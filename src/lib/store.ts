@@ -180,9 +180,23 @@ export const useCVStore = create<CVStore>()(
     content: initialContent,
     history: { past: [], future: [] },
 
-    setInitialContent: (content) => {
+    setInitialContent: (loadedContent) => {
       set((state) => {
-        state.content = content;
+        state.content = {
+          ...initialContent,
+          ...loadedContent,
+          personal: {
+            ...initialContent.personal,
+            ...(loadedContent?.personal || {}),
+          },
+          experience: loadedContent?.experience || [],
+          education: loadedContent?.education || [],
+          skills: loadedContent?.skills || [],
+          projects: loadedContent?.projects || [],
+          certifications: loadedContent?.certifications || [],
+          languages: loadedContent?.languages || [],
+          sectionOrder: loadedContent?.sectionOrder || initialContent.sectionOrder,
+        };
         state.history = { past: [], future: [] };
       });
     },
