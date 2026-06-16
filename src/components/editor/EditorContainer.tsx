@@ -17,7 +17,17 @@ export const EditorContainer: React.FC<EditorContainerProps> = ({ initialResume 
   const [cvTitle, setCvTitle] = React.useState(initialResume.title);
   const [isGenerating, setIsGenerating] = React.useState(false);
   const [isSaving, setIsSaving] = React.useState(false);
+  const [toast, setToast] = React.useState<{ message: string; type: 'success' | 'error' } | null>(null);
   const isFirstLoad = React.useRef(true);
+
+  React.useEffect(() => {
+    if (toast) {
+      const timer = setTimeout(() => {
+        setToast(null);
+      }, 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [toast]);
 
   // Cargar contenido inicial en el store
   React.useEffect(() => {
@@ -123,7 +133,7 @@ export const EditorContainer: React.FC<EditorContainerProps> = ({ initialResume 
 
       if (!response.ok) {
         const errorData = await response.json();
-        alert(errorData.error || 'Error al generar el PDF');
+        setToast({ message: errorData.error || 'Error al generar el PDF', type: 'error' });
         return;
       }
 
@@ -139,7 +149,7 @@ export const EditorContainer: React.FC<EditorContainerProps> = ({ initialResume 
       document.body.removeChild(a);
 
     } catch (err: any) {
-      alert('Error al conectar con el servidor: ' + err.message);
+      setToast({ message: 'Error al conectar con el servidor: ' + err.message, type: 'error' });
     } finally {
       setIsGenerating(false);
     }
@@ -227,6 +237,26 @@ export const EditorContainer: React.FC<EditorContainerProps> = ({ initialResume 
         <EditPanel />
         <PreviewPanel />
       </div>
+
+      {/* React Toast Overlay */}
+      {toast && (
+        <div className={`fixed bottom-4 right-4 z-55 flex items-center gap-3 px-4 py-3 rounded-lg border shadow-lg text-sm font-semibold transition-all duration-300 pointer-events-auto ${
+          toast.type === 'success'
+            ? 'bg-green-50 text-green-800 border-green-200 dark:bg-green-950/20 dark:text-green-400 dark:border-green-900/50'
+            : 'bg-red-50 text-red-800 border-red-200 dark:bg-red-950/20 dark:text-red-400 dark:border-red-900/50'
+        }`}>
+          {toast.type === 'success' ? (
+            <svg className="h-5 w-5 text-green-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          ) : (
+            <svg className="h-5 w-5 text-red-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          )}
+          <span>{toast.message}</span>
+        </div>
+      )}
     </div>
   );
 };

@@ -21,10 +21,10 @@ export const POST: APIRoute = async ({ params, request }) => {
       });
     }
 
-    const { title, content } = await request.json();
+    const { title, content, isPublished, templateId } = await request.json();
 
-    if (!title || !content) {
-      return new Response(JSON.stringify({ error: 'El título y el contenido son obligatorios' }), {
+    if (title === undefined && content === undefined && isPublished === undefined && templateId === undefined) {
+      return new Response(JSON.stringify({ error: 'Debe proporcionar al menos un campo para actualizar (title, content, isPublished, templateId)' }), {
         status: 400,
         headers: { 'Content-Type': 'application/json' }
       });
@@ -44,13 +44,16 @@ export const POST: APIRoute = async ({ params, request }) => {
       });
     }
 
-    // Actualizar registro
+    // Actualizar registro con campos suministrados
+    const updateData: any = {};
+    if (title !== undefined) updateData.title = title;
+    if (content !== undefined) updateData.content = content;
+    if (isPublished !== undefined) updateData.isPublished = isPublished;
+    if (templateId !== undefined) updateData.templateId = templateId;
+
     await prisma.resume.update({
       where: { id },
-      data: {
-        title,
-        content,
-      },
+      data: updateData,
     });
 
     return new Response(JSON.stringify({ success: true, message: 'Currículum guardado con éxito' }), {

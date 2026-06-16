@@ -21,7 +21,7 @@ const resumes = await prisma.resume.findMany({
   <div class="min-h-screen bg-zinc-50 dark:bg-zinc-950 select-none">
     
     <!-- Dashboard Header -->
-    <header class="sticky top-0 z-50 w-full border-b border-zinc-200 bg-white/70 backdrop-blur-md dark:border-zinc-800/30 dark:bg-zinc-950/70">
+    <header class="sticky top-0 z-40 w-full border-b border-zinc-200 bg-white/70 backdrop-blur-md dark:border-zinc-800/30 dark:bg-zinc-950/70">
       <div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <div class="flex items-center gap-2">
           <div class="flex h-9 w-9 items-center justify-center rounded-lg bg-black text-white font-bold text-xl dark:bg-white dark:text-black">
@@ -34,7 +34,7 @@ const resumes = await prisma.resume.findMany({
           <span class="text-sm text-zinc-650 dark:text-zinc-400 font-medium">Hola, {user.name}</span>
           <button 
             id="logout-btn"
-            class="text-sm font-medium text-red-500 hover:text-red-650 transition-colors"
+            class="text-sm font-medium text-red-500 hover:text-red-650 transition-colors cursor-pointer"
           >
             Cerrar Sesión
           </button>
@@ -44,6 +44,7 @@ const resumes = await prisma.resume.findMany({
 
     <!-- Main Content -->
     <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <!-- Welcome Header -->
       <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-zinc-200 pb-5 dark:border-zinc-850">
         <div>
           <h1 class="text-3xl font-bold tracking-tight">Mis Currículums</h1>
@@ -51,10 +52,30 @@ const resumes = await prisma.resume.findMany({
         </div>
         <button 
           id="new-cv-btn"
-          class="inline-flex h-10 items-center justify-center rounded-md bg-black px-4 text-sm font-semibold text-white shadow hover:bg-zinc-800 active:scale-98 transition-all dark:bg-white dark:text-black dark:hover:bg-zinc-200"
+          class="inline-flex h-10 items-center justify-center rounded-md bg-black px-4 text-sm font-semibold text-white shadow hover:bg-zinc-800 active:scale-98 transition-all dark:bg-white dark:text-black dark:hover:bg-zinc-200 cursor-pointer"
         >
           + Crear Currículum
         </button>
+      </div>
+
+      <!-- Search and Filter Bar -->
+      <div class="mt-6 flex flex-col sm:flex-row gap-4 items-center justify-between">
+        <div class="relative w-full sm:max-w-xs">
+          <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+            <svg class="h-4 w-4 text-zinc-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </span>
+          <input 
+            type="text" 
+            id="search-input" 
+            placeholder="Buscar currículum..." 
+            class="flex h-10 w-full rounded-md border border-zinc-200 bg-white pl-9 pr-3 py-2 text-sm placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-black dark:border-zinc-800 dark:bg-zinc-900 dark:placeholder:text-zinc-650 dark:focus:ring-white"
+          />
+        </div>
+        <span class="text-xs text-zinc-400 font-medium">
+          {resumes.length} {resumes.length === 1 ? 'currículum registrado' : 'currículums registrados'}
+        </span>
       </div>
 
       <!-- Resumes List -->
@@ -69,26 +90,50 @@ const resumes = await prisma.resume.findMany({
             <p class="text-sm text-zinc-500 mt-1 max-w-sm">Comienza creando tu primer hoja de vida optimizada para pasar los filtros automáticos de reclutamiento.</p>
             <button 
               id="new-cv-empty-btn"
-              class="mt-4 inline-flex h-9 items-center justify-center rounded-md bg-zinc-900 px-4 text-xs font-semibold text-white shadow hover:bg-zinc-850 dark:bg-white dark:text-black dark:hover:bg-zinc-200"
+              class="mt-4 inline-flex h-9 items-center justify-center rounded-md bg-zinc-900 px-4 text-xs font-semibold text-white shadow hover:bg-zinc-850 dark:bg-white dark:text-black dark:hover:bg-zinc-200 cursor-pointer"
             >
               Crear tu primer CV
             </button>
           </div>
         ) : (
+          <!-- Empty Search State (Hidden initially) -->
+          <div id="empty-search-state" class="hidden flex-col items-center justify-center border-2 border-dashed border-zinc-200 rounded-xl p-16 text-center dark:border-zinc-800">
+            <svg class="h-12 w-12 text-zinc-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.602 10.602Z" />
+            </svg>
+            <h3 class="text-lg font-bold">No se encontraron currículums</h3>
+            <p class="text-sm text-zinc-500 mt-1 max-w-sm">Prueba ajustando los términos de tu búsqueda.</p>
+          </div>
+
           <!-- Resumes Grid -->
           <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {resumes.map((resume) => (
               <div 
                 key={resume.id}
-                class="group relative flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-6 shadow-sm hover:shadow-md hover:border-zinc-300 transition-all dark:bg-zinc-900 dark:border-zinc-800"
+                class="cv-card group relative flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-6 shadow-sm hover:shadow-md hover:border-zinc-300 transition-all dark:bg-zinc-900 dark:border-zinc-800"
+                data-title={resume.title}
               >
                 <div>
-                  <div class="flex justify-between items-start">
-                    <h3 class="font-bold text-lg leading-tight tracking-tight group-hover:text-violet-650 transition-colors">
+                  <div class="flex justify-between items-start gap-2">
+                    <h3 class="font-bold text-lg leading-tight tracking-tight group-hover:text-violet-650 dark:group-hover:text-violet-400 transition-colors">
                       {resume.title}
                     </h3>
+                    
+                    <!-- Toggle Switch para Publicación -->
+                    <button 
+                      class={`publish-toggle-btn text-[10px] font-bold px-2 py-0.5 rounded-full border transition-all active:scale-95 cursor-pointer shrink-0 ${
+                        resume.isPublished 
+                          ? 'bg-emerald-50 text-emerald-700 border-emerald-250 dark:bg-emerald-950/20 dark:text-emerald-400 dark:border-emerald-900/50' 
+                          : 'bg-zinc-100 text-zinc-600 border-zinc-200 dark:bg-zinc-850 dark:text-zinc-400 dark:border-zinc-800'
+                      }`}
+                      data-id={resume.id}
+                      data-published={resume.isPublished ? "true" : "false"}
+                      title={resume.isPublished ? 'Haz clic para despublicar' : 'Haz clic para publicar en la web'}
+                    >
+                      {resume.isPublished ? 'Público' : 'Privado'}
+                    </button>
                   </div>
-                  <p class="text-xs text-zinc-450 mt-2">
+                  <p class="text-xs text-zinc-400 mt-2">
                     Actualizado: {new Date(resume.updatedAt).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' })}
                   </p>
                   <div class="flex items-center gap-4 mt-4 text-xs text-zinc-500">
@@ -99,23 +144,44 @@ const resumes = await prisma.resume.findMany({
                       </svg>
                       {resume.viewsCount} vistas
                     </span>
-                    <span>• {resume.templateId === 'ats-classic' ? 'Plantilla ATS Classic' : 'Plantilla Custom'}</span>
+                    <span>• {resume.templateId === 'ats-classic' ? 'ATS Classic' : 'Plantilla Custom'}</span>
                   </div>
                 </div>
 
-                <div class="mt-6 flex items-center justify-between border-t border-zinc-150 pt-4 dark:border-zinc-850">
-                  <a 
-                    href={`/editor?id=${resume.id}`}
-                    class="inline-flex h-8 items-center justify-center rounded-md bg-zinc-900 px-3 text-xs font-semibold text-white shadow-sm hover:bg-zinc-800 dark:bg-white dark:text-black dark:hover:bg-zinc-200"
-                  >
-                    Editar CV
-                  </a>
-                  <button 
-                    class="delete-cv-btn text-xs font-medium text-red-500 hover:text-red-700 transition-colors px-2 py-1"
-                    data-id={resume.id}
-                  >
-                    Eliminar
-                  </button>
+                <div class="mt-6 flex flex-col gap-2 border-t border-zinc-150 pt-4 dark:border-zinc-850">
+                  <div class="flex items-center justify-between w-full">
+                    <div class="flex items-center gap-1.5">
+                      <a 
+                        href={`/editor?id=${resume.id}`}
+                        class="inline-flex h-8 items-center justify-center rounded-md bg-zinc-900 px-3 text-xs font-semibold text-white shadow-sm hover:bg-zinc-800 dark:bg-white dark:text-black dark:hover:bg-zinc-200"
+                      >
+                        Editar
+                      </a>
+                      <button 
+                        class="rename-cv-btn inline-flex h-8 items-center justify-center rounded-md border border-zinc-200 bg-white px-2.5 text-xs font-medium hover:bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:bg-zinc-850 dark:text-zinc-350 cursor-pointer"
+                        data-id={resume.id}
+                        data-title={resume.title}
+                        title="Renombrar currículum"
+                      >
+                        Renombrar
+                      </button>
+                      <button 
+                        class="duplicate-cv-btn inline-flex h-8 items-center justify-center rounded-md border border-zinc-200 bg-white px-2.5 text-xs font-medium hover:bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:bg-zinc-850 dark:text-zinc-350 cursor-pointer"
+                        data-id={resume.id}
+                        title="Duplicar currículum"
+                      >
+                        Duplicar
+                      </button>
+                    </div>
+                    
+                    <button 
+                      class="delete-cv-btn text-xs font-semibold text-red-500 hover:text-red-700 transition-colors px-2 py-1.5 cursor-pointer rounded-md hover:bg-red-50 dark:hover:bg-red-950/20"
+                      data-id={resume.id}
+                      title="Eliminar currículum"
+                    >
+                      Eliminar
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}
@@ -125,65 +191,492 @@ const resumes = await prisma.resume.findMany({
     </main>
   </div>
 
+  <!-- ==================== TOAST & MODAL OVERLAYS ==================== -->
+  
+  <!-- Toast Container -->
+  <div id="toast-container" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- Custom Create CV Modal -->
+  <div id="create-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300">
+    <div class="w-full max-w-md bg-white border border-zinc-200 rounded-xl shadow-xl p-6 transform scale-95 transition-all duration-300 dark:bg-zinc-900 dark:border-zinc-800 m-4">
+      <h3 class="text-xl font-bold tracking-tight">Crear Nuevo Currículum</h3>
+      <p class="text-sm text-zinc-500 mt-1 dark:text-zinc-400">Elige un nombre y una plantilla para comenzar.</p>
+      
+      <div class="mt-4 space-y-4">
+        <div class="space-y-1.5">
+          <label for="create-title" class="text-sm font-semibold text-zinc-700 dark:text-zinc-300">Nombre del currículum</label>
+          <input 
+            type="text" 
+            id="create-title" 
+            value="Mi Currículum Profesional"
+            class="flex h-10 w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-black dark:border-zinc-800 dark:bg-zinc-950 dark:focus:ring-white"
+          />
+        </div>
+
+        <div class="space-y-1.5">
+          <label for="create-template" class="text-sm font-semibold text-zinc-700 dark:text-zinc-300">Plantilla inicial</label>
+          <select 
+            id="create-template"
+            class="flex h-10 w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black dark:border-zinc-800 dark:bg-zinc-950 dark:focus:ring-white"
+          >
+            <option value="ats-classic">Plantilla ATS Classic</option>
+            <option value="ats-modern" disabled>Plantilla ATS Modern (Próximamente)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mt-6 flex items-center justify-end gap-3">
+        <button 
+          id="close-create-btn"
+          class="h-9 px-4 rounded-md border border-zinc-200 text-sm font-semibold hover:bg-zinc-50 dark:border-zinc-800 dark:hover:bg-zinc-850 dark:text-zinc-300 cursor-pointer"
+        >
+          Cancelar
+        </button>
+        <button 
+          id="confirm-create-btn"
+          class="h-9 px-4 rounded-md bg-black text-white text-sm font-semibold hover:bg-zinc-800 dark:bg-white dark:text-black dark:hover:bg-zinc-200 cursor-pointer"
+        >
+          Crear
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom Rename CV Modal -->
+  <div id="rename-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300">
+    <div class="w-full max-w-md bg-white border border-zinc-200 rounded-xl shadow-xl p-6 transform scale-95 transition-all duration-300 dark:bg-zinc-900 dark:border-zinc-800 m-4">
+      <h3 class="text-xl font-bold tracking-tight">Renombrar Currículum</h3>
+      <p class="text-sm text-zinc-500 mt-1 dark:text-zinc-400">Ingresa el nuevo nombre para este currículum.</p>
+      
+      <input type="hidden" id="rename-id" />
+      <div class="mt-4 space-y-1.5">
+        <label for="rename-title" class="text-sm font-semibold text-zinc-700 dark:text-zinc-300">Nuevo Nombre</label>
+        <input 
+          type="text" 
+          id="rename-title" 
+          class="flex h-10 w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-black dark:border-zinc-800 dark:bg-zinc-950 dark:focus:ring-white"
+        />
+      </div>
+
+      <div class="mt-6 flex items-center justify-end gap-3">
+        <button 
+          id="close-rename-btn"
+          class="h-9 px-4 rounded-md border border-zinc-200 text-sm font-semibold hover:bg-zinc-50 dark:border-zinc-800 dark:hover:bg-zinc-850 dark:text-zinc-300 cursor-pointer"
+        >
+          Cancelar
+        </button>
+        <button 
+          id="confirm-rename-btn"
+          class="h-9 px-4 rounded-md bg-black text-white text-sm font-semibold hover:bg-zinc-800 dark:bg-white dark:text-black dark:hover:bg-zinc-200 cursor-pointer"
+        >
+          Renombrar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom Confirmation Modal -->
+  <div id="confirm-dialog" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300">
+    <div class="w-full max-w-md bg-white border border-zinc-200 rounded-xl shadow-xl p-6 transform scale-95 transition-all duration-300 dark:bg-zinc-900 dark:border-zinc-800 m-4">
+      <h3 id="confirm-dialog-title" class="text-xl font-bold tracking-tight">¿Estás seguro?</h3>
+      <p id="confirm-dialog-desc" class="text-sm text-zinc-500 mt-1 dark:text-zinc-400">Esta acción no se puede deshacer.</p>
+
+      <div class="mt-6 flex items-center justify-end gap-3">
+        <button 
+          id="close-confirm-btn"
+          class="h-9 px-4 rounded-md border border-zinc-200 text-sm font-semibold hover:bg-zinc-50 dark:border-zinc-800 dark:hover:bg-zinc-850 dark:text-zinc-300 cursor-pointer"
+        >
+          Cancelar
+        </button>
+        <button 
+          id="accept-confirm-btn"
+          class="h-9 px-4 rounded-md bg-red-600 text-white text-sm font-semibold hover:bg-red-700 active:scale-98 cursor-pointer transition-all"
+        >
+          Confirmar
+        </button>
+      </div>
+    </div>
+  </div>
+
   <script>
-    // Cerrar sesión
-    document.getElementById('logout-btn')?.addEventListener('click', async () => {
-      if (confirm('¿Estás seguro de que quieres cerrar sesión?')) {
-        const response = await fetch('/api/auth/logout', { method: 'POST' });
-        if (response.ok) {
-          window.location.href = '/';
+    // ==================== TOAST NOTIFICATION UTILITY ====================
+    function showToast(message: string, type: 'success' | 'error' | 'info' = 'info') {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+
+      const toast = document.createElement('div');
+      toast.className = `flex items-center gap-3 px-4 py-3 rounded-lg border shadow-lg text-sm font-semibold transition-all duration-300 transform translate-y-2 opacity-0 pointer-events-auto max-w-xs md:max-w-sm`;
+      
+      let bgClass = '';
+      let borderClass = '';
+      let textClass = '';
+      let icon = '';
+
+      if (type === 'success') {
+        bgClass = 'bg-green-50 dark:bg-green-950/20';
+        borderClass = 'border-green-200 dark:border-green-900/50';
+        textClass = 'text-green-800 dark:text-green-300';
+        icon = `<svg class="h-5 w-5 text-green-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>`;
+      } else if (type === 'error') {
+        bgClass = 'bg-red-50 dark:bg-red-950/20';
+        borderClass = 'border-red-200 dark:border-red-900/50';
+        textClass = 'text-red-800 dark:text-red-300';
+        icon = `<svg class="h-5 w-5 text-red-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>`;
+      } else {
+        bgClass = 'bg-zinc-50 dark:bg-zinc-900';
+        borderClass = 'border-zinc-200 dark:border-zinc-800';
+        textClass = 'text-zinc-800 dark:text-zinc-200';
+        icon = `<svg class="h-5 w-5 text-zinc-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>`;
+      }
+
+      toast.className += ` ${bgClass} ${borderClass} ${textClass}`;
+      toast.innerHTML = `${icon} <span class="flex-1">${message}</span>`;
+      
+      container.appendChild(toast);
+
+      // Animation in
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-2', 'opacity-0');
+      });
+
+      // Animation out and removal
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        toast.addEventListener('transitionend', () => {
+          toast.remove();
+        });
+      }, 4000);
+    }
+
+    // ==================== MODAL HELPERS ====================
+    function openModal(modalId: string) {
+      const modal = document.getElementById(modalId);
+      if (!modal) return;
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      const content = modal.querySelector('div');
+      if (content) {
+        content.classList.remove('scale-95');
+        content.classList.add('scale-100');
+      }
+    }
+
+    function closeModal(modalId: string) {
+      const modal = document.getElementById(modalId);
+      if (!modal) return;
+      modal.classList.add('opacity-0', 'pointer-events-none');
+      const content = modal.querySelector('div');
+      if (content) {
+        content.classList.remove('scale-100');
+        content.classList.add('scale-95');
+      }
+    }
+
+    // Bind Close Buttons
+    document.getElementById('close-create-btn')?.addEventListener('click', () => closeModal('create-modal'));
+    document.getElementById('close-rename-btn')?.addEventListener('click', () => closeModal('rename-modal'));
+    document.getElementById('close-confirm-btn')?.addEventListener('click', () => closeModal('confirm-dialog'));
+
+    // ==================== CONFIRM DIALOG HELPER ====================
+    let currentConfirmAction: (() => Promise<void>) | null = null;
+
+    function showConfirmDialog(title: string, desc: string, onConfirm: () => Promise<void>, confirmText = 'Confirmar', isDestructive = true) {
+      const titleEl = document.getElementById('confirm-dialog-title');
+      const descEl = document.getElementById('confirm-dialog-desc');
+      if (titleEl) titleEl.innerText = title;
+      if (descEl) descEl.innerText = desc;
+      
+      const acceptBtn = document.getElementById('accept-confirm-btn') as HTMLButtonElement;
+      if (acceptBtn) {
+        acceptBtn.innerText = confirmText;
+        if (isDestructive) {
+          acceptBtn.className = "h-9 px-4 rounded-md bg-red-600 text-white text-sm font-semibold hover:bg-red-700 active:scale-98 cursor-pointer transition-all";
+        } else {
+          acceptBtn.className = "h-9 px-4 rounded-md bg-black text-white text-sm font-semibold hover:bg-zinc-800 active:scale-98 cursor-pointer transition-all dark:bg-white dark:text-black dark:hover:bg-zinc-200";
+        }
+      }
+      
+      currentConfirmAction = onConfirm;
+      openModal('confirm-dialog');
+    }
+
+    document.getElementById('accept-confirm-btn')?.addEventListener('click', async (e) => {
+      if (currentConfirmAction) {
+        const btn = e.target as HTMLButtonElement;
+        const oldText = btn.innerText;
+        btn.disabled = true;
+        btn.innerText = 'Cargando...';
+        try {
+          await currentConfirmAction();
+        } catch (e: any) {
+          showToast(e.message || 'Error al procesar la acción', 'error');
+        } finally {
+          btn.disabled = false;
+          btn.innerText = oldText;
+          closeModal('confirm-dialog');
         }
       }
     });
 
-    // Crear currículum
-    const handleNewCV = async () => {
-      const title = prompt('Ingresa un nombre para tu currículum:', 'Mi Currículum Profesional');
-      if (!title) return;
+    // ==================== LOGOUT FLOW ====================
+    document.getElementById('logout-btn')?.addEventListener('click', () => {
+      showConfirmDialog(
+        '¿Cerrar Sesión?',
+        '¿Estás seguro de que quieres cerrar tu sesión actual de CVForge?',
+        async () => {
+          const response = await fetch('/api/auth/logout', { method: 'POST' });
+          if (response.ok) {
+            window.location.href = '/';
+          } else {
+            showToast('Error al cerrar sesión', 'error');
+          }
+        },
+        'Cerrar Sesión',
+        true
+      );
+    });
+
+    // ==================== CREATE CV FLOW ====================
+    const newCvHandler = () => {
+      // Reiniciar título y foco
+      const titleInput = document.getElementById('create-title') as HTMLInputElement;
+      if (titleInput) {
+        titleInput.value = 'Mi Currículum Profesional';
+      }
+      openModal('create-modal');
+      setTimeout(() => titleInput?.focus(), 100);
+    };
+
+    document.getElementById('new-cv-btn')?.addEventListener('click', newCvHandler);
+    document.getElementById('new-cv-empty-btn')?.addEventListener('click', newCvHandler);
+
+    document.getElementById('confirm-create-btn')?.addEventListener('click', async (e) => {
+      const titleInput = document.getElementById('create-title') as HTMLInputElement;
+      const title = titleInput?.value?.trim();
+      const templateSelect = document.getElementById('create-template') as HTMLSelectElement;
+      const templateId = templateSelect?.value || 'ats-classic';
+
+      if (!title) {
+        showToast('El título del currículum no puede estar vacío.', 'error');
+        return;
+      }
+
+      const btn = e.target as HTMLButtonElement;
+      btn.disabled = true;
+      btn.innerText = 'Creando...';
 
       try {
         const response = await fetch('/api/resumes', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ title, templateId }),
+        });
+
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || 'Error al crear currículum');
+
+        showToast('Currículum creado con éxito, redirigiendo...', 'success');
+        setTimeout(() => {
+          window.location.href = `/editor?id=${data.id}`;
+        }, 800);
+
+      } catch (err: any) {
+        showToast(err.message || 'Error al crear currículum', 'error');
+        btn.disabled = false;
+        btn.innerText = 'Crear';
+      }
+    });
+
+    // ==================== SEARCH / FILTER FLOW ====================
+    const searchInput = document.getElementById('search-input') as HTMLInputElement;
+    searchInput?.addEventListener('input', (e) => {
+      const query = (e.target as HTMLInputElement).value.toLowerCase().trim();
+      const cards = document.querySelectorAll('.cv-card');
+      let visibleCount = 0;
+
+      cards.forEach((card) => {
+        const title = card.getAttribute('data-title')?.toLowerCase() || '';
+        if (title.includes(query)) {
+          (card as HTMLElement).style.display = 'flex';
+          visibleCount++;
+        } else {
+          (card as HTMLElement).style.display = 'none';
+        }
+      });
+
+      const emptyState = document.getElementById('empty-search-state');
+      if (emptyState) {
+        if (visibleCount === 0 && cards.length > 0) {
+          emptyState.classList.remove('hidden');
+          emptyState.classList.add('flex');
+        } else {
+          emptyState.classList.remove('flex');
+          emptyState.classList.add('hidden');
+        }
+      }
+    });
+
+    // ==================== RENAME CV FLOW ====================
+    document.querySelectorAll('.rename-cv-btn').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        const target = e.currentTarget as HTMLButtonElement;
+        const id = target.getAttribute('data-id');
+        const title = target.getAttribute('data-title');
+        
+        if (!id || !title) return;
+
+        const renameIdInput = document.getElementById('rename-id') as HTMLInputElement;
+        const renameTitleInput = document.getElementById('rename-title') as HTMLInputElement;
+
+        if (renameIdInput) renameIdInput.value = id;
+        if (renameTitleInput) renameTitleInput.value = title;
+
+        openModal('rename-modal');
+        setTimeout(() => renameTitleInput?.focus(), 100);
+      });
+    });
+
+    document.getElementById('confirm-rename-btn')?.addEventListener('click', async (e) => {
+      const idInput = document.getElementById('rename-id') as HTMLInputElement;
+      const titleInput = document.getElementById('rename-title') as HTMLInputElement;
+
+      const id = idInput?.value;
+      const title = titleInput?.value?.trim();
+
+      if (!id || !title) {
+        showToast('El nombre del currículum es obligatorio.', 'error');
+        return;
+      }
+
+      const btn = e.target as HTMLButtonElement;
+      btn.disabled = true;
+      btn.innerText = 'Renombrando...';
+
+      try {
+        const response = await fetch(`/api/resumes/${id}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ title }),
         });
 
         const data = await response.json();
-        if (!response.ok) throw new Error(data.error);
+        if (!response.ok) throw new Error(data.error || 'Error al renombrar');
 
-        // Redirigir al editor
-        window.location.href = `/editor?id=${data.id}`;
+        showToast('Currículum renombrado con éxito.', 'success');
+        closeModal('rename-modal');
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
 
       } catch (err: any) {
-        alert(err.message || 'Error al crear currículum');
+        showToast(err.message || 'Error al renombrar currículum', 'error');
+        btn.disabled = false;
+        btn.innerText = 'Renombrar';
       }
-    };
+    });
 
-    document.getElementById('new-cv-btn')?.addEventListener('click', handleNewCV);
-    document.getElementById('new-cv-empty-btn')?.addEventListener('click', handleNewCV);
-
-    // Eliminar currículum
-    document.querySelectorAll('.delete-cv-btn').forEach((btn) => {
+    // ==================== DUPLICATE CV FLOW ====================
+    document.querySelectorAll('.duplicate-cv-btn').forEach((btn) => {
       btn.addEventListener('click', async (e) => {
-        const id = (e.target as HTMLButtonElement).getAttribute('data-id');
+        const target = e.currentTarget as HTMLButtonElement;
+        const id = target.getAttribute('data-id');
+        
         if (!id) return;
 
-        if (confirm('¿Estás seguro de que deseas eliminar este currículum? Esta acción no se puede deshacer.')) {
-          try {
+        target.disabled = true;
+        const oldTitle = target.title;
+        target.title = 'Duplicando...';
+
+        try {
+          const response = await fetch('/api/resumes/duplicate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id }),
+          });
+
+          const data = await response.json();
+          if (!response.ok) throw new Error(data.error || 'Error al duplicar');
+
+          showToast(`Currículum duplicado como "${data.title}"`, 'success');
+          setTimeout(() => {
+            window.location.reload();
+          }, 500);
+
+        } catch (err: any) {
+          showToast(err.message || 'Error al duplicar currículum', 'error');
+          target.disabled = false;
+          target.title = oldTitle;
+        }
+      });
+    });
+
+    // ==================== PUBLISH TOGGLE FLOW ====================
+    document.querySelectorAll('.publish-toggle-btn').forEach((btn) => {
+      btn.addEventListener('click', async (e) => {
+        const target = e.currentTarget as HTMLButtonElement;
+        const id = target.getAttribute('data-id');
+        const isCurrentlyPublished = target.getAttribute('data-published') === 'true';
+        
+        if (!id) return;
+
+        target.disabled = true;
+        const newPublishedState = !isCurrentlyPublished;
+
+        try {
+          const response = await fetch(`/api/resumes/${id}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ isPublished: newPublishedState }),
+          });
+
+          const data = await response.json();
+          if (!response.ok) throw new Error(data.error || 'Error al cambiar estado de publicación');
+
+          showToast(newPublishedState ? 'Currículum publicado con éxito' : 'Currículum ahora es privado', 'success');
+          
+          // Actualizar botón localmente sin recargar
+          target.setAttribute('data-published', newPublishedState ? 'true' : 'false');
+          target.innerText = newPublishedState ? 'Público' : 'Privado';
+          
+          if (newPublishedState) {
+            target.className = "publish-toggle-btn text-[10px] font-bold px-2 py-0.5 rounded-full border transition-all active:scale-95 cursor-pointer shrink-0 bg-emerald-50 text-emerald-700 border-emerald-250 dark:bg-emerald-950/20 dark:text-emerald-400 dark:border-emerald-900/50";
+          } else {
+            target.className = "publish-toggle-btn text-[10px] font-bold px-2 py-0.5 rounded-full border transition-all active:scale-95 cursor-pointer shrink-0 bg-zinc-100 text-zinc-600 border-zinc-200 dark:bg-zinc-850 dark:text-zinc-400 dark:border-zinc-800";
+          }
+
+        } catch (err: any) {
+          showToast(err.message || 'Error al actualizar publicación', 'error');
+        } finally {
+          target.disabled = false;
+        }
+      });
+    });
+
+    // ==================== DELETE CV FLOW ====================
+    document.querySelectorAll('.delete-cv-btn').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        const target = e.currentTarget as HTMLButtonElement;
+        const id = target.getAttribute('data-id');
+        if (!id) return;
+
+        showConfirmDialog(
+          '¿Eliminar Currículum?',
+          '¿Estás completamente seguro de que deseas eliminar este currículum? Esta acción borrará de forma permanente todos los datos asociados y no se puede deshacer.',
+          async () => {
             const response = await fetch(`/api/resumes?id=${id}`, {
               method: 'DELETE',
             });
 
             const data = await response.json();
-            if (!response.ok) throw new Error(data.error);
+            if (!response.ok) throw new Error(data.error || 'Error al eliminar');
 
-            // Recargar la página
-            window.location.reload();
-
-          } catch (err: any) {
-            alert(err.message || 'Error al eliminar currículum');
-          }
-        }
+            showToast('Currículum eliminado correctamente.', 'success');
+            setTimeout(() => {
+              window.location.reload();
+            }, 500);
+          },
+          'Eliminar Currículum',
+          true
+        );
       });
     });
   </script>
