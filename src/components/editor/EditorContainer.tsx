@@ -18,6 +18,7 @@ export const EditorContainer: React.FC<EditorContainerProps> = ({ initialResume 
   const [isGenerating, setIsGenerating] = React.useState(false);
   const [isSaving, setIsSaving] = React.useState(false);
   const [toast, setToast] = React.useState<{ message: string; type: 'success' | 'error' } | null>(null);
+  const [activeTab, setActiveTab] = React.useState<'edit' | 'preview'>('edit');
   const isFirstLoad = React.useRef(true);
 
   React.useEffect(() => {
@@ -233,9 +234,33 @@ export const EditorContainer: React.FC<EditorContainerProps> = ({ initialResume 
       </header>
 
       {/* Panel de Contenido Principal */}
-      <div className="flex-1 flex overflow-hidden print:overflow-visible print:block">
-        <EditPanel />
-        <PreviewPanel />
+      <div className="flex-1 flex overflow-hidden print:overflow-visible print:block relative">
+        <EditPanel className={activeTab === 'edit' ? 'flex' : 'hidden lg:flex'} />
+        <PreviewPanel className={activeTab === 'preview' ? 'flex' : 'hidden lg:flex'} />
+      </div>
+
+      {/* Floating Mobile Tab Switcher */}
+      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 lg:hidden bg-white/95 dark:bg-zinc-900/95 border border-zinc-200 dark:border-zinc-800 rounded-full shadow-lg p-1 flex gap-1 backdrop-blur-md">
+        <button
+          onClick={() => setActiveTab('edit')}
+          className={`px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer ${
+            activeTab === 'edit'
+              ? 'bg-black text-white dark:bg-white dark:text-black shadow-sm'
+              : 'text-zinc-500 hover:text-zinc-700 dark:text-zinc-400'
+          }`}
+        >
+          Editar Datos
+        </button>
+        <button
+          onClick={() => setActiveTab('preview')}
+          className={`px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer ${
+            activeTab === 'preview'
+              ? 'bg-black text-white dark:bg-white dark:text-black shadow-sm'
+              : 'text-zinc-500 hover:text-zinc-700 dark:text-zinc-400'
+          }`}
+        >
+          Vista Previa
+        </button>
       </div>
 
       {/* React Toast Overlay */}

@@ -5,8 +5,13 @@ import { Textarea } from '../ui/textarea';
 import { Label } from '../ui/label';
 import { Button } from '../ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../ui/accordion';
+import { AtsAnalyzer } from './AtsAnalyzer';
 
-export const EditPanel: React.FC = () => {
+interface EditPanelProps {
+  className?: string;
+}
+
+export const EditPanel: React.FC<EditPanelProps> = ({ className = '' }) => {
   const {
     content,
     updatePersonal,
@@ -32,13 +37,15 @@ export const EditPanel: React.FC = () => {
   const { personal, summary, experience, education, skills, projects, certifications, languages } = content;
 
   return (
-    <div className="w-full lg:w-[480px] xl:w-[540px] border-r border-zinc-200 bg-white flex flex-col h-full overflow-hidden dark:border-zinc-800 dark:bg-zinc-950">
+    <div className={`w-full lg:w-[480px] xl:w-[540px] border-r border-zinc-200 bg-white flex flex-col h-full overflow-hidden dark:border-zinc-800 dark:bg-zinc-950 ${className}`}>
       <div className="p-4 border-b border-zinc-150 flex items-center justify-between dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/10">
         <h2 className="text-base font-bold">Editor de Datos</h2>
         <span className="text-xs text-zinc-500">Auto-guardado local</span>
       </div>
 
       <div className="flex-1 overflow-y-auto p-4 space-y-6 select-none">
+        <AtsAnalyzer />
+        
         <Accordion type="single" collapsible defaultValue="personal" className="w-full space-y-4">
           
           {/* Información Personal */}
