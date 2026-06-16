@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { EditorContainer } from '../components/editor/EditorContainer';
+import { ErrorBoundary } from '../components/editor/ErrorBoundary';
 import { getUserFromRequest } from '../lib/auth';
 import { getDb } from '../lib/db';
 
@@ -43,6 +44,8 @@ const serializedResume = {
   description="Diseña tu currículum optimizado para ATS en tiempo real de forma gratuita."
 >
   <main class="h-screen w-screen overflow-hidden print:h-auto print:w-auto print:overflow-visible">
-    <EditorContainer client:only="react" initialResume={serializedResume} />
+    <ErrorBoundary client:only="react">
+      <EditorContainer client:only="react" initialResume={serializedResume} />
+    </ErrorBoundary>
   </main>
 </Layout>

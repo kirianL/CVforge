@@ -7,7 +7,8 @@ let prisma: PrismaClient;
 
 // Obtener cliente de Prisma con soporte para import.meta.env (Astro/Vite) y process.env (Vercel/Node)
 export function getDb(): PrismaClient {
-  const databaseUrl = import.meta.env.DATABASE_URL || (typeof process !== 'undefined' ? process.env.DATABASE_URL : undefined);
+  const metaEnv = (import.meta as any).env;
+  const databaseUrl = (metaEnv ? metaEnv.DATABASE_URL : undefined) || (typeof process !== 'undefined' ? process.env.DATABASE_URL : undefined);
   
   if (!prisma) {
     if (!databaseUrl) {
