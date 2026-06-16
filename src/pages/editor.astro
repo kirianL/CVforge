@@ -1,0 +1,48 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { EditorContainer } from '../components/editor/EditorContainer';
+import { getUserFromRequest } from '../lib/auth';
+import { getDb } from '../lib/db';
+
+const user = await getUserFromRequest(Astro.request);
+
+// Si no está autenticado, redirigir al login
+if (!user) {
+  return Astro.redirect('/login');
+}
+
+const url = new URL(Astro.request.url);
+const id = url.searchParams.get('id');
+
+// Si no se especifica ID de CV, volver al Dashboard
+if (!id) {
+  return Astro.redirect('/dashboard');
+}
+
+const prisma = getDb();
+
+// Buscar currículum y verificar propiedad
+const resume = await prisma.resume.findFirst({
+  where: { id, userId: user.id }
+});
+
+if (!resume) {
+  return Astro.redirect('/dashboard');
+}
+
+// Convertir campos del modelo a datos seguros para pasar como props (evitar problemas con fechas en props)
+const serializedResume = {
+  id: resume.id,
+  title: resume.title,
+  content: resume.content as any, // Cast de Json a tipo compatible
+};
+---
+
+<Layout 
+  title={`${resume.title} | Editor CVForge`} 
+  description="Diseña tu currículum optimizado para ATS en tiempo real de forma gratuita."
+>
+  <main class="h-screen w-screen overflow-hidden print:h-auto print:w-auto print:overflow-visible">
+    <EditorContainer client:only="react" initialResume={serializedResume} />
+  </main>
+</Layout>
