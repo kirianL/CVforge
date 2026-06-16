@@ -43,10 +43,8 @@ export const EditPanel: React.FC<EditPanelProps> = ({ className = '' }) => {
         <span className="text-xs text-zinc-500">Auto-guardado local</span>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-4 space-y-6 select-none">
-        <AtsAnalyzer />
-        
-        <Accordion type="single" collapsible defaultValue="personal" className="w-full space-y-4">
+      <div className="flex-1 overflow-y-auto p-4 space-y-6">
+        <Accordion type="multiple" defaultValue={["personal"]} className="w-full space-y-4">
           
           {/* Información Personal */}
           <AccordionItem value="personal" className="border border-zinc-200/80 rounded-lg px-4 dark:border-zinc-800">

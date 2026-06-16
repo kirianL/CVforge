@@ -18,9 +18,30 @@ export const PreviewPanel: React.FC<PreviewPanelProps> = ({ className = '' }) =>
             <h1 className="text-3xl font-bold tracking-tight text-zinc-900 uppercase">{personal.name || 'Tu Nombre'}</h1>
             <p className="text-lg font-medium text-zinc-650 mt-1">{personal.title || 'Tu Profesión'}</p>
             <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 mt-2 text-xs text-zinc-500">
-              {personal.email && <span>{personal.email}</span>}
+              {personal.email && (
+                <span>
+                  <a 
+                    href={`mailto:${personal.email}`} 
+                    className="hover:underline text-zinc-600"
+                  >
+                    {personal.email}
+                  </a>
+                </span>
+              )}
               {personal.phone && <span>• {personal.phone}</span>}
-              {personal.website && <span>• {personal.website}</span>}
+              {personal.website && (
+                <span>
+                  •{' '}
+                  <a 
+                    href={personal.website.startsWith('http') ? personal.website : `https://${personal.website}`} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="hover:underline text-zinc-650 font-medium"
+                  >
+                    {personal.website}
+                  </a>
+                </span>
+              )}
               {personal.location && <span>• {personal.location}</span>}
             </div>
           </div>
@@ -103,7 +124,14 @@ export const PreviewPanel: React.FC<PreviewPanelProps> = ({ className = '' }) =>
                       {proj.name} {proj.role && <span className="text-zinc-650 font-normal">({proj.role})</span>}
                     </span>
                     {proj.link && (
-                      <span className="text-xs text-zinc-500 font-normal underline">{proj.link}</span>
+                      <a 
+                        href={proj.link.startsWith('http') ? proj.link : `https://${proj.link}`} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="text-xs text-zinc-500 font-normal underline hover:text-zinc-800 transition-colors"
+                      >
+                        {proj.link}
+                      </a>
                     )}
                   </div>
                   {proj.description && (

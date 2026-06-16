@@ -3,6 +3,8 @@ import { EditPanel } from './EditPanel';
 import { PreviewPanel } from './PreviewPanel';
 import { useCVStore } from '../../lib/store';
 import { Button } from '../ui/button';
+import { analyzeCV } from '../../lib/ats';
+import { AtsAnalyzer } from './AtsAnalyzer';
 
 interface EditorContainerProps {
   initialResume: {
@@ -19,7 +21,10 @@ export const EditorContainer: React.FC<EditorContainerProps> = ({ initialResume 
   const [isSaving, setIsSaving] = React.useState(false);
   const [toast, setToast] = React.useState<{ message: string; type: 'success' | 'error' } | null>(null);
   const [activeTab, setActiveTab] = React.useState<'edit' | 'preview'>('edit');
+  const [isAtsOpen, setIsAtsOpen] = React.useState(false);
   const isFirstLoad = React.useRef(true);
+
+  const { score, label, bgColor, textColor } = analyzeCV(content);
 
   React.useEffect(() => {
     if (toast) {
@@ -171,9 +176,16 @@ export const EditorContainer: React.FC<EditorContainerProps> = ({ initialResume 
               onChange={(e) => setCvTitle(e.target.value)}
               className="text-sm font-bold bg-transparent border-b border-transparent hover:border-zinc-300 focus:border-black focus:outline-none px-1 py-0.5 transition-colors dark:focus:border-white"
             />
-            <span className="text-[10px] text-zinc-400 font-medium">
+            <span className="text-[10px] text-zinc-400 font-medium mr-2">
               {isSaving ? 'Guardando...' : 'Cambios guardados'}
             </span>
+            <button 
+              onClick={() => setIsAtsOpen(true)}
+              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-[10px] font-bold shadow-sm transition-all active:scale-95 hover:scale-102 cursor-pointer ${bgColor} ${textColor} border-zinc-200 dark:border-zinc-800/65`}
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-current animate-pulse"></span>
+              <span>ATS: {score}%</span>
+            </button>
           </div>
         </div>
 
@@ -262,6 +274,36 @@ export const EditorContainer: React.FC<EditorContainerProps> = ({ initialResume 
           Vista Previa
         </button>
       </div>
+
+      {/* Custom ATS Suggestions Modal Overlay */}
+      {isAtsOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm pointer-events-auto transition-all duration-300">
+          <div className="w-full max-w-md bg-white border border-zinc-200 rounded-2xl shadow-2xl p-6 dark:bg-zinc-900 dark:border-zinc-800 m-4 flex flex-col max-h-[90vh]">
+            <div className="flex items-center justify-between border-b border-zinc-150 pb-3 mb-4 dark:border-zinc-800/60">
+              <h3 className="text-base font-extrabold tracking-tight text-zinc-900 dark:text-zinc-50">Sugerencias de Optimización ATS</h3>
+              <button 
+                onClick={() => setIsAtsOpen(false)}
+                className="text-zinc-400 hover:text-zinc-650 dark:hover:text-zinc-200 text-sm font-bold p-1 cursor-pointer transition-colors"
+              >
+                ✕
+              </button>
+            </div>
+            
+            <div className="flex-1 overflow-y-auto pr-1">
+              <AtsAnalyzer />
+            </div>
+
+            <div className="mt-6 flex items-center justify-end">
+              <Button 
+                onClick={() => setIsAtsOpen(false)}
+                className="h-8 bg-black text-white hover:bg-zinc-850 dark:bg-white dark:text-black dark:hover:bg-zinc-100 px-4 font-bold text-xs cursor-pointer rounded-lg uppercase tracking-wider transition-colors"
+              >
+                Entendido
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* React Toast Overlay */}
       {toast && (
