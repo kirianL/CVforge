@@ -254,12 +254,106 @@ const user = await getUserFromRequest(Astro.request);
 
         </div>
 
-        {/* Right Side: Gigantic Viewport Column (Cinematic background placement) */}
-        <div class="hidden lg:flex absolute top-0 bottom-0 right-0 w-[46%] items-center justify-end pointer-events-none select-none overflow-hidden z-0">
-          <pre 
-            id="ascii-sculpture" 
-            class="leading-[0.82] font-mono text-[7.5px] xl:text-[9.5px] text-zinc-300/70 font-bold select-none cursor-default"
-          ></pre>
+        {/* Right Side: Gigantic Viewport Column (Interactive 3D ATS Document Scanner) */}
+        <div class="hidden lg:flex absolute top-0 bottom-0 right-0 w-[46%] items-center justify-center pointer-events-none select-none overflow-hidden z-0 perspective-container">
+          
+          {/* Main 3D Tilted Document Container */}
+          <div class="relative w-[340px] h-[480px] bg-white rounded-xl shadow-[0_25px_60px_rgba(0,0,0,0.06)] border border-zinc-200/50 flex flex-col p-8 tilted-document">
+            
+            {/* Header info skeleton */}
+            <div class="space-y-2 mb-6">
+              <div class="h-4 w-24 bg-zinc-900 rounded-sm"></div>
+              <div class="h-2 w-32 bg-zinc-300 rounded-sm"></div>
+              <div class="flex gap-2 pt-1.5">
+                <div class="h-1.5 w-16 bg-zinc-200 rounded-sm"></div>
+                <div class="h-1.5 w-12 bg-zinc-200 rounded-sm"></div>
+                <div class="h-1.5 w-20 bg-zinc-200 rounded-sm"></div>
+              </div>
+            </div>
+
+            {/* Profile section skeleton */}
+            <div class="space-y-2 mb-5">
+              <div class="h-1.5 w-16 bg-zinc-400 rounded-sm"></div>
+              <div class="space-y-1">
+                <div class="h-2 w-full bg-zinc-150 rounded-sm"></div>
+                <div class="h-2 w-full bg-zinc-150 rounded-sm"></div>
+                <div class="h-2 w-4/5 bg-zinc-150 rounded-sm"></div>
+              </div>
+            </div>
+
+            {/* Experience section skeleton */}
+            <div class="space-y-4 mb-5">
+              <div class="h-1.5 w-24 bg-zinc-400 rounded-sm"></div>
+              
+              <div class="space-y-2">
+                <div class="flex justify-between">
+                  <div class="h-2 w-36 bg-zinc-300 rounded-sm"></div>
+                  <div class="h-1.5 w-12 bg-zinc-200 rounded-sm"></div>
+                </div>
+                <div class="space-y-1">
+                  <div class="h-2 w-full bg-zinc-100 rounded-sm"></div>
+                  <div class="h-2 w-[90%] bg-zinc-100 rounded-sm"></div>
+                </div>
+              </div>
+
+              <div class="space-y-2">
+                <div class="flex justify-between">
+                  <div class="h-2 w-28 bg-zinc-300 rounded-sm"></div>
+                  <div class="h-1.5 w-12 bg-zinc-200 rounded-sm"></div>
+                </div>
+                <div class="space-y-1">
+                  <div class="h-2 w-full bg-zinc-100 rounded-sm"></div>
+                  <div class="h-2 w-[95%] bg-zinc-100 rounded-sm"></div>
+                </div>
+              </div>
+            </div>
+
+            {/* Skills section skeleton */}
+            <div class="space-y-2">
+              <div class="h-1.5 w-14 bg-zinc-400 rounded-sm"></div>
+              <div class="flex flex-wrap gap-1.5">
+                <div class="h-3 w-10 bg-zinc-200 rounded-sm"></div>
+                <div class="h-3 w-14 bg-zinc-250 rounded-sm"></div>
+                <div class="h-3 w-12 bg-zinc-200 rounded-sm"></div>
+                <div class="h-3 w-8 bg-zinc-250 rounded-sm"></div>
+                <div class="h-3 w-16 bg-zinc-200 rounded-sm"></div>
+              </div>
+            </div>
+
+            {/* Scanning Laser Beam Effect */}
+            <div class="absolute left-0 right-0 h-0.5 bg-zinc-900/10 shadow-[0_0_8px_rgba(0,0,0,0.15)] scanner-beam"></div>
+          </div>
+
+          {/* Floating Metrics Scorecard Bubble */}
+          <div class="absolute top-20 left-12 bg-white/85 border border-zinc-200 rounded-2xl shadow-xl p-3.5 flex items-center gap-3 backdrop-blur-md floating-card select-none">
+            <div class="relative flex items-center justify-center w-11 h-11">
+              <svg class="w-full h-full transform -rotate-90">
+                <circle cx="22" cy="22" r="19" class="stroke-zinc-100" stroke-width="3.5" fill="transparent" />
+                <circle cx="22" cy="22" r="19" class="stroke-zinc-900" stroke-width="3.5" stroke-dasharray="119" stroke-dashoffset="2" stroke-linecap="round" fill="transparent" />
+              </svg>
+              <span class="absolute text-[11px] font-black tracking-tighter text-zinc-900">98%</span>
+            </div>
+            <div class="flex flex-col">
+              <span class="text-[8px] font-bold text-zinc-400 uppercase tracking-wider">Optimización</span>
+              <span class="text-xs font-extrabold text-zinc-900 font-sans">ATS Score: Excelente</span>
+            </div>
+          </div>
+
+          {/* Floating Keyword Badge 1: TypeScript */}
+          <div class="absolute bottom-32 left-4 bg-zinc-900 text-white rounded-full px-3.5 py-1.5 text-[10px] font-bold tracking-wide shadow-lg floating-card-delay-1 flex items-center gap-1 font-sans">
+            <span class="text-emerald-400">✓</span> TypeScript
+          </div>
+
+          {/* Floating Keyword Badge 2: React */}
+          <div class="absolute top-36 right-8 bg-white/95 border border-zinc-200 text-zinc-900 rounded-full px-3.5 py-1.5 text-[10px] font-bold tracking-wide shadow-md floating-card-delay-2 flex items-center gap-1 backdrop-blur-md font-sans">
+            <span class="text-emerald-500">✓</span> React.js
+          </div>
+
+          {/* Floating Keyword Badge 3: ATS Friendly */}
+          <div class="absolute bottom-24 right-12 bg-zinc-50 border border-zinc-200 text-zinc-650 rounded-full px-3.5 py-1.5 text-[10px] font-bold tracking-wide shadow-md floating-card-delay-3 flex items-center gap-1 font-sans">
+            <span class="text-emerald-500">✓</span> Formato ATS
+          </div>
+          
         </div>
       </main>
 
@@ -275,136 +369,6 @@ const user = await getUserFromRequest(Astro.request);
   </div>
 
   <script>
-    // ── 3D ASCII Cinematic Column Rendering ──
-    const asciiElement = document.getElementById('ascii-sculpture');
-    const ramp = " .:-=+*#%@";
-
-    let A = 0.15; // Tilted X angle
-    let B = 0;    // Y rotation angle
-
-    // Tall high-resolution grid that spans the entire page height from header to footer
-    const width = 85;
-    const height = 115;
-
-    function renderFrame() {
-      if (!asciiElement) return;
-
-      const output = Array(width * height).fill(' ');
-      const zbuffer = Array(width * height).fill(-1000);
-
-      const stepsY = 160;
-      const stepsTheta = 72;
-
-      const cosA = Math.cos(A);
-      const sinA = Math.sin(A);
-      const cosB = Math.cos(B);
-      const sinB = Math.sin(B);
-
-      for (let i = 0; i < stepsY; i++) {
-        const y = -45 + (90 * i) / (stepsY - 1);
-
-        for (let j = 0; j < stepsTheta; j++) {
-          const theta = (2 * Math.PI * j) / stepsTheta;
-
-          // Mathematical representation of a Classical Greek Column with Plinth and Abacus
-          let R = 3.0; // Default base shaft radius
-
-          if (y < -40) {
-            // Plinth: Square block at the very base
-            const sq = Math.max(Math.abs(Math.cos(theta)), Math.abs(Math.sin(theta)));
-            R = 5.6 / sq;
-          } else if (y < -37) {
-            // Lower torus (thick round ring)
-            const dy = (y - (-38.5)) / 1.5;
-            R = 4.4 + Math.sqrt(Math.max(0, 1 - dy * dy)) * 0.8;
-          } else if (y < -34) {
-            // Scotia (inward curved ring)
-            const dy = (y - (-35.5)) / 1.5;
-            R = 3.6 - Math.sqrt(Math.max(0, 1 - dy * dy)) * 0.3;
-          } else if (y < -31) {
-            // Upper torus (smaller round ring)
-            const dy = (y - (-32.5)) / 1.5;
-            R = 3.6 + Math.sqrt(Math.max(0, 1 - dy * dy)) * 0.4;
-          } else if (y > 40) {
-            // Abacus: Square block at the very top (capital cap)
-            const sq = Math.max(Math.abs(Math.cos(theta)), Math.abs(Math.sin(theta)));
-            R = 5.6 / sq;
-          } else if (y > 36) {
-            // Echinus: Flaring bell shape under the abacus
-            const t = (y - 36) / 4; // 0 to 1
-            R = 3.2 + t * 1.8;
-          } else if (y > 33) {
-            // Annulets: Small necking rings under echinus
-            const cycle = Math.sin((y - 33) * Math.PI * 2);
-            R = 3.0 + (cycle > 0 ? 0.25 : 0);
-          } else {
-            // Shaft with entasis (swelling) and 12 flutes (grooves)
-            const normY = y / 33; // -1 to 1
-            const entasis = 0.28 * Math.cos(normY * Math.PI / 2);
-            const numGrooves = 12;
-            const grooveDepth = 0.25;
-            const baseR = 2.6 + entasis;
-            R = baseR + grooveDepth * Math.cos(numGrooves * theta);
-          }
-
-          const x3 = Math.cos(theta) * R;
-          const z3 = Math.sin(theta) * R;
-          const y3 = y;
-
-          // Project with cached trigonometric functions
-          const xRotY = x3 * cosB - z3 * sinB;
-          const zRotY = x3 * sinB + z3 * cosB;
-
-          const yFinal = y3 * cosA - zRotY * sinA;
-          const zFinal = y3 * sinA + zRotY * cosA;
-
-          const distance = 46;
-          const scaleX = 3.2;
-          const scaleY = 1.0;
-
-          const ooz = 1 / (zFinal + distance);
-          const xp = Math.round(width / 2 + scaleX * xRotY * ooz * 58);
-          const yp = Math.round(height / 2 - scaleY * yFinal * ooz * 58);
-
-          if (xp >= 0 && xp < width && yp >= 0 && yp < height) {
-            const nx3 = Math.cos(theta);
-            const nz3 = Math.sin(theta);
-            const ny3 = 0;
-
-            const nxRotY = nx3 * cosB - nz3 * sinB;
-            const nzRotY = nx3 * sinB + nz3 * cosB;
-            const nyFinal = ny3 * cosA - nzRotY * sinA;
-            const nzFinalNormal = ny3 * sinA + nzRotY * cosA;
-
-            const luminance = nxRotY * 0.45 + nyFinal * 0.35 - nzFinalNormal * 0.85;
-
-            if (ooz > zbuffer[yp * width + xp]) {
-              zbuffer[yp * width + xp] = ooz;
-
-              let charIdx = Math.floor((luminance + 1) * 4.5);
-              charIdx = Math.max(0, Math.min(ramp.length - 1, charIdx));
-              output[yp * width + xp] = ramp[charIdx];
-            }
-          }
-        }
-      }
-
-      let frameStr = '';
-      for (let h = 0; h < height; h++) {
-        for (let w = 0; w < width; w++) {
-          frameStr += output[h * width + w];
-        }
-        frameStr += '\n';
-      }
-
-      asciiElement.textContent = frameStr;
-      
-      // Cinematic slow rotation
-      B += 0.005;
-    }
-
-    setInterval(renderFrame, 45);
-
     // ── SPA View Switcher with Dynamic Height & Directional Slide ──
     const viewHero = document.getElementById('view-hero');
     const viewLogin = document.getElementById('view-login');
@@ -687,5 +651,77 @@ const user = await getUserFromRequest(Astro.request);
     .delay-375 { transition-delay: 375ms !important; }
     .delay-450 { transition-delay: 450ms !important; }
     .delay-525 { transition-delay: 525ms !important; }
+
+    /* Perspective and Tilt for 3D A4 Mockup */
+    .perspective-container {
+      perspective: 1200px;
+    }
+
+    .tilted-document {
+      transform: rotateY(-14deg) rotateX(10deg) rotateZ(-2deg);
+      box-shadow: 
+        -10px 10px 30px rgba(0, 0, 0, 0.02),
+        -20px 20px 50px rgba(0, 0, 0, 0.04),
+        1px 1px 1px rgba(255, 255, 255, 0.8) inset;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s ease;
+    }
+
+    .tilted-document:hover {
+      transform: rotateY(-6deg) rotateX(6deg) rotateZ(-1deg) translateY(-6px);
+      box-shadow: 
+        -15px 15px 40px rgba(0, 0, 0, 0.04),
+        -30px 30px 70px rgba(0, 0, 0, 0.06);
+    }
+
+    /* Laser Scanner Beam Animation */
+    @keyframes scan {
+      0% {
+        top: 6%;
+        opacity: 0.1;
+      }
+      15% {
+        opacity: 1;
+      }
+      85% {
+        opacity: 1;
+      }
+      100% {
+        top: 94%;
+        opacity: 0.1;
+      }
+    }
+
+    .scanner-beam {
+      animation: scan 4.5s ease-in-out infinite alternate;
+    }
+
+    /* Floating Animations for metrics and badges */
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+
+    .floating-card {
+      animation: float 5s ease-in-out infinite;
+    }
+
+    .floating-card-delay-1 {
+      animation: float 6s ease-in-out infinite;
+      animation-delay: 0.5s;
+    }
+
+    .floating-card-delay-2 {
+      animation: float 5.5s ease-in-out infinite;
+      animation-delay: 1.2s;
+    }
+
+    .floating-card-delay-3 {
+      animation: float 6.5s ease-in-out infinite;
+      animation-delay: 1.8s;
+    }
   </style>
 </Layout>
