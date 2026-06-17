@@ -164,14 +164,17 @@ export const EditorContainer: React.FC<EditorContainerProps> = ({ initialResume 
   return (
     <div className="flex flex-col h-screen w-screen overflow-hidden bg-zinc-100 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-50 print:h-auto print:w-auto print:overflow-visible">
       {/* Editor Header */}
-      <header className="h-14 border-b border-zinc-200 bg-white flex items-center justify-between px-4 dark:border-zinc-800 dark:bg-zinc-950 print:hidden shrink-0">
+      <header className="h-14 border-b border-zinc-200 bg-white/70 backdrop-blur-md flex items-center justify-between px-4 dark:border-zinc-800/30 dark:bg-zinc-950/70 print:hidden shrink-0 sticky top-0 z-40">
         <div className="flex items-center gap-3">
-          <a href="/dashboard" className="flex h-8 w-8 items-center justify-center rounded-lg bg-black hover:bg-zinc-800 text-white dark:bg-white dark:text-black dark:hover:bg-zinc-200 transition-all active:scale-95" title="Volver al Dashboard">
-            <svg viewBox="52 41 34 36" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <path opacity="0.12" d="M54 57.6084C54 56.6512 54 56.1725 54.1234 55.7318C54.2327 55.3413 54.4123 54.9741 54.6534 54.6481C54.9256 54.2801 55.3034 53.9862 56.059 53.3985L67.3628 44.6067C67.9484 44.1512 68.2411 43.9235 68.5644 43.836C68.8497 43.7588 69.1503 43.7588 69.4356 43.836C69.7589 43.9235 70.0516 44.1512 70.6372 44.6067L81.941 53.3985C82.6966 53.9862 83.0744 54.2801 83.3466 54.6481C83.5877 54.9741 83.7673 55.3413 83.8766 55.7318C84 56.1725 84 56.6512 84 57.6084V69.6666C84 71.5335 84 72.4669 83.6367 73.1799C83.3171 73.8071 82.8072 74.3171 82.18 74.6367C81.4669 75 80.5335 75 78.6667 75H59.3333C57.4665 75 56.5331 75 55.82 74.6367C55.1928 74.3171 54.6829 73.8071 54.3633 73.1799C54 72.4669 54 71.5335 54 69.6666V57.6084Z" fill="currentColor"/>
-              <path d="M62.5434 63.3333C63.2834 66.2087 65.8936 68.3333 69 68.3333C72.1064 68.3333 74.7166 66.2087 75.4566 63.3333M67.3628 44.6067L56.059 53.3985C55.3034 53.9862 54.9256 54.2801 54.6534 54.6481C54.4123 54.9741 54.2327 55.3413 54.1234 55.7318C54 56.1725 54 56.6512 54 57.6084V69.6666C54 71.5335 54 72.4669 54.3633 73.1799C54.6829 73.8071 55.82 74.6367C56.5331 75 57.4665 75 59.3333 75H78.6667C80.5335 75 81.4669 75 82.18 74.6367C82.8072 74.3171 83.3171 73.8071 83.6367 73.1799C84 72.4669 84 71.5335 84 69.6666V57.6084C84 56.6512 84 56.1725 83.8766 55.7318C83.7673 55.3413 83.5877 54.9741 83.3466 54.6481C83.0744 54.2801 82.6966 53.9862 81.941 53.3985L70.6372 44.6067C70.0516 44.1512 69.7589 43.9235 69.4356 43.836C69.1503 43.7588 68.8497 43.7588 68.5644 43.836C68.2411 43.9235 67.9484 44.1512 67.3628 44.6067Z" />
-            </svg>
+          <a href="/dashboard" className="flex items-center gap-2.5 no-underline cursor-pointer select-none" title="Volver al Dashboard">
+            <div className="flex h-7.5 w-7.5 items-center justify-center rounded-lg bg-black text-white font-extrabold text-[15px] dark:bg-white dark:text-black shrink-0">
+              CF
+            </div>
+            <span className="text-[16px] font-bold tracking-tight text-zinc-900 dark:text-white hidden sm:inline">CV<span className="text-zinc-450">Forge</span></span>
           </a>
+
+          <div className="h-4 w-px bg-zinc-200 dark:bg-zinc-800 mx-1 hidden sm:block"></div>
+
           <div className="flex items-center gap-2">
             <input 
               type="text" 
@@ -200,12 +203,12 @@ export const EditorContainer: React.FC<EditorContainerProps> = ({ initialResume 
               size="sm" 
               onClick={undo} 
               disabled={history.past.length === 0}
-              className="h-8 w-8 p-0 flex items-center justify-center"
+              className="h-8 w-8 p-0 flex items-center justify-center cursor-pointer"
               title="Deshacer (Ctrl+Z)"
             >
-              <svg viewBox="212 41 37 37" className="h-4 w-4 text-zinc-550 dark:text-zinc-400 group-hover:text-zinc-800 dark:group-hover:text-zinc-200 transition-colors" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path opacity="0.12" d="M237.667 53.3333V61.6667C237.667 62.9927 238.193 64.2645 239.131 65.2022C240.069 66.1399 241.341 66.6667 242.667 66.6667C243.993 66.6667 245.264 66.1399 246.202 65.2022C247.14 64.2645 247.667 62.9927 247.667 61.6667V60C247.666 56.2384 246.394 52.5874 244.055 49.6409C241.717 46.6943 238.451 44.6254 234.788 43.7705C231.124 42.9156 227.28 43.3251 223.879 44.9323C220.478 46.5395 217.721 49.2499 216.055 52.6229C214.39 55.9958 213.915 59.8329 214.707 63.5102C215.499 67.1875 217.512 70.4887 220.418 72.8771C223.324 75.2655 226.952 76.6006 230.713 76.6652C234.474 76.7299 238.147 75.5204 241.133 73.2333" fill="currentColor"/>
-                <path d="M237.667 60C237.667 63.6819 234.682 66.6667 231 66.6667C227.318 66.6667 224.333 63.6819 224.333 60C224.333 56.3181 227.318 53.3333 231 53.3333C234.682 53.3333 237.667 56.3181 237.667 60Z" />
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 text-zinc-550 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors">
+                <path d="M3 7v6h6" />
+                <path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13" />
               </svg>
             </Button>
             <Button 
@@ -213,12 +216,12 @@ export const EditorContainer: React.FC<EditorContainerProps> = ({ initialResume 
               size="sm" 
               onClick={redo} 
               disabled={history.future.length === 0}
-              className="h-8 w-8 p-0 flex items-center justify-center"
+              className="h-8 w-8 p-0 flex items-center justify-center cursor-pointer"
               title="Rehacer (Ctrl+Y)"
             >
-              <svg viewBox="860 41 37 37" className="h-4 w-4 text-zinc-550 dark:text-zinc-400 group-hover:text-zinc-800 dark:group-hover:text-zinc-200 transition-colors" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path opacity="0.12" d="M879 76.6667C888.205 76.6667 895.667 69.2047 895.667 60C895.667 50.7953 888.205 43.3333 879 43.3333C869.795 43.3333 862.333 50.7953 862.333 60C862.333 69.2047 869.795 76.6667 879 76.6667Z" fill="currentColor"/>
-                <path d="M872.333 60L879 53.3333L885.667 60M879 53.3333V68.6667C879 70.9845 879 72.1434 879.917 73.441C880.527 74.3031 882.282 75.3672 883.329 75.509C884.903 75.7223 885.501 75.4104 886.698 74.7864C892.028 72.0059 895.667 66.4279 895.667 60C895.667 50.7953 888.205 43.3333 879 43.3333C869.795 43.3333 862.333 50.7953 862.333 60C862.333 66.169 865.685 71.5552 870.667 74.437" />
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 text-zinc-550 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors">
+                <path d="M21 7v6h-6" />
+                <path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3l3 2.7" />
               </svg>
             </Button>
           </div>
@@ -226,7 +229,7 @@ export const EditorContainer: React.FC<EditorContainerProps> = ({ initialResume 
           <Button 
             onClick={handlePrint}
             disabled={isGenerating}
-            className="h-9 bg-black text-white hover:bg-zinc-800 dark:bg-white dark:text-black dark:hover:bg-zinc-200 flex items-center gap-2 active:scale-98 transition-all px-2.5 sm:px-4"
+            className="h-9 bg-black text-white hover:bg-zinc-800 dark:bg-white dark:text-black dark:hover:bg-zinc-200 flex items-center gap-2 active:scale-98 transition-all px-2.5 sm:px-4 cursor-pointer"
           >
             {isGenerating ? (
               <>
@@ -250,9 +253,13 @@ export const EditorContainer: React.FC<EditorContainerProps> = ({ initialResume 
       </header>
 
       {/* Panel de Contenido Principal */}
-      <div className="flex-1 flex overflow-hidden print:overflow-visible print:block relative">
-        <EditPanel className={activeTab === 'edit' ? 'flex' : 'hidden lg:flex'} />
-        <PreviewPanel className={activeTab === 'preview' ? 'flex' : 'hidden lg:flex'} />
+      <div className="flex-1 overflow-hidden print:overflow-visible print:block relative">
+        <div className={`flex h-full w-[200%] lg:w-full transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] print:block print:w-auto print:transform-none ${
+          activeTab === 'edit' ? 'translate-x-0' : '-translate-x-1/2 lg:translate-x-0'
+        }`}>
+          <EditPanel className="w-1/2 lg:w-[480px] xl:w-[540px] shrink-0" />
+          <PreviewPanel className="w-1/2 lg:flex-1 shrink-0 lg:w-auto" />
+        </div>
       </div>
 
       {/* Floating Mobile Tab Switcher */}

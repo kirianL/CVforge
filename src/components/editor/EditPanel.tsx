@@ -231,8 +231,8 @@ export const EditPanel: React.FC<EditPanelProps> = ({ className = '' }) => {
     personal: {
       title: 'Información Personal',
       render: () => (
-        <div className="grid grid-cols-2 gap-3">
-          <div className="space-y-1.5 col-span-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="space-y-1.5 col-span-1 sm:col-span-2">
             <Label htmlFor="name">Nombre Completo</Label>
             <Input 
               id="name" 
@@ -241,7 +241,7 @@ export const EditPanel: React.FC<EditPanelProps> = ({ className = '' }) => {
               placeholder="Juan Pérez"
             />
           </div>
-          <div className="space-y-1.5 col-span-2">
+          <div className="space-y-1.5 col-span-1 sm:col-span-2">
             <Label htmlFor="title">Profesión / Título</Label>
             <Input 
               id="title" 
@@ -317,7 +317,7 @@ export const EditPanel: React.FC<EditPanelProps> = ({ className = '' }) => {
                     Eliminar
                   </Button>
                 </div>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="space-y-1">
                     <Label>Empresa</Label>
                     <Input value={exp.company} onChange={(e) => updateExperience(exp.id, { company: e.target.value })} placeholder="Ej: Corporación de Logística" />
@@ -334,7 +334,7 @@ export const EditPanel: React.FC<EditPanelProps> = ({ className = '' }) => {
                     <Label>Fin</Label>
                     <Input value={exp.endDate} onChange={(e) => updateExperience(exp.id, { endDate: e.target.value })} placeholder="2024-05" disabled={exp.current} />
                   </div>
-                  <div className="col-span-2 flex items-center gap-2 py-1">
+                  <div className="col-span-1 sm:col-span-2 flex items-center gap-2 py-1">
                     <input 
                       type="checkbox" 
                       id={`curr-${exp.id}`} 
@@ -343,7 +343,7 @@ export const EditPanel: React.FC<EditPanelProps> = ({ className = '' }) => {
                     />
                     <Label htmlFor={`curr-${exp.id}`} className="cursor-pointer">Actualmente trabajo aquí</Label>
                   </div>
-                  <div className="col-span-2 space-y-1">
+                  <div className="col-span-1 sm:col-span-2 space-y-1">
                     <Label>Descripción de logros</Label>
                     <Textarea value={exp.description} onChange={(e) => updateExperience(exp.id, { description: e.target.value })} placeholder="Ej: Lideré la planificación e implementación de nuevos procesos operativos..." className="min-h-[80px]" />
                   </div>
@@ -370,8 +370,8 @@ export const EditPanel: React.FC<EditPanelProps> = ({ className = '' }) => {
                     Eliminar
                   </Button>
                 </div>
-                 <div className="grid grid-cols-2 gap-2">
-                  <div className="col-span-2 space-y-1">
+                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="col-span-1 sm:col-span-2 space-y-1">
                     <Label>Institución</Label>
                     <Input value={edu.school} onChange={(e) => updateEducation(edu.id, { school: e.target.value })} placeholder="Ej: Universidad de Costa Rica" />
                   </div>
@@ -460,7 +460,7 @@ export const EditPanel: React.FC<EditPanelProps> = ({ className = '' }) => {
                     Eliminar
                   </Button>
                 </div>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="space-y-1">
                     <Label>Nombre</Label>
                     <Input value={proj.name} onChange={(e) => updateProject(proj.id, { name: e.target.value })} placeholder="Ej: Migración de Sistema ERP" />
@@ -469,11 +469,11 @@ export const EditPanel: React.FC<EditPanelProps> = ({ className = '' }) => {
                     <Label>Rol</Label>
                     <Input value={proj.role} onChange={(e) => updateProject(proj.id, { role: e.target.value })} placeholder="Ej: Líder de Proyecto" />
                   </div>
-                  <div className="col-span-2 space-y-1">
+                  <div className="col-span-1 sm:col-span-2 space-y-1">
                     <Label>Enlace del proyecto</Label>
                     <Input value={proj.link} onChange={(e) => updateProject(proj.id, { link: e.target.value })} placeholder="Ej: https://linkedin.com/in/juanperez" />
                   </div>
-                  <div className="col-span-2 space-y-1">
+                  <div className="col-span-1 sm:col-span-2 space-y-1">
                     <Label>Descripción</Label>
                     <Textarea value={proj.description} onChange={(e) => updateProject(proj.id, { description: e.target.value })} placeholder="Ej: Coordiné la migración y capacitación del nuevo sistema..." className="min-h-[60px]" />
                   </div>
@@ -521,8 +521,8 @@ export const EditPanel: React.FC<EditPanelProps> = ({ className = '' }) => {
                     Eliminar
                   </Button>
                 </div>
-                <div className="grid grid-cols-2 gap-2">
-                  <div className="col-span-2 space-y-1">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="col-span-1 sm:col-span-2 space-y-1">
                     <Label>Nombre de la Certificación</Label>
                     <Input value={cert.name} onChange={(e) => updateCertification(cert.id, { name: e.target.value })} placeholder="Ej: Project Management Professional (PMP)" />
                   </div>
@@ -547,13 +547,13 @@ export const EditPanel: React.FC<EditPanelProps> = ({ className = '' }) => {
   };
 
   return (
-    <div className={`w-full lg:w-[480px] xl:w-[540px] border-r border-zinc-200 bg-white flex flex-col h-full overflow-hidden dark:border-zinc-800 dark:bg-zinc-950 ${className}`}>
+    <div className={`border-r border-zinc-200 bg-white flex flex-col h-full overflow-hidden dark:border-zinc-800 dark:bg-zinc-950 ${className}`}>
       <div className="p-4 border-b border-zinc-150 flex items-center justify-between dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/10">
         <h2 className="text-base font-bold">Editor de Datos</h2>
         <span className="text-xs text-zinc-500">Auto-guardado local</span>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-4 space-y-6">
+      <div className="flex-1 overflow-y-auto p-4 pb-20 lg:pb-4 space-y-6">
         <DndContext 
           sensors={sensors}
           collisionDetection={closestCenter}

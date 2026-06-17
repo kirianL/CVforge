@@ -208,7 +208,7 @@ export const PreviewPanel: React.FC<PreviewPanelProps> = ({ className = '' }) =>
   return (
     <div 
       ref={containerRef}
-      className={`flex-1 overflow-auto bg-zinc-150 p-6 flex justify-center items-start print:bg-white print:p-0 relative ${className}`}
+      className={`overflow-auto bg-zinc-150 p-6 pb-24 lg:pb-6 flex justify-center items-start print:bg-white print:p-0 relative ${className}`}
     >
       {/* Scaled Wrapper Box to preserve document flow dimensions */}
       <div 
