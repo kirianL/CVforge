@@ -81,6 +81,34 @@ const SortableAccordionItem: React.FC<SortableAccordionItemProps> = ({ id, title
   );
 };
 
+const ATS_KEYWORDS: Record<string, string[]> = {
+  software: ['React', 'Node.js', 'TypeScript', 'API REST', 'Git', 'CI/CD', 'SQL', 'Docker', 'AWS', 'Agile', 'Java', 'Python', 'Jest', 'NoSQL', 'GraphQL', 'Linux', 'Kubernetes'],
+  marketing: ['SEO', 'SEM', 'Google Analytics', 'Growth Hacking', 'Email Marketing', 'CRM', 'Inbound Marketing', 'Figma', 'Copywriting', 'Content Strategy', 'Social Media', 'A/B Testing', 'Lead Gen', 'PPC'],
+  admin: ['Contabilidad', 'Excel Avanzado', 'Presupuestos', 'Facturación', 'ERP', 'Análisis de Datos', 'KPIs', 'Project Management', 'Planificación', 'Negociación', 'Auditoría', 'SAP'],
+  design: ['Figma', 'Design Systems', 'Wireframing', 'Adobe CC', 'User Research', 'Prototipado', 'Webflow', 'UI Design', 'UX Design', 'Interaction Design', 'Illustrator', 'Photoshop'],
+  support: ['Atención al Cliente', 'CRM', 'Troubleshooting', 'ITIL', 'Slack', 'Gestión de Incidencias', 'Helpdesk', 'Technical Support', 'Soporte Técnico', 'Windows Server', 'Jira']
+};
+
+const getProfessionCategory = (title: string = ''): string => {
+  const t = title.toLowerCase();
+  if (t.includes('soft') || t.includes('dev') || t.includes('backend') || t.includes('frontend') || t.includes('program') || t.includes('sistem') || t.includes('informát') || t.includes('fullstack') || t.includes('tech') || t.includes('python') || t.includes('javascript') || t.includes('web') || t.includes('código')) {
+    return 'software';
+  }
+  if (t.includes('market') || t.includes('seo') || t.includes('ventas') || t.includes('growth') || t.includes('social') || t.includes('publici') || t.includes('sem') || t.includes('comercial') || t.includes('ppc')) {
+    return 'marketing';
+  }
+  if (t.includes('diseñ') || t.includes('design') || t.includes('ux') || t.includes('ui') || t.includes('webflow') || t.includes('figma') || t.includes('gráfic') || t.includes('creativ')) {
+    return 'design';
+  }
+  if (t.includes('admin') || t.includes('finan') || t.includes('contad') || t.includes('excel') || t.includes('presup') || t.includes('factur') || t.includes('gerent') || t.includes('manag') || t.includes('proyect') || t.includes('recurs') || t.includes('rrhh') || t.includes('talent')) {
+    return 'admin';
+  }
+  if (t.includes('soport') || t.includes('client') || t.includes('help') || t.includes('operac') || t.includes('support') || t.includes('servici') || t.includes('atención') || t.includes('incidenc')) {
+    return 'support';
+  }
+  return 'software';
+};
+
 export const EditPanel: React.FC<EditPanelProps> = ({ className = '' }) => {
   const {
     content,
@@ -307,18 +335,49 @@ export const EditPanel: React.FC<EditPanelProps> = ({ className = '' }) => {
     },
     skills: {
       title: 'Habilidades',
-      render: () => (
-        <div className="space-y-2">
-          <Label htmlFor="skills-input">Habilidades (separadas por comas)</Label>
-          <Input 
-            id="skills-input" 
-            value={skills.join(', ')} 
-            onChange={(e) => updateSkills(e.target.value.split(',').map(s => s.trim()))} 
-            placeholder="React, Node.js, TypeScript, Docker"
-          />
-          <span className="text-[10px] text-zinc-400 block mt-1">Escribe tus habilidades separadas por comas para listarlas automáticamente en el CV.</span>
-        </div>
-      )
+      render: () => {
+        const category = getProfessionCategory(personal.title);
+        const suggestedKeywords = ATS_KEYWORDS[category] || [];
+        const remainingSuggestions = suggestedKeywords.filter(
+          keyword => !skills.some(s => s.toLowerCase() === keyword.toLowerCase())
+        );
+
+        return (
+          <div className="space-y-2">
+            <Label htmlFor="skills-input">Habilidades (separadas por comas)</Label>
+            <Input 
+              id="skills-input" 
+              value={skills.join(', ')} 
+              onChange={(e) => updateSkills(e.target.value.split(',').map(s => s.trim()).filter(s => s !== ''))} 
+              placeholder="React, Node.js, TypeScript, Docker"
+            />
+            <span className="text-[10px] text-zinc-400 block mt-1">Escribe tus habilidades separadas por comas para listarlas automáticamente en el CV.</span>
+
+            {remainingSuggestions.length > 0 && (
+              <div className="space-y-1.5 mt-3 border-t border-zinc-100 pt-2.5 dark:border-zinc-800/40">
+                <Label className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wide">
+                  Palabras Clave ATS recomendadas para "{personal.title || 'tu perfil'}" (Toca para añadir)
+                </Label>
+                <div className="flex flex-wrap gap-1.5 pt-1">
+                  {remainingSuggestions.slice(0, 10).map((keyword) => (
+                    <button
+                      key={keyword}
+                      type="button"
+                      onClick={() => {
+                        const updatedSkills = [...skills.filter(s => s.trim() !== ''), keyword];
+                        updateSkills(updatedSkills);
+                      }}
+                      className="px-2 py-0.5 rounded bg-zinc-150 hover:bg-zinc-200 text-zinc-700 text-[10px] font-semibold border border-zinc-200/50 hover:border-zinc-300 dark:bg-zinc-900 dark:text-zinc-400 dark:border-zinc-800 dark:hover:bg-zinc-800 dark:hover:text-white transition-all cursor-pointer select-none active:scale-[0.95]"
+                    >
+                      + {keyword}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        );
+      }
     },
     projects: {
       title: 'Proyectos',
