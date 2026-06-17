@@ -27,7 +27,7 @@ const user = await getUserFromRequest(Astro.request);
         </a>
 
         {/* Desktop nav */}
-        <nav class="hidden md:flex items-center gap-6 text-[13px] text-zinc-555 font-medium">
+        <nav class="hidden md:flex items-center gap-6 text-[13px] text-zinc-550 font-medium">
           <a href="#features" class="hover:text-black transition-colors duration-150">Características</a>
           <a href="#editor" class="hover:text-black transition-colors duration-150">Editor</a>
           <a href="https://github.com/kirianL/CVforge" target="_blank" rel="noopener noreferrer" class="hover:text-black transition-colors duration-150">GitHub</a>
@@ -121,11 +121,11 @@ const user = await getUserFromRequest(Astro.request);
           </div>
         </div>
 
-        {/* Right Side: Imposing Floating 3D ASCII Sculpture */}
+        {/* Right Side: Imposing Floating 3D ASCII Temple Facade */}
         <div class="w-full lg:w-1/2 flex justify-center items-center lg:justify-end overflow-hidden">
           <pre 
             id="ascii-sculpture" 
-            class="leading-[0.92] font-mono text-[7px] sm:text-[8px] md:text-[9.5px] lg:text-[10px] xl:text-[11px] text-zinc-850 select-none cursor-default font-extrabold transition-colors hover:text-black"
+            class="leading-[0.92] font-mono text-[7px] sm:text-[8px] md:text-[9px] lg:text-[9.5px] xl:text-[10px] text-zinc-850 select-none cursor-default font-extrabold transition-colors hover:text-black"
           ></pre>
         </div>
       </main>
@@ -142,14 +142,13 @@ const user = await getUserFromRequest(Astro.request);
   </div>
 
   <script>
-    // ── 3D ASCII Sculpture Rendering ──
+    // ── 3D ASCII Temple Facade Rendering ──
     const asciiElement = document.getElementById('ascii-sculpture');
     const ramp = " .:-=+*#%@";
 
-    let A = 0.15; // Tilted X angle
-    let B = 0;    // Y rotation angle
+    let A = 0.12; // Slight X tilt for perspective
+    let B = 0;    // Y rotation angle (slow)
 
-    // High resolution grid for imposing classical design
     const width = 80;
     const height = 44;
 
@@ -159,80 +158,125 @@ const user = await getUserFromRequest(Astro.request);
       const output = Array(width * height).fill(' ');
       const zbuffer = Array(width * height).fill(-1000);
 
-      const stepsY = 90;
-      const stepsTheta = 90;
+      // Helper function to project and draw a 3D point into the ASCII buffer
+      function drawPoint(x3, y3, z3, nx3, ny3, nz3) {
+        // Rotate around Y axis (angle B)
+        const xRotY = x3 * Math.cos(B) - z3 * Math.sin(B);
+        const zRotY = x3 * Math.sin(B) + z3 * Math.cos(B);
 
-      for (let i = 0; i < stepsY; i++) {
-        const y = -7 + (14 * i) / (stepsY - 1);
+        // Rotate normal around Y axis
+        const nxRotY = nx3 * Math.cos(B) - nz3 * Math.sin(B);
+        const nzRotY = nx3 * Math.sin(B) + nz3 * Math.cos(B);
 
-        for (let j = 0; j < stepsTheta; j++) {
-          const theta = (2 * Math.PI * j) / stepsTheta;
+        // Rotate around X axis (angle A)
+        const yFinal = y3 * Math.cos(A) - zRotY * Math.sin(A);
+        const zFinal = y3 * Math.sin(A) + zRotY * Math.cos(A);
 
-          // Grand stepped Classical Doric column
-          let R = 6.2;
-          if (y < -6.0) {
-            // Upper capital slab (Abacus)
-            R = 9.8;
-          } else if (y < -4.8) {
-            // Flared transition (Echinus)
-            R = 6.2 + Math.pow(Math.abs(y + 4.8), 1.5) * 2.8;
-          } else if (y > 6.0) {
-            // Lower base slab (Plinth)
-            R = 9.8;
-          } else if (y > 4.8) {
-            // Base transition
-            R = 6.2 + Math.pow(y - 4.8, 1.5) * 2.8;
-          } else {
-            // Shaft fluting
-            const numGrooves = 12;
-            const grooveDepth = 0.65;
-            R = 5.8 + grooveDepth * Math.cos(numGrooves * theta);
-          }
+        const nyFinal = ny3 * Math.cos(A) - nzRotY * Math.sin(A);
+        const nzFinalNormal = ny3 * Math.sin(A) + nzRotY * Math.cos(A);
 
-          const x3 = Math.cos(theta) * R;
-          const z3 = Math.sin(theta) * R;
-          const y3 = y;
+        const distance = 25;
+        const scaleX = 2.45;
+        const scaleY = 1.1;
 
-          // Rotate around Y axis
-          const xRotY = x3 * Math.cos(B) - z3 * Math.sin(B);
-          const zRotY = x3 * Math.sin(B) + z3 * Math.cos(B);
+        const ooz = 1 / (zFinal + distance);
+        const xp = Math.round(width / 2 + scaleX * xRotY * ooz * 32);
+        const yp = Math.round(height / 2 - scaleY * yFinal * ooz * 36);
 
-          // Rotate around X axis
-          const yFinal = y3 * Math.cos(A) - zRotY * Math.sin(A);
-          const zFinal = y3 * Math.sin(A) + zRotY * Math.cos(A);
+        if (xp >= 0 && xp < width && yp >= 0 && yp < height) {
+          // Standard front-top-left directional light
+          const luminance = nxRotY * 0.4 + nyFinal * 0.3 - nzFinalNormal * 0.85;
 
-          // Projection calculations for larger size
-          const distance = 22;
-          const scaleX = 2.45;
-          const scaleY = 1.1;
+          if (ooz > zbuffer[yp * width + xp]) {
+            zbuffer[yp * width + xp] = ooz;
 
-          const ooz = 1 / (zFinal + distance);
-          const xp = Math.round(width / 2 + scaleX * xRotY * ooz * 32);
-          const yp = Math.round(height / 2 - scaleY * yFinal * ooz * 36);
-
-          if (xp >= 0 && xp < width && yp >= 0 && yp < height) {
-            const nx3 = Math.cos(theta);
-            const nz3 = Math.sin(theta);
-            const ny3 = 0;
-
-            const nxRotY = nx3 * Math.cos(B) - nz3 * Math.sin(B);
-            const nzRotY = nx3 * Math.sin(B) + nz3 * Math.cos(B);
-            const nyFinal = ny3 * Math.cos(A) - nzRotY * Math.sin(A);
-            const nzFinalNormal = ny3 * Math.sin(A) + nzRotY * Math.cos(A);
-
-            const luminance = nxRotY * 0.45 + nyFinal * 0.35 - nzFinalNormal * 0.85;
-
-            if (ooz > zbuffer[yp * width + xp]) {
-              zbuffer[yp * width + xp] = ooz;
-
-              let charIdx = Math.floor((luminance + 1) * 4.5);
-              charIdx = Math.max(0, Math.min(ramp.length - 1, charIdx));
-              output[yp * width + xp] = ramp[charIdx];
-            }
+            let charIdx = Math.floor((luminance + 1) * 4.5);
+            charIdx = Math.max(0, Math.min(ramp.length - 1, charIdx));
+            output[yp * width + xp] = ramp[charIdx];
           }
         }
       }
 
+      // Draw a 3D box/cuboid face system
+      function drawBox(xMin, xMax, yMin, yMax, zMin, zMax) {
+        // Front and Back
+        for (let x = xMin; x <= xMax; x += 0.35) {
+          for (let y = yMin; y <= yMax; y += 0.25) {
+            drawPoint(x, y, zMin, 0, 0, -1);
+            drawPoint(x, y, zMax, 0, 0, 1);
+          }
+        }
+        // Left and Right
+        for (let z = zMin; z <= zMax; z += 0.35) {
+          for (let y = yMin; y <= yMax; y += 0.25) {
+            drawPoint(xMin, y, z, -1, 0, 0);
+            drawPoint(xMax, y, z, 1, 0, 0);
+          }
+        }
+        // Top and Bottom
+        for (let x = xMin; x <= xMax; x += 0.35) {
+          for (let z = zMin; z <= zMax; z += 0.35) {
+            drawPoint(x, yMin, z, 0, -1, 0);
+            drawPoint(x, yMax, z, 0, 1, 0);
+          }
+        }
+      }
+
+      // 1. STEPPED BASE (Stylobate)
+      drawBox(-7.2, 7.2, 5.0, 5.5, -3.2, 3.2); // Step 1
+      drawBox(-7.6, 7.6, 5.5, 6.0, -3.6, 3.6); // Step 2
+      drawBox(-8.0, 8.0, 6.0, 6.6, -4.0, 4.0); // Step 3
+
+      // 2. ARCHITRAVE (Horizontal lintel above columns)
+      drawBox(-7.6, 7.6, -5.2, -4.2, -3.2, 3.2);
+
+      // 3. PEDIMENT (Triangular Greek Roof)
+      for (let y = -7.0; y <= -5.2; y += 0.22) {
+        // w is the half-width decreasing linearly to form the triangle
+        const w = 7.6 * (1 - (y + 5.2) / -1.8);
+        // Front & back triangle walls
+        for (let x = -w; x <= w; x += 0.3) {
+          drawPoint(x, y, -3.2, 0, 0, -1);
+          drawPoint(x, y, 3.2, 0, 0, 1);
+        }
+      }
+      // Roof slopes
+      for (let z = -3.2; z <= 3.2; z += 0.3) {
+        for (let y = -7.0; y <= -5.2; y += 0.2) {
+          const w = 7.6 * (1 - (y + 5.2) / -1.8);
+          drawPoint(-w, y, z, -0.9, -0.4, 0); // Left slope
+          drawPoint(w, y, z, 0.9, -0.4, 0);  // Right slope
+        }
+      }
+
+      // 4. FOUR COLUMNS
+      const colX = [-5.2, -1.7, 1.7, 5.2];
+      for (let c = 0; c < colX.length; c++) {
+        const cx = colX[c];
+
+        // Column cylinder shaft with vertical grooves
+        for (let y = -4.2; y <= 5.0; y += 0.22) {
+          for (let theta = 0; theta < 2 * Math.PI; theta += 0.15) {
+            const numGrooves = 8;
+            const grooveDepth = 0.12;
+            const R = 0.75 + grooveDepth * Math.cos(numGrooves * theta);
+
+            const x = cx + Math.cos(theta) * R;
+            const z = Math.sin(theta) * R;
+            drawPoint(x, y, z, Math.cos(theta), 0, Math.sin(theta));
+          }
+        }
+
+        // Capitals & Bases for each column
+        for (let r = 0; r <= 0.95; r += 0.15) {
+          for (let theta = 0; theta < 2 * Math.PI; theta += 0.2) {
+            drawPoint(cx + Math.cos(theta) * r, -4.25, Math.sin(theta) * r, 0, -1, 0); // Capital cap
+            drawPoint(cx + Math.cos(theta) * r, 5.05, Math.sin(theta) * r, 0, 1, 0);  // Base cap
+          }
+        }
+      }
+
+      // Render output to screen
       let frameStr = '';
       for (let h = 0; h < height; h++) {
         for (let w = 0; w < width; w++) {
@@ -242,11 +286,13 @@ const user = await getUserFromRequest(Astro.request);
       }
 
       asciiElement.textContent = frameStr;
-      B += 0.025; // Y rotation speed
+      
+      // Slow rotation for majestic, premium, and imposing look
+      B += 0.008; 
     }
 
-    // Run at 25 frames per second
-    setInterval(renderFrame, 40);
+    // Run render ticks
+    setInterval(renderFrame, 45);
 
     // ── Mobile nav ──
     const btn = document.getElementById('mobile-menu-btn');
