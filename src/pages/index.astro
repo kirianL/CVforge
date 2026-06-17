@@ -9,7 +9,7 @@ const user = await getUserFromRequest(Astro.request);
   title="CVForge | Generador de Currículums Optimizado para ATS"
   description="Crea un currículum profesional de una sola página, optimizado para pasar los filtros automáticos ATS de reclutamiento y exportable a PDF de forma gratuita."
 >
-  <div class="landing h-[100dvh] lg:h-screen lg:min-h-screen bg-zinc-55/30 text-zinc-900 flex flex-col font-sans relative overflow-hidden">
+  <div class="landing min-h-[100dvh] lg:h-screen lg:min-h-screen bg-zinc-55/30 text-zinc-900 flex flex-col font-sans relative overflow-y-auto lg:overflow-hidden">
 
     {/* ── Subtle noise texture ── */}
     <div class="absolute inset-0 opacity-[0.012] pointer-events-none" style="background-image:url('data:image/svg+xml,%3Csvg viewBox=%220 0 256 256%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.9%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23n)%22/%3E%3C/svg%3E')"></div>
@@ -18,7 +18,7 @@ const user = await getUserFromRequest(Astro.request);
     <div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(120,119,198,0.03),transparent)] pointer-events-none"></div>
 
     {/* ══════════ Content shell ══════════ */}
-    <div class="mx-auto w-full max-w-[1120px] px-5 sm:px-8 flex flex-col h-full relative z-10">
+    <div class="mx-auto w-full max-w-[1120px] px-5 sm:px-8 flex flex-col flex-1 lg:h-full relative z-10">
 
       {/* ── Header ── */}
       <header class="flex h-14 items-center justify-between shrink-0 py-4 z-20 relative" data-logged-in={user ? "true" : "false"} id="landing-header">
@@ -97,7 +97,7 @@ const user = await getUserFromRequest(Astro.request);
       </div>
 
       {/* ══════════ Hero / Form Split Screen ══════════ */}
-      <main class="flex-1 flex flex-col lg:flex-row items-center justify-center lg:justify-between py-6 lg:py-0 relative overflow-hidden">
+      <main class="flex-1 flex flex-col lg:flex-row items-center justify-center lg:justify-between py-6 lg:py-0 relative overflow-visible lg:overflow-hidden">
         
         {/* Left Side Container (Transitions between Hero copy, Login, and Register) */}
         <div id="views-container" class="w-full lg:max-w-xl relative grid grid-cols-1 grid-rows-1 items-center z-10 py-6 lg:py-24 transition-[height] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] mx-auto lg:mx-0">
@@ -143,21 +143,21 @@ const user = await getUserFromRequest(Astro.request);
           </div>
 
           {/* ── VIEW 2: LOGIN FORM (Flat/Frameless, Optimized for Mobile) ── */}
-          <div id="view-login" class="w-full col-start-1 row-start-1 hidden transition-all duration-500 transform opacity-0 translate-x-12 flex flex-col justify-center space-y-6 text-center lg:text-left">
-            <div class="space-y-2.5 flex flex-col items-center lg:items-start">
+          <div id="view-login" class="w-full col-start-1 row-start-1 hidden transition-all duration-500 transform opacity-0 translate-x-12 flex flex-col justify-center space-y-5 sm:space-y-6 text-center lg:text-left">
+            <div class="space-y-2 flex flex-col items-center lg:items-start">
               <button id="login-back-btn" class="reveal-item delay-0 inline-flex items-center justify-center lg:justify-start gap-1.5 text-[13px] text-zinc-550 hover:text-black transition-colors font-semibold cursor-pointer border-none bg-transparent p-0 w-full lg:w-auto">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" class="w-3.5 h-3.5">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
                 </svg>
                 Volver al inicio
               </button>
-              <h2 class="reveal-item delay-75 text-3xl font-extrabold tracking-tight text-zinc-900 text-center lg:text-left">Entrar a tu cuenta</h2>
+              <h2 class="reveal-item delay-75 text-2xl sm:text-3xl font-extrabold tracking-tight text-zinc-900 text-center lg:text-left">Entrar a tu cuenta</h2>
               <p class="reveal-item delay-150 text-[14px] text-zinc-550 text-center lg:text-left">Ingresa tus credenciales para continuar.</p>
             </div>
 
             <div id="login-error-alert" class="hidden p-3.5 rounded-lg border border-red-200 bg-red-50/70 text-xs text-red-650 font-medium"></div>
 
-            <form id="login-form" class="space-y-4 w-full max-w-sm mx-auto lg:mx-0 text-left">
+            <form id="login-form" class="space-y-3.5 sm:space-y-4 w-full max-w-sm mx-auto lg:mx-0 text-left">
               <div class="reveal-item delay-225 space-y-1.5">
                 <label for="login-email" class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Correo Electrónico</label>
                 <input 
@@ -225,21 +225,21 @@ const user = await getUserFromRequest(Astro.request);
           </div>
 
           {/* ── VIEW 3: REGISTER FORM (Flat/Frameless, Optimized for Mobile) ── */}
-          <div id="view-register" class="w-full col-start-1 row-start-1 hidden transition-all duration-500 transform opacity-0 translate-x-12 flex flex-col justify-center space-y-6 text-center lg:text-left">
-            <div class="space-y-2.5 flex flex-col items-center lg:items-start">
+          <div id="view-register" class="w-full col-start-1 row-start-1 hidden transition-all duration-500 transform opacity-0 translate-x-12 flex flex-col justify-center space-y-5 sm:space-y-6 text-center lg:text-left">
+            <div class="space-y-2 flex flex-col items-center lg:items-start">
               <button id="register-back-btn" class="reveal-item delay-0 inline-flex items-center justify-center lg:justify-start gap-1.5 text-[13px] text-zinc-550 hover:text-black transition-colors font-semibold cursor-pointer border-none bg-transparent p-0 w-full lg:w-auto">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" class="w-3.5 h-3.5">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
                 </svg>
                 Volver al inicio
               </button>
-              <h2 class="reveal-item delay-75 text-3xl font-extrabold tracking-tight text-zinc-900 text-center lg:text-left">Crea tu cuenta</h2>
+              <h2 class="reveal-item delay-75 text-2xl sm:text-3xl font-extrabold tracking-tight text-zinc-900 text-center lg:text-left">Crea tu cuenta</h2>
               <p class="reveal-item delay-150 text-[14px] text-zinc-550 text-center lg:text-left">Regístrate para guardar tus currículums gratis.</p>
             </div>
 
             <div id="register-error-alert" class="hidden p-3.5 rounded-lg border border-red-200 bg-red-50/70 text-xs text-red-650 font-medium"></div>
 
-            <form id="register-form" class="space-y-4 w-full max-w-sm mx-auto lg:mx-0 text-left">
+            <form id="register-form" class="space-y-3.5 sm:space-y-4 w-full max-w-sm mx-auto lg:mx-0 text-left">
               <div class="reveal-item delay-225 space-y-1.5">
                 <label for="register-name" class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Nombre Completo</label>
                 <input 
@@ -318,15 +318,15 @@ const user = await getUserFromRequest(Astro.request);
           </div>
 
           {/* ── VIEW 4: FEATURES VIEW (Flat/Frameless, Optimized for Mobile) ── */}
-          <div id="view-features" class="w-full col-start-1 row-start-1 hidden transition-all duration-500 transform opacity-0 translate-x-12 flex flex-col justify-center space-y-6 text-center lg:text-left">
-            <div class="space-y-2.5 flex flex-col items-center lg:items-start">
+          <div id="view-features" class="w-full col-start-1 row-start-1 hidden transition-all duration-500 transform opacity-0 translate-x-12 flex flex-col justify-center space-y-5 sm:space-y-6 text-center lg:text-left">
+            <div class="space-y-2 flex flex-col items-center lg:items-start">
               <button id="features-back-btn" class="reveal-item delay-0 inline-flex items-center justify-center lg:justify-start gap-1.5 text-[13px] text-zinc-550 hover:text-black transition-colors font-semibold cursor-pointer border-none bg-transparent p-0 w-full lg:w-auto">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" class="w-3.5 h-3.5">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
                 </svg>
                 Volver al inicio
               </button>
-              <h2 class="reveal-item delay-75 text-3xl font-extrabold tracking-tight text-zinc-900 text-center lg:text-left">Características</h2>
+              <h2 class="reveal-item delay-75 text-2xl sm:text-3xl font-extrabold tracking-tight text-zinc-900 text-center lg:text-left">Características</h2>
               <p class="reveal-item delay-150 text-[14px] text-zinc-550 text-center lg:text-left font-sans">Diseñado para que tu currículum destaque y supere filtros.</p>
             </div>
 
@@ -797,15 +797,7 @@ const user = await getUserFromRequest(Astro.request);
     .landing a, .landing button { -webkit-tap-highlight-color: transparent; }
     .landing { -webkit-overflow-scrolling: touch; }
 
-    /* Lock body scroll on mobile viewport */
-    @media (max-width: 1023px) {
-      html, body {
-        overflow: hidden !important;
-        position: fixed;
-        width: 100%;
-        height: 100%;
-      }
-    }
+    /* Native scrolling on mobile handles viewports and virtual keyboards cleanly */
 
     /* Motion text reveal keyframes */
     @keyframes revealUp {
