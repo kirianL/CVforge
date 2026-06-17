@@ -8,8 +8,11 @@ interface Props {
 
 const {
   title = "CVForge | Generador de Currículums Optimizado para ATS",
-  description = "Crea un currículum profesional, optimizado para ATS y exportable a PDF de forma gratuita. Aumenta tus posibilidades de conseguir empleo.",
+  description = "Crea un currículum profesional de una sola página, optimizado para pasar los filtros automáticos ATS de reclutamiento y exportable a PDF de forma gratuita.",
 } = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || Astro.url.origin).href;
+const ogImage = new URL("/og-image.png", Astro.site || Astro.url.origin).href;
 ---
 
 <!doctype html>
@@ -27,32 +30,49 @@ const {
     </script>
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="keywords" content="currículum, generador de currículum, ATS, cv profesional, plantilla cv, pdf, cvforge" />
-    <link rel="canonical" href={Astro.url.href} />
+    <meta name="keywords" content="currículum, generador de currículum, ATS, cv profesional, plantilla cv, pdf, cvforge, curriculum friendly" />
+    <link rel="canonical" href={canonicalURL} />
     <meta name="robots" content="index, follow" />
 
-    <!-- Schema.org JSON-LD Structured Data for SEO -->
-    <script type="application/ld+json" is:inline>
+    <!-- Schema.org JSON-LD Structured Data for SEO (Senior-level metadata integration) -->
+    <script type="application/ld+json" is:inline define:vars={{ title, description, canonicalURL, ogImage }}>
       {
         "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "CVForge",
         "url": "https://cvforge.com",
-        "description": "Crea currículos profesionales de una sola página optimizados para ATS y exportables a PDF.",
+        "image": ogImage,
+        "description": description,
         "applicationCategory": "BusinessApplication",
-        "operatingSystem": "All"
+        "operatingSystem": "All",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "featureList": [
+          "Optimización ATS",
+          "Editor en tiempo real",
+          "Exportación a PDF A4 sin marca de agua",
+          "Sugerencias de habilidades inteligentes"
+        ]
       }
     </script>
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:site_name" content="CVForge" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={ogImage} />
 
     <style>
       html,

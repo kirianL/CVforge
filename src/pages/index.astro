@@ -39,6 +39,7 @@ const user = await getUserFromRequest(Astro.request);
               <span class="text-[13px] text-zinc-500 hidden sm:inline">Hola, {user.name}</span>
               <a 
                 href="/dashboard" 
+                data-astro-prefetch
                 class="inline-flex h-8 items-center justify-center rounded-lg bg-black px-3.5 text-[13px] font-semibold text-white hover:bg-zinc-800 active:scale-[0.97] transition-all cursor-pointer shadow-sm"
               >
                 Dashboard
@@ -761,6 +762,15 @@ const user = await getUserFromRequest(Astro.request);
     .delay-450 { transition-delay: 450ms !important; }
     .delay-525 { transition-delay: 525ms !important; }
 
+    /* SPA Page Transitions Optimization */
+    #views-container {
+      will-change: height;
+    }
+
+    #view-hero, #view-features, #view-login, #view-register {
+      will-change: transform, opacity;
+    }
+
     /* Perspective and Tilt for 3D A4 Mockup */
     .perspective-container {
       perspective: 1200px;
@@ -773,6 +783,7 @@ const user = await getUserFromRequest(Astro.request);
         -20px 20px 50px rgba(0, 0, 0, 0.04),
         1px 1px 1px rgba(255, 255, 255, 0.8) inset;
       transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s ease;
+      will-change: transform, box-shadow;
     }
 
     .tilted-document:hover {
@@ -782,10 +793,10 @@ const user = await getUserFromRequest(Astro.request);
         -30px 30px 70px rgba(0, 0, 0, 0.06);
     }
 
-    /* Laser Scanner Beam Animation */
+    /* Laser Scanner Beam Animation (GPU Compositor Accelerated) */
     @keyframes scan {
       0% {
-        top: 6%;
+        transform: translateY(30px);
         opacity: 0.1;
       }
       15% {
@@ -795,13 +806,16 @@ const user = await getUserFromRequest(Astro.request);
         opacity: 1;
       }
       100% {
-        top: 94%;
+        transform: translateY(440px);
         opacity: 0.1;
       }
     }
 
     .scanner-beam {
+      top: 0;
+      transform: translateY(30px);
       animation: scan 4.5s ease-in-out infinite alternate;
+      will-change: transform, opacity;
     }
 
     /* Floating Animations for metrics and badges */
@@ -816,21 +830,25 @@ const user = await getUserFromRequest(Astro.request);
 
     .floating-card {
       animation: float 5s ease-in-out infinite;
+      will-change: transform;
     }
 
     .floating-card-delay-1 {
       animation: float 6s ease-in-out infinite;
       animation-delay: 0.5s;
+      will-change: transform;
     }
 
     .floating-card-delay-2 {
       animation: float 5.5s ease-in-out infinite;
       animation-delay: 1.2s;
+      will-change: transform;
     }
 
     .floating-card-delay-3 {
       animation: float 6.5s ease-in-out infinite;
       animation-delay: 1.8s;
+      will-change: transform;
     }
   </style>
 </Layout>

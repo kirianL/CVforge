@@ -100,6 +100,7 @@ const {
 
 const title = `${personal.name || "Currículum"} - ${personal.title || "Profesional"} | CVForge`;
 const description = summary || `Currículum profesional de ${personal.name || "CVForge User"}.`;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || Astro.url.origin).href;
 ---
 
 <!doctype html>
@@ -110,17 +111,35 @@ const description = summary || `Currículum profesional de ${personal.name || "C
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
     <meta name="robots" content="index, follow" />
 
     <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content="profile" />
+    <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
 
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:card" content="summary" />
+    <meta property="twitter:url" content={canonicalURL} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
+
+    <!-- Profile Schema JSON-LD for rich snippet indexing -->
+    <script type="application/ld+json" is:inline define:vars={{ name: personal.name, jobTitle: personal.title, description, canonicalURL }}>
+      {
+        "@context": "https://schema.org",
+        "@type": "ProfilePage",
+        "url": canonicalURL,
+        "mainEntity": {
+          "@type": "Person",
+          "name": name || "Candidato",
+          "jobTitle": jobTitle || "Profesional",
+          "description": description
+        }
+      }
+    </script>
 
     <script is:inline>
       document.documentElement.classList.remove('dark');
