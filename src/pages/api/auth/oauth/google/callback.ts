@@ -36,9 +36,14 @@ export const GET: APIRoute = async ({ request }) => {
     const metaEnv = (import.meta as any).env;
     const clientId = metaEnv.GOOGLE_CLIENT_ID || process.env.GOOGLE_CLIENT_ID;
     const clientSecret = metaEnv.GOOGLE_CLIENT_SECRET || process.env.GOOGLE_CLIENT_SECRET;
-    const redirectUri = metaEnv.GOOGLE_CALLBACK_URL || process.env.GOOGLE_CALLBACK_URL;
 
-    if (!clientId || !clientSecret || !redirectUri) {
+    // Calcular la URI de redireccionamiento dinámicamente según el origen de la petición
+    const urlObj = new URL(request.url);
+    const isLocalhost = urlObj.hostname === 'localhost' || urlObj.hostname === '127.0.0.1';
+    const protocol = isLocalhost ? urlObj.protocol : 'https:';
+    const redirectUri = `${protocol}//${urlObj.host}/api/auth/oauth/google/callback`;
+
+    if (!clientId || !clientSecret) {
       return new Response(JSON.stringify({ error: 'Configuración de Google OAuth incompleta en el servidor' }), {
         status: 500,
         headers: { 'Content-Type': 'application/json' }

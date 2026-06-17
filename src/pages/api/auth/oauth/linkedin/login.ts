@@ -4,10 +4,15 @@ export const GET: APIRoute = async ({ request }) => {
   try {
     const metaEnv = (import.meta as any).env;
     const clientId = metaEnv.LINKEDIN_CLIENT_ID || process.env.LINKEDIN_CLIENT_ID;
-    const redirectUri = metaEnv.LINKEDIN_CALLBACK_URL || process.env.LINKEDIN_CALLBACK_URL;
 
-    if (!clientId || !redirectUri) {
-      return new Response(JSON.stringify({ error: 'Configuración de LinkedIn OAuth incompleta en el servidor' }), {
+    // Calcular la URI de redireccionamiento dinámicamente según el origen de la petición
+    const urlObj = new URL(request.url);
+    const isLocalhost = urlObj.hostname === 'localhost' || urlObj.hostname === '127.0.0.1';
+    const protocol = isLocalhost ? urlObj.protocol : 'https:';
+    const redirectUri = `${protocol}//${urlObj.host}/api/auth/oauth/linkedin/callback`;
+
+    if (!clientId) {
+      return new Response(JSON.stringify({ error: 'Configuración de LinkedIn OAuth incompleta (falta LINKEDIN_CLIENT_ID)' }), {
         status: 500,
         headers: { 'Content-Type': 'application/json' }
       });
