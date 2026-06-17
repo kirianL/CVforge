@@ -24,25 +24,6 @@ export const EditorContainer: React.FC<EditorContainerProps> = ({ initialResume 
   const [isAtsOpen, setIsAtsOpen] = React.useState(false);
   const isFirstLoad = React.useRef(true);
 
-  const [theme, setTheme] = React.useState<'light' | 'dark'>('light');
-
-  React.useEffect(() => {
-    const isDark = document.documentElement.classList.contains('dark');
-    setTheme(isDark ? 'dark' : 'light');
-  }, []);
-
-  const toggleTheme = () => {
-    const nextTheme = theme === 'dark' ? 'light' : 'dark';
-    setTheme(nextTheme);
-    if (nextTheme === 'dark') {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    }
-  };
-
   const { score, label, bgColor, textColor } = analyzeCV(content);
 
   React.useEffect(() => {
@@ -211,23 +192,6 @@ export const EditorContainer: React.FC<EditorContainerProps> = ({ initialResume 
         {/* Acciones del Editor */}
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1 border-r border-zinc-200 pr-3 dark:border-zinc-800">
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              onClick={toggleTheme} 
-              className="h-8 w-8 p-0 mr-1"
-              title="Cambiar tema"
-            >
-              {theme === 'dark' ? (
-                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
-                </svg>
-              ) : (
-                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                </svg>
-              )}
-            </Button>
             <Button 
               variant="ghost" 
               size="sm" 

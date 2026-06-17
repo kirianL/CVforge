@@ -22,26 +22,27 @@ const {
 
     <!-- SEO Meta Tags -->
     <script is:inline>
-      const theme = (() => {
-        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-          return localStorage.getItem('theme');
-        }
-        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-          return 'dark';
-        }
-        return 'light';
-      })();
-    
-      if (theme === 'dark') {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-      }
-      window.localStorage.setItem('theme', theme);
+      document.documentElement.classList.remove('dark');
+      window.localStorage.setItem('theme', 'light');
     </script>
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="keywords" content="currículum, generador de currículum, ATS, cv profesional, plantilla cv, pdf, cvforge" />
+    <link rel="canonical" href={Astro.url.href} />
     <meta name="robots" content="index, follow" />
+
+    <!-- Schema.org JSON-LD Structured Data for SEO -->
+    <script type="application/ld+json" is:inline>
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "CVForge",
+        "url": "https://cvforge.com",
+        "description": "Crea currículos profesionales de una sola página optimizados para ATS y exportables a PDF.",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "All"
+      }
+    </script>
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />

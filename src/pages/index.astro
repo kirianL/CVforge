@@ -7,15 +7,15 @@ const user = await getUserFromRequest(Astro.request);
 
 <Layout 
   title="CVForge | Generador de Currículums Optimizado para ATS"
-  description="Crea un currículum profesional de una sola página, optimizado para pasar los filtros automáticos ATS de reclutamiento y exportable a PDF."
+  description="Crea un currículum profesional de una sola página, optimizado para pasar los filtros automáticos ATS de reclutamiento y exportable a PDF de forma gratuita."
 >
-  <div class="landing min-h-screen bg-[#0a0a0a] text-zinc-100 flex flex-col font-sans relative overflow-hidden">
+  <div class="landing min-h-screen bg-zinc-55/30 text-zinc-900 flex flex-col font-sans relative overflow-hidden">
 
     {/* ── Subtle noise texture ── */}
-    <div class="absolute inset-0 opacity-[0.015] pointer-events-none" style="background-image:url('data:image/svg+xml,%3Csvg viewBox=%220 0 256 256%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.9%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23n)%22/%3E%3C/svg%3E')"></div>
+    <div class="absolute inset-0 opacity-[0.012] pointer-events-none" style="background-image:url('data:image/svg+xml,%3Csvg viewBox=%220 0 256 256%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.9%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23n)%22/%3E%3C/svg%3E')"></div>
 
     {/* ── Soft radial vignette ── */}
-    <div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(120,119,198,0.06),transparent)] pointer-events-none"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(120,119,198,0.03),transparent)] pointer-events-none"></div>
 
     {/* ══════════ Content shell ══════════ */}
     <div class="mx-auto w-full max-w-[1120px] px-5 sm:px-8 flex flex-col min-h-screen relative z-10">
@@ -23,35 +23,35 @@ const user = await getUserFromRequest(Astro.request);
       {/* ── Header ── */}
       <header class="flex h-14 items-center justify-between shrink-0 py-4">
         <a href="/" class="flex items-center gap-2 no-underline">
-          <span class="text-[15px] font-semibold tracking-tight text-white">CVForge</span>
+          <span class="text-[15px] font-extrabold tracking-tight text-zinc-900">CVForge</span>
         </a>
 
         {/* Desktop nav */}
-        <nav class="hidden md:flex items-center gap-6 text-[13px] text-zinc-500">
-          <a href="#features" class="hover:text-zinc-200 transition-colors duration-150">Características</a>
-          <a href="#editor" class="hover:text-zinc-200 transition-colors duration-150">Editor</a>
-          <a href="https://github.com/kirianL/CVforge" target="_blank" rel="noopener noreferrer" class="hover:text-zinc-200 transition-colors duration-150">GitHub</a>
+        <nav class="hidden md:flex items-center gap-6 text-[13px] text-zinc-550 font-medium">
+          <a href="#features" class="hover:text-black transition-colors duration-150">Características</a>
+          <a href="#editor" class="hover:text-black transition-colors duration-150">Editor</a>
+          <a href="https://github.com/kirianL/CVforge" target="_blank" rel="noopener noreferrer" class="hover:text-black transition-colors duration-150">GitHub</a>
         </nav>
 
         <div class="flex items-center gap-3">
           {user ? (
             <>
-              <span class="text-[13px] text-zinc-500 hidden sm:inline">{user.name}</span>
+              <span class="text-[13px] text-zinc-500 hidden sm:inline">Hola, {user.name}</span>
               <a 
                 href="/dashboard" 
-                class="inline-flex h-8 items-center justify-center rounded-lg bg-white px-3.5 text-[13px] font-medium text-zinc-900 hover:bg-zinc-200 active:scale-[0.97] transition-all cursor-pointer"
+                class="inline-flex h-8 items-center justify-center rounded-lg bg-black px-3.5 text-[13px] font-semibold text-white hover:bg-zinc-800 active:scale-[0.97] transition-all cursor-pointer shadow-sm"
               >
                 Dashboard
               </a>
             </>
           ) : (
             <>
-              <a href="/login" class="hidden sm:inline text-[13px] text-zinc-500 hover:text-zinc-200 transition-colors duration-150">
+              <a href="/login" class="hidden sm:inline text-[13px] text-zinc-550 hover:text-black transition-colors duration-150 font-semibold">
                 Entrar
               </a>
               <a 
                 href="/register" 
-                class="inline-flex h-8 items-center justify-center rounded-lg bg-white px-3.5 text-[13px] font-medium text-zinc-900 hover:bg-zinc-200 active:scale-[0.97] transition-all cursor-pointer"
+                class="inline-flex h-8 items-center justify-center rounded-lg bg-black px-3.5 text-[13px] font-semibold text-white hover:bg-zinc-800 active:scale-[0.97] transition-all cursor-pointer shadow-sm"
               >
                 Comenzar
               </a>
@@ -62,50 +62,51 @@ const user = await getUserFromRequest(Astro.request);
           <button 
             id="mobile-menu-btn"
             type="button"
-            class="md:hidden flex flex-col items-center justify-center w-8 h-8 gap-[5px] rounded-md hover:bg-white/5 transition-colors cursor-pointer"
+            class="md:hidden flex flex-col items-center justify-center w-8 h-8 gap-[5px] rounded-md hover:bg-zinc-100 transition-colors cursor-pointer"
             aria-label="Abrir menú"
           >
-            <span class="hamburger-line block w-[18px] h-[1.5px] bg-zinc-400 rounded-full transition-all duration-300 origin-center"></span>
-            <span class="hamburger-line block w-[18px] h-[1.5px] bg-zinc-400 rounded-full transition-all duration-300 origin-center"></span>
+            <span class="hamburger-line block w-[18px] h-[1.5px] bg-zinc-600 rounded-full transition-all duration-300 origin-center"></span>
+            <span class="hamburger-line block w-[18px] h-[1.5px] bg-zinc-600 rounded-full transition-all duration-300 origin-center"></span>
           </button>
         </div>
       </header>
 
       {/* Thin separator */}
-      <div class="h-px bg-white/[0.06]"></div>
+      <div class="h-px bg-zinc-200/60"></div>
 
       {/* ── Mobile nav drawer ── */}
       <div id="mobile-nav" class="md:hidden overflow-hidden transition-all duration-300 ease-out" style="max-height:0;opacity:0">
-        <nav class="flex flex-col py-3 border-b border-white/[0.06]">
-          <a href="#features" class="mobile-nav-link px-2 py-2.5 text-[14px] text-zinc-400 hover:text-white transition-colors duration-150">Características</a>
-          <a href="#editor" class="mobile-nav-link px-2 py-2.5 text-[14px] text-zinc-400 hover:text-white transition-colors duration-150">Editor</a>
-          <a href="https://github.com/kirianL/CVforge" target="_blank" rel="noopener noreferrer" class="mobile-nav-link px-2 py-2.5 text-[14px] text-zinc-400 hover:text-white transition-colors duration-150">GitHub</a>
+        <nav class="flex flex-col py-3 border-b border-zinc-200/60">
+          <a href="#features" class="mobile-nav-link px-2 py-2.5 text-[14px] text-zinc-500 hover:text-black transition-colors duration-150 font-medium">Características</a>
+          <a href="#editor" class="mobile-nav-link px-2 py-2.5 text-[14px] text-zinc-500 hover:text-black transition-colors duration-150 font-medium">Editor</a>
+          <a href="https://github.com/kirianL/CVforge" target="_blank" rel="noopener noreferrer" class="mobile-nav-link px-2 py-2.5 text-[14px] text-zinc-500 hover:text-black transition-colors duration-150 font-medium">GitHub</a>
           {!user && (
-            <a href="/login" class="mobile-nav-link px-2 py-2.5 text-[14px] text-zinc-400 hover:text-white transition-colors duration-150">Iniciar sesión</a>
+            <a href="/login" class="mobile-nav-link px-2 py-2.5 text-[14px] text-zinc-500 hover:text-black transition-colors duration-150 font-medium">Iniciar sesión</a>
           )}
         </nav>
       </div>
 
-      {/* ══════════ Hero ══════════ */}
-      <main class="flex-1 flex flex-col items-center justify-center py-16 sm:py-20 md:py-0">
-        <div class="w-full max-w-3xl mx-auto text-center space-y-6 sm:space-y-8">
-
+      {/* ══════════ Hero (Split Screen) ══════════ */}
+      <main class="flex-1 flex flex-col lg:flex-row items-center justify-between py-12 lg:py-20 gap-12 lg:gap-8">
+        
+        {/* Left Side: Copywriting */}
+        <div class="w-full lg:max-w-xl text-center lg:text-left space-y-6 sm:space-y-8">
           {/* Headline */}
-          <h1 class="text-[2.25rem] sm:text-[3.25rem] md:text-[3.75rem] lg:text-[4.25rem] font-semibold leading-[1.08] tracking-[-0.03em] text-white">
+          <h1 class="text-[2.25rem] sm:text-[3.25rem] md:text-[3.75rem] lg:text-[4.25rem] font-semibold leading-[1.08] tracking-[-0.03em] text-zinc-900">
             Crea currículos que <br class="hidden sm:inline"/>
-            <span class="text-zinc-500">superan filtros ATS.</span>
+            <span class="text-zinc-400">superan filtros ATS.</span>
           </h1>
 
           {/* Subtitle */}
-          <p class="text-[15px] sm:text-[17px] leading-relaxed text-zinc-500 max-w-lg mx-auto">
-            Editor en tiempo real, formato profesional validado por reclutadores y exportación PDF gratuita. Sin distracciones.
+          <p class="text-[15px] sm:text-[17px] leading-relaxed text-zinc-550 max-w-lg mx-auto lg:mx-0">
+            Editor en tiempo real, formato profesional validado por reclutadores y exportación PDF gratuita. Minimalista, estético y en blanco.
           </p>
 
           {/* CTA row */}
-          <div class="flex flex-col sm:flex-row gap-3 items-center justify-center pt-2">
+          <div class="flex flex-col sm:flex-row gap-3 items-center justify-center lg:justify-start pt-2">
             <a 
               href={user ? "/dashboard" : "/register"} 
-              class="w-full sm:w-auto inline-flex h-10 sm:h-11 items-center justify-center rounded-lg bg-white px-5 sm:px-6 text-[14px] font-medium text-zinc-900 hover:bg-zinc-200 active:scale-[0.97] transition-all cursor-pointer"
+              class="w-full sm:w-auto inline-flex h-10 sm:h-11 items-center justify-center rounded-lg bg-black px-5 sm:px-6 text-[14px] font-semibold text-white hover:bg-zinc-800 active:scale-[0.97] transition-all cursor-pointer shadow-md"
             >
               Comenzar gratis →
             </a>
@@ -113,98 +114,139 @@ const user = await getUserFromRequest(Astro.request);
               href="https://github.com/kirianL/CVforge"
               target="_blank"
               rel="noopener noreferrer"
-              class="w-full sm:w-auto inline-flex h-10 sm:h-11 items-center justify-center rounded-lg border border-white/[0.08] bg-transparent px-5 sm:px-6 text-[14px] font-medium text-zinc-400 hover:text-white hover:border-white/[0.15] active:scale-[0.97] transition-all cursor-pointer"
+              class="w-full sm:w-auto inline-flex h-10 sm:h-11 items-center justify-center rounded-lg border border-zinc-200 bg-white px-5 sm:px-6 text-[14px] font-medium text-zinc-650 hover:bg-zinc-50 hover:border-zinc-350 active:scale-[0.97] transition-all cursor-pointer shadow-sm"
             >
               Ver en GitHub
             </a>
           </div>
         </div>
 
-        {/* ── Terminal ── */}
-        <div class="w-full max-w-xl mx-auto mt-14 sm:mt-16 md:mt-20">
-          <div class="rounded-xl border border-white/[0.06] bg-[#111111] overflow-hidden">
-            
-            {/* Window chrome */}
-            <div class="flex items-center gap-1.5 px-4 py-3 border-b border-white/[0.04]">
-              <span class="h-[10px] w-[10px] rounded-full bg-white/[0.06]"></span>
-              <span class="h-[10px] w-[10px] rounded-full bg-white/[0.06]"></span>
-              <span class="h-[10px] w-[10px] rounded-full bg-white/[0.06]"></span>
-              <span class="ml-auto text-[10px] text-zinc-600 font-mono">cvforge-ats v1.0</span>
-            </div>
-
-            {/* Terminal body */}
-            <pre 
-              id="terminal-content" 
-              class="h-48 sm:h-52 md:h-56 overflow-y-auto px-4 py-3 leading-[1.7] whitespace-pre-wrap font-mono text-[11px] sm:text-[12px] text-zinc-500 scrollbar-none"
-            ></pre>
-          </div>
+        {/* Right Side: Imposing Floating 3D ASCII Sculpture */}
+        <div class="w-full lg:w-1/2 flex justify-center items-center lg:justify-end">
+          <pre 
+            id="ascii-sculpture" 
+            class="leading-[0.95] font-mono text-[9px] sm:text-[11px] lg:text-[11.5px] text-zinc-850 select-none cursor-default font-bold transition-colors hover:text-black"
+          ></pre>
         </div>
       </main>
 
       {/* ── Footer ── */}
-      <footer class="py-6 flex items-center justify-between text-[12px] text-zinc-600 shrink-0 border-t border-white/[0.04]">
+      <footer class="py-6 flex items-center justify-between text-[12px] text-zinc-500 shrink-0 border-t border-zinc-200/60">
         <span>© 2026 CVForge</span>
         <div class="flex items-center gap-5">
-          <a href="/login" class="hover:text-zinc-300 transition-colors duration-150">Acceso</a>
-          <a href="/register" class="hover:text-zinc-300 transition-colors duration-150">Registro</a>
+          <a href="/login" class="hover:text-black transition-colors duration-150 font-medium">Acceso</a>
+          <a href="/register" class="hover:text-black transition-colors duration-150 font-medium">Registro</a>
         </div>
       </footer>
     </div>
   </div>
 
   <script>
-    // ── Terminal animation ──
-    const lines = [
-      "$ cvforge scan --file resume.pdf",
-      "",
-      "  Conectando a base de datos...",
-      "  Motor ATS inicializado.",
-      "",
-      "  Escaneando campos del perfil:",
-      "    ✓ Información personal",
-      "    ✓ Educación",
-      "    ✓ Habilidades técnicas",
-      "    ✓ Experiencia laboral",
-      "",
-      "  Validando estructura...",
-      "    ✓ Resumen profesional detectado",
-      "    ✓ Formato compatible con ATS",
-      "",
-      "  Analizando keywords...",
-      "    ████████████████████ 100%",
-      "",
-      "  ┌───────────────────────────┐",
-      "  │  Compatibilidad ATS: 98%  │",
-      "  │  Estado: Aprobado ✓       │",
-      "  └───────────────────────────┘",
-      "",
-      "  Listo. Redirigiendo al editor..."
-    ];
+    // ── 3D ASCII Sculpture Rendering ──
+    const asciiElement = document.getElementById('ascii-sculpture');
+    const ramp = " .:-=+*#%@";
 
-    const pre = document.getElementById('terminal-content');
-    let idx = 0;
+    let A = 0.15; // Tilted X angle
+    let B = 0;    // Y rotation angle
 
-    function typeLine() {
-      if (!pre) return;
-      if (idx < lines.length) {
-        const line = lines[idx];
-        pre.textContent += line + '\n';
-        idx++;
-        pre.scrollTop = pre.scrollHeight;
+    // Larger grid resolution for imposing appearance
+    const width = 60;
+    const height = 34;
 
-        const d = line === "" ? 80
-          : line.startsWith("$") ? 500
-          : line.startsWith("    ✓") ? 180
-          : line.includes("████") ? 400
-          : line.startsWith("  ┌") || line.startsWith("  └") ? 300
-          : 200;
+    function renderFrame() {
+      if (!asciiElement) return;
 
-        setTimeout(typeLine, d);
-      } else {
-        setTimeout(() => { pre.textContent = ""; idx = 0; typeLine(); }, 7000);
+      const output = Array(width * height).fill(' ');
+      const zbuffer = Array(width * height).fill(-1000);
+
+      const stepsY = 80;
+      const stepsTheta = 80;
+
+      for (let i = 0; i < stepsY; i++) {
+        const y = -7 + (14 * i) / (stepsY - 1);
+
+        for (let j = 0; j < stepsTheta; j++) {
+          const theta = (2 * Math.PI * j) / stepsTheta;
+
+          // Thick stepped Classical Doric column
+          let R = 4.2;
+          if (y < -6.0) {
+            // Upper capital slab (Abacus)
+            R = 6.4;
+          } else if (y < -4.8) {
+            // Flared transition (Echinus)
+            R = 4.2 + Math.pow(Math.abs(y + 4.8), 1.5) * 1.8;
+          } else if (y > 6.0) {
+            // Lower base slab (Plinth)
+            R = 6.4;
+          } else if (y > 4.8) {
+            // Base transition
+            R = 4.2 + Math.pow(y - 4.8, 1.5) * 1.8;
+          } else {
+            // Shaft fluting
+            const numGrooves = 12;
+            const grooveDepth = 0.45;
+            R = 4.0 + grooveDepth * Math.cos(numGrooves * theta);
+          }
+
+          const x3 = Math.cos(theta) * R;
+          const z3 = Math.sin(theta) * R;
+          const y3 = y;
+
+          // Rotate around Y axis
+          const xRotY = x3 * Math.cos(B) - z3 * Math.sin(B);
+          const zRotY = x3 * Math.sin(B) + z3 * Math.cos(B);
+
+          // Rotate around X axis
+          const yFinal = y3 * Math.cos(A) - zRotY * Math.sin(A);
+          const zFinal = y3 * Math.sin(A) + zRotY * Math.cos(A);
+
+          // Projection scale adjustments for larger size
+          const distance = 22;
+          const scaleX = 2.45;
+          const scaleY = 1.1;
+
+          const ooz = 1 / (zFinal + distance);
+          const xp = Math.round(width / 2 + scaleX * xRotY * ooz * 24);
+          const yp = Math.round(height / 2 - scaleY * yFinal * ooz * 28);
+
+          if (xp >= 0 && xp < width && yp >= 0 && yp < height) {
+            const nx3 = Math.cos(theta);
+            const nz3 = Math.sin(theta);
+            const ny3 = 0;
+
+            const nxRotY = nx3 * Math.cos(B) - nz3 * Math.sin(B);
+            const nzRotY = nx3 * Math.sin(B) + nz3 * Math.cos(B);
+            const nyFinal = ny3 * Math.cos(A) - nzRotY * Math.sin(A);
+            const nzFinalNormal = ny3 * Math.sin(A) + nzRotY * Math.cos(A);
+
+            const luminance = nxRotY * 0.45 + nyFinal * 0.35 - nzFinalNormal * 0.85;
+
+            if (ooz > zbuffer[yp * width + xp]) {
+              zbuffer[yp * width + xp] = ooz;
+
+              let charIdx = Math.floor((luminance + 1) * 4.5);
+              charIdx = Math.max(0, Math.min(ramp.length - 1, charIdx));
+              output[yp * width + xp] = ramp[charIdx];
+            }
+          }
+        }
       }
+
+      let frameStr = '';
+      for (let h = 0; h < height; h++) {
+        for (let w = 0; w < width; w++) {
+          frameStr += output[h * width + w];
+        }
+        frameStr += '\n';
+      }
+
+      asciiElement.textContent = frameStr;
+      B += 0.025; // Y rotation speed
     }
-    setTimeout(typeLine, 600);
+
+    // Run at 25 frames per second
+    setInterval(renderFrame, 40);
 
     // ── Mobile nav ──
     const btn = document.getElementById('mobile-menu-btn');
