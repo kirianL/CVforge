@@ -9,7 +9,7 @@ const user = await getUserFromRequest(Astro.request);
   title="CVForge | Generador de Currículums Optimizado para ATS"
   description="Crea un currículum profesional de una sola página, optimizado para pasar los filtros automáticos ATS de reclutamiento y exportable a PDF de forma gratuita."
 >
-  <div class="landing min-h-[100dvh] lg:h-screen lg:min-h-screen bg-zinc-55/30 text-zinc-900 flex flex-col font-sans relative overflow-y-auto lg:overflow-hidden">
+  <div class="landing h-[100dvh] lg:h-screen lg:min-h-screen bg-zinc-55/30 text-zinc-900 flex flex-col font-sans relative overflow-hidden">
 
     {/* ── Subtle noise texture ── */}
     <div class="absolute inset-0 opacity-[0.012] pointer-events-none" style="background-image:url('data:image/svg+xml,%3Csvg viewBox=%220 0 256 256%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.9%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23n)%22/%3E%3C/svg%3E')"></div>
@@ -18,7 +18,7 @@ const user = await getUserFromRequest(Astro.request);
     <div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(120,119,198,0.03),transparent)] pointer-events-none"></div>
 
     {/* ══════════ Content shell ══════════ */}
-    <div class="mx-auto w-full max-w-[1120px] px-5 sm:px-8 flex flex-col flex-1 lg:h-full relative z-10">
+    <div class="mx-auto w-full max-w-[1120px] px-5 sm:px-8 flex flex-col h-full relative z-10">
 
       {/* ── Header ── */}
       <header class="flex h-14 items-center justify-between shrink-0 py-4 z-20 relative" data-logged-in={user ? "true" : "false"} id="landing-header">
@@ -97,7 +97,7 @@ const user = await getUserFromRequest(Astro.request);
       </div>
 
       {/* ══════════ Hero / Form Split Screen ══════════ */}
-      <main class="flex-1 flex flex-col lg:flex-row items-center justify-center lg:justify-between py-6 lg:py-0 relative overflow-visible lg:overflow-hidden">
+      <main class="flex-1 flex flex-col lg:flex-row items-center justify-center lg:justify-between py-6 lg:py-0 relative overflow-hidden">
         
         {/* Left Side Container (Transitions between Hero copy, Login, and Register) */}
         <div id="views-container" class="w-full lg:max-w-xl relative grid grid-cols-1 grid-rows-1 items-center z-10 py-6 lg:py-24 transition-[height] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] mx-auto lg:mx-0">
@@ -133,9 +133,8 @@ const user = await getUserFromRequest(Astro.request);
                 rel="noopener noreferrer"
                 class="w-full sm:w-auto inline-flex h-12 sm:h-12 items-center justify-center rounded-lg border border-zinc-200 bg-white px-6 text-[14px] font-medium text-zinc-650 hover:bg-zinc-50 hover:border-zinc-350 active:scale-[0.97] transition-all cursor-pointer shadow-sm gap-2"
               >
-                <svg class="w-4 h-4 text-zinc-700 animate-pulse" fill="none" viewBox="1346 41 37 37" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                  <path opacity="0.12" d="M1365 76.6667C1374.2 76.6667 1381.67 69.2047 1381.67 60C1381.67 50.7953 1374.2 43.3333 1365 43.3333C1355.8 43.3333 1348.33 50.7953 1348.33 60C1348.33 69.2047 1355.8 76.6667 1365 76.6667Z" fill="currentColor"/>
-                  <path d="M1368.33 68.3333L1373.33 63.3333L1368.33 58.3333M1361.67 51.6667L1356.67 56.6667L1361.67 61.6667M1381.67 60C1381.67 69.2047 1374.2 76.6667 1365 76.6667C1355.8 76.6667 1348.33 69.2047 1348.33 60C1348.33 50.7953 1355.8 43.3333 1365 43.3333C1374.2 43.3333 1381.67 50.7953 1381.67 60Z" />
+                <svg class="w-4 h-4 text-zinc-700" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.91 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
                 </svg>
                 Ver en GitHub
               </a>
@@ -143,7 +142,7 @@ const user = await getUserFromRequest(Astro.request);
           </div>
 
           {/* ── VIEW 2: LOGIN FORM (Flat/Frameless, Optimized for Mobile) ── */}
-          <div id="view-login" class="w-full col-start-1 row-start-1 hidden transition-all duration-500 transform opacity-0 translate-x-12 flex flex-col justify-center space-y-5 sm:space-y-6 text-center lg:text-left">
+          <div id="view-login" class="w-full col-start-1 row-start-1 hidden transition-all duration-500 transform opacity-0 translate-x-12 flex flex-col justify-center space-y-3 sm:space-y-6 text-center lg:text-left">
             <div class="space-y-2 flex flex-col items-center lg:items-start">
               <button id="login-back-btn" class="reveal-item delay-0 inline-flex items-center justify-center lg:justify-start gap-1.5 text-[13px] text-zinc-550 hover:text-black transition-colors font-semibold cursor-pointer border-none bg-transparent p-0 w-full lg:w-auto">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" class="w-3.5 h-3.5">
@@ -152,50 +151,50 @@ const user = await getUserFromRequest(Astro.request);
                 Volver al inicio
               </button>
               <h2 class="reveal-item delay-75 text-2xl sm:text-3xl font-extrabold tracking-tight text-zinc-900 text-center lg:text-left">Entrar a tu cuenta</h2>
-              <p class="reveal-item delay-150 text-[14px] text-zinc-550 text-center lg:text-left">Ingresa tus credenciales para continuar.</p>
+              <p class="reveal-item delay-150 text-xs sm:text-[14px] text-zinc-550 text-center lg:text-left hidden sm:block">Ingresa tus credenciales para continuar.</p>
             </div>
 
             <div id="login-error-alert" class="hidden p-3.5 rounded-lg border border-red-200 bg-red-50/70 text-xs text-red-650 font-medium"></div>
 
-            <form id="login-form" class="space-y-3.5 sm:space-y-4 w-full max-w-sm mx-auto lg:mx-0 text-left">
-              <div class="reveal-item delay-225 space-y-1.5">
+            <form id="login-form" class="space-y-2.5 sm:space-y-4 w-full max-w-sm mx-auto lg:mx-0 text-left">
+              <div class="reveal-item delay-225 space-y-1 sm:space-y-1.5">
                 <label for="login-email" class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Correo Electrónico</label>
                 <input 
                   type="email" 
                   id="login-email" 
                   required
                   placeholder="correo@ejemplo.com"
-                  class="flex h-12 w-full rounded-lg border border-zinc-200 bg-white px-3.5 py-2 text-base placeholder:text-zinc-400 focus:outline-none focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100 transition-all shadow-sm"
+                  class="flex h-10 sm:h-12 w-full rounded-lg border border-zinc-200 bg-white px-3.5 py-1.5 text-sm sm:text-base placeholder:text-zinc-400 focus:outline-none focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100 transition-all shadow-sm"
                 />
               </div>
 
-              <div class="reveal-item delay-300 space-y-1.5">
+              <div class="reveal-item delay-300 space-y-1 sm:space-y-1.5">
                 <label for="login-password" class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Contraseña</label>
                 <input 
                   type="password" 
                   id="login-password" 
                   required
                   placeholder="••••••"
-                  class="flex h-12 w-full rounded-lg border border-zinc-200 bg-white px-3.5 py-2 text-base placeholder:text-zinc-400 focus:outline-none focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100 transition-all shadow-sm"
+                  class="flex h-10 sm:h-12 w-full rounded-lg border border-zinc-200 bg-white px-3.5 py-1.5 text-sm sm:text-base placeholder:text-zinc-400 focus:outline-none focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100 transition-all shadow-sm"
                 />
               </div>
 
               <button 
                 type="submit" 
                 id="login-submit-btn"
-                class="reveal-item delay-375 w-full flex h-12 items-center justify-center rounded-lg bg-black px-4 text-sm font-semibold text-white shadow hover:bg-zinc-800 active:scale-98 transition-all cursor-pointer border-none"
+                class="reveal-item delay-375 w-full flex h-10 sm:h-12 items-center justify-center rounded-lg bg-black px-4 text-xs sm:text-sm font-semibold text-white shadow hover:bg-zinc-800 active:scale-98 transition-all cursor-pointer border-none"
               >
                 Iniciar Sesión
               </button>
 
-              <div class="reveal-item delay-450 relative flex py-2 items-center justify-center text-xs text-zinc-400">
+              <div class="reveal-item delay-450 relative flex py-1 sm:py-2 items-center justify-center text-[9px] sm:text-xs text-zinc-400">
                 <div class="flex-grow border-t border-zinc-200/60 dark:border-zinc-800/40"></div>
                 <span class="flex-shrink mx-4 font-semibold uppercase tracking-wider text-[9px] text-zinc-400 dark:text-zinc-500">o continuar con</span>
                 <div class="flex-grow border-t border-zinc-200/60 dark:border-zinc-800/40"></div>
               </div>
 
               <div class="reveal-item delay-525 grid grid-cols-3 gap-3">
-                <button type="button" class="flex items-center justify-center h-11 rounded-lg border border-zinc-200 bg-white hover:bg-zinc-50 active:scale-[0.98] transition-all cursor-pointer shadow-xs dark:border-zinc-800/80 dark:bg-zinc-900 dark:hover:bg-zinc-850" title="Iniciar sesión con Google">
+                <button type="button" id="login-google-btn" class="flex items-center justify-center h-9.5 sm:h-11 rounded-lg border border-zinc-200 bg-white hover:bg-zinc-50 active:scale-[0.98] transition-all cursor-pointer shadow-xs dark:border-zinc-800/80 dark:bg-zinc-900 dark:hover:bg-zinc-850" title="Iniciar sesión con Google">
                   <svg class="h-4.5 w-4.5" viewBox="0 0 24 24">
                     <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
                     <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
@@ -203,12 +202,12 @@ const user = await getUserFromRequest(Astro.request);
                     <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
                   </svg>
                 </button>
-                <button type="button" class="flex items-center justify-center h-11 rounded-lg border border-zinc-200 bg-white hover:bg-zinc-50 active:scale-[0.98] transition-all cursor-pointer shadow-xs dark:border-zinc-800/80 dark:bg-zinc-900 dark:hover:bg-zinc-850" title="Iniciar sesión con GitHub">
+                <button type="button" id="login-github-btn" class="flex items-center justify-center h-9.5 sm:h-11 rounded-lg border border-zinc-200 bg-white hover:bg-zinc-50 active:scale-[0.98] transition-all cursor-pointer shadow-xs dark:border-zinc-800/80 dark:bg-zinc-900 dark:hover:bg-zinc-850" title="Iniciar sesión con GitHub">
                   <svg class="h-4.5 w-4.5 text-zinc-900 dark:text-white" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
                   </svg>
                 </button>
-                <button type="button" class="flex items-center justify-center h-11 rounded-lg border border-zinc-200 bg-white hover:bg-zinc-50 active:scale-[0.98] transition-all cursor-pointer shadow-xs dark:border-zinc-800/80 dark:bg-zinc-900 dark:hover:bg-zinc-850" title="Iniciar sesión con LinkedIn">
+                <button type="button" id="login-linkedin-btn" class="flex items-center justify-center h-9.5 sm:h-11 rounded-lg border border-zinc-200 bg-white hover:bg-zinc-50 active:scale-[0.98] transition-all cursor-pointer shadow-xs dark:border-zinc-800/80 dark:bg-zinc-900 dark:hover:bg-zinc-850" title="Iniciar sesión con LinkedIn">
                   <svg class="h-4.5 w-4.5" fill="#0A66C2" viewBox="0 0 24 24">
                     <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
                   </svg>
@@ -216,7 +215,7 @@ const user = await getUserFromRequest(Astro.request);
               </div>
             </form>
 
-            <div class="reveal-item delay-600 text-[14px] text-zinc-550 text-center lg:text-left">
+            <div class="reveal-item delay-600 text-xs sm:text-[14px] text-zinc-550 text-center lg:text-left">
               ¿No tienes una cuenta?
               <button id="login-to-register-btn" class="font-semibold text-black hover:underline cursor-pointer ml-1 border-none bg-transparent p-0 dark:text-white">
                 Regístrate gratis
@@ -225,8 +224,8 @@ const user = await getUserFromRequest(Astro.request);
           </div>
 
           {/* ── VIEW 3: REGISTER FORM (Flat/Frameless, Optimized for Mobile) ── */}
-          <div id="view-register" class="w-full col-start-1 row-start-1 hidden transition-all duration-500 transform opacity-0 translate-x-12 flex flex-col justify-center space-y-5 sm:space-y-6 text-center lg:text-left">
-            <div class="space-y-2 flex flex-col items-center lg:items-start">
+          <div id="view-register" class="w-full col-start-1 row-start-1 hidden transition-all duration-500 transform opacity-0 translate-x-12 flex flex-col justify-center space-y-3 sm:space-y-5 text-center lg:text-left">
+            <div class="space-y-1 sm:space-y-2 flex flex-col items-center lg:items-start">
               <button id="register-back-btn" class="reveal-item delay-0 inline-flex items-center justify-center lg:justify-start gap-1.5 text-[13px] text-zinc-550 hover:text-black transition-colors font-semibold cursor-pointer border-none bg-transparent p-0 w-full lg:w-auto">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" class="w-3.5 h-3.5">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
@@ -234,61 +233,61 @@ const user = await getUserFromRequest(Astro.request);
                 Volver al inicio
               </button>
               <h2 class="reveal-item delay-75 text-2xl sm:text-3xl font-extrabold tracking-tight text-zinc-900 text-center lg:text-left">Crea tu cuenta</h2>
-              <p class="reveal-item delay-150 text-[14px] text-zinc-550 text-center lg:text-left">Regístrate para guardar tus currículums gratis.</p>
+              <p class="reveal-item delay-150 text-xs sm:text-[14px] text-zinc-555 text-center lg:text-left hidden sm:block">Regístrate para guardar tus currículums gratis.</p>
             </div>
 
             <div id="register-error-alert" class="hidden p-3.5 rounded-lg border border-red-200 bg-red-50/70 text-xs text-red-650 font-medium"></div>
 
-            <form id="register-form" class="space-y-3.5 sm:space-y-4 w-full max-w-sm mx-auto lg:mx-0 text-left">
-              <div class="reveal-item delay-225 space-y-1.5">
+            <form id="register-form" class="space-y-2.5 sm:space-y-4 w-full max-w-sm mx-auto lg:mx-0 text-left">
+              <div class="reveal-item delay-225 space-y-1 sm:space-y-1.5">
                 <label for="register-name" class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Nombre Completo</label>
                 <input 
                   type="text" 
                   id="register-name" 
                   required
                   placeholder="Juan Pérez"
-                  class="flex h-12 w-full rounded-lg border border-zinc-200 bg-white px-3.5 py-2 text-base placeholder:text-zinc-400 focus:outline-none focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100 transition-all shadow-sm"
+                  class="flex h-10 sm:h-12 w-full rounded-lg border border-zinc-200 bg-white px-3.5 py-1.5 text-sm sm:text-base placeholder:text-zinc-400 focus:outline-none focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100 transition-all shadow-sm"
                 />
               </div>
 
-              <div class="reveal-item delay-300 space-y-1.5">
+              <div class="reveal-item delay-300 space-y-1 sm:space-y-1.5">
                 <label for="register-email" class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Correo Electrónico</label>
                 <input 
                   type="email" 
                   id="register-email" 
                   required
                   placeholder="correo@ejemplo.com"
-                  class="flex h-12 w-full rounded-lg border border-zinc-200 bg-white px-3.5 py-2 text-base placeholder:text-zinc-400 focus:outline-none focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100 transition-all shadow-sm"
+                  class="flex h-10 sm:h-12 w-full rounded-lg border border-zinc-200 bg-white px-3.5 py-1.5 text-sm sm:text-base placeholder:text-zinc-400 focus:outline-none focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100 transition-all shadow-sm"
                 />
               </div>
 
-              <div class="reveal-item delay-375 space-y-1.5">
+              <div class="reveal-item delay-375 space-y-1 sm:space-y-1.5">
                 <label for="register-password" class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Contraseña (mín. 6 caracteres)</label>
                 <input 
                   type="password" 
                   id="register-password" 
                   required
                   placeholder="••••••"
-                  class="flex h-12 w-full rounded-lg border border-zinc-200 bg-white px-3.5 py-2 text-base placeholder:text-zinc-400 focus:outline-none focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100 transition-all shadow-sm"
+                  class="flex h-10 sm:h-12 w-full rounded-lg border border-zinc-200 bg-white px-3.5 py-1.5 text-sm sm:text-base placeholder:text-zinc-400 focus:outline-none focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100 transition-all shadow-sm"
                 />
               </div>
 
               <button 
                 type="submit" 
                 id="register-submit-btn"
-                class="reveal-item delay-450 w-full flex h-12 items-center justify-center rounded-lg bg-black px-4 text-sm font-semibold text-white shadow hover:bg-zinc-800 active:scale-98 transition-all cursor-pointer border-none"
+                class="reveal-item delay-450 w-full flex h-10 sm:h-12 items-center justify-center rounded-lg bg-black px-4 text-xs sm:text-sm font-semibold text-white shadow hover:bg-zinc-800 active:scale-98 transition-all cursor-pointer border-none"
               >
                 Crear Cuenta
               </button>
 
-              <div class="reveal-item delay-525 relative flex py-2 items-center justify-center text-xs text-zinc-400">
+              <div class="reveal-item delay-525 relative flex py-1 sm:py-2 items-center justify-center text-[9px] sm:text-xs text-zinc-400">
                 <div class="flex-grow border-t border-zinc-200/60 dark:border-zinc-800/40"></div>
                 <span class="flex-shrink mx-4 font-semibold uppercase tracking-wider text-[9px] text-zinc-400 dark:text-zinc-500">o registrarse con</span>
                 <div class="flex-grow border-t border-zinc-200/60 dark:border-zinc-800/40"></div>
               </div>
 
               <div class="reveal-item delay-600 grid grid-cols-3 gap-3">
-                <button type="button" class="flex items-center justify-center h-11 rounded-lg border border-zinc-200 bg-white hover:bg-zinc-50 active:scale-[0.98] transition-all cursor-pointer shadow-xs dark:border-zinc-800/80 dark:bg-zinc-900 dark:hover:bg-zinc-850" title="Registrarse con Google">
+                <button type="button" id="register-google-btn" class="flex items-center justify-center h-9.5 sm:h-11 rounded-lg border border-zinc-200 bg-white hover:bg-zinc-50 active:scale-[0.98] transition-all cursor-pointer shadow-xs dark:border-zinc-800/80 dark:bg-zinc-900 dark:hover:bg-zinc-850" title="Registrarse con Google">
                   <svg class="h-4.5 w-4.5" viewBox="0 0 24 24">
                     <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
                     <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
@@ -296,12 +295,12 @@ const user = await getUserFromRequest(Astro.request);
                     <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
                   </svg>
                 </button>
-                <button type="button" class="flex items-center justify-center h-11 rounded-lg border border-zinc-200 bg-white hover:bg-zinc-50 active:scale-[0.98] transition-all cursor-pointer shadow-xs dark:border-zinc-800/80 dark:bg-zinc-900 dark:hover:bg-zinc-850" title="Registrarse con GitHub">
+                <button type="button" id="register-github-btn" class="flex items-center justify-center h-9.5 sm:h-11 rounded-lg border border-zinc-200 bg-white hover:bg-zinc-50 active:scale-[0.98] transition-all cursor-pointer shadow-xs dark:border-zinc-800/80 dark:bg-zinc-900 dark:hover:bg-zinc-850" title="Registrarse con GitHub">
                   <svg class="h-4.5 w-4.5 text-zinc-900 dark:text-white" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
                   </svg>
                 </button>
-                <button type="button" class="flex items-center justify-center h-11 rounded-lg border border-zinc-200 bg-white hover:bg-zinc-50 active:scale-[0.98] transition-all cursor-pointer shadow-xs dark:border-zinc-800/80 dark:bg-zinc-900 dark:hover:bg-zinc-850" title="Registrarse con LinkedIn">
+                <button type="button" id="register-linkedin-btn" class="flex items-center justify-center h-9.5 sm:h-11 rounded-lg border border-zinc-200 bg-white hover:bg-zinc-50 active:scale-[0.98] transition-all cursor-pointer shadow-xs dark:border-zinc-800/80 dark:bg-zinc-900 dark:hover:bg-zinc-850" title="Registrarse con LinkedIn">
                   <svg class="h-4.5 w-4.5" fill="#0A66C2" viewBox="0 0 24 24">
                     <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
                   </svg>
@@ -309,7 +308,7 @@ const user = await getUserFromRequest(Astro.request);
               </div>
             </form>
 
-            <div class="reveal-item delay-675 text-[14px] text-zinc-550 text-center lg:text-left">
+            <div class="reveal-item delay-675 text-xs sm:text-[14px] text-zinc-550 text-center lg:text-left">
               ¿Ya tienes una cuenta?
               <button id="register-to-login-btn" class="font-semibold text-black hover:underline cursor-pointer ml-1 border-none bg-transparent p-0 dark:text-white">
                 Inicia sesión
@@ -318,7 +317,7 @@ const user = await getUserFromRequest(Astro.request);
           </div>
 
           {/* ── VIEW 4: FEATURES VIEW (Flat/Frameless, Optimized for Mobile) ── */}
-          <div id="view-features" class="w-full col-start-1 row-start-1 hidden transition-all duration-500 transform opacity-0 translate-x-12 flex flex-col justify-center space-y-5 sm:space-y-6 text-center lg:text-left">
+          <div id="view-features" class="w-full col-start-1 row-start-1 hidden transition-all duration-500 transform opacity-0 translate-x-12 flex flex-col justify-center space-y-3 sm:space-y-6 text-center lg:text-left">
             <div class="space-y-2 flex flex-col items-center lg:items-start">
               <button id="features-back-btn" class="reveal-item delay-0 inline-flex items-center justify-center lg:justify-start gap-1.5 text-[13px] text-zinc-550 hover:text-black transition-colors font-semibold cursor-pointer border-none bg-transparent p-0 w-full lg:w-auto">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" class="w-3.5 h-3.5">
@@ -327,11 +326,11 @@ const user = await getUserFromRequest(Astro.request);
                 Volver al inicio
               </button>
               <h2 class="reveal-item delay-75 text-2xl sm:text-3xl font-extrabold tracking-tight text-zinc-900 text-center lg:text-left">Características</h2>
-              <p class="reveal-item delay-150 text-[14px] text-zinc-550 text-center lg:text-left font-sans">Diseñado para que tu currículum destaque y supere filtros.</p>
+              <p class="reveal-item delay-150 text-xs sm:text-[14px] text-zinc-550 text-center lg:text-left font-sans hidden sm:block">Diseñado para que tu currículum destaque y supere filtros.</p>
             </div>
 
-            <div class="space-y-4 pt-2 w-full max-w-md mx-auto lg:mx-0">
-              <div class="reveal-item delay-225 flex gap-3.5 items-start text-left">
+            <div class="grid grid-cols-1 min-[450px]:grid-cols-2 gap-x-4 gap-y-3 pt-2 w-full max-w-xl mx-auto lg:mx-0">
+              <div class="reveal-item delay-225 flex gap-3 items-start text-left">
                 <div class="p-2 bg-zinc-100 rounded-lg text-zinc-900 shrink-0">
                   <svg class="w-4 h-4 text-zinc-800 dark:text-zinc-200" fill="none" viewBox="941 121 37 37" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <path opacity="0.12" d="M953.333 156.667C958.856 156.667 963.333 152.19 963.333 146.667C963.333 141.144 958.856 136.667 953.333 136.667C947.81 136.667 943.333 141.144 943.333 146.667Z" fill="currentColor"/>
@@ -339,38 +338,38 @@ const user = await getUserFromRequest(Astro.request);
                   </svg>
                 </div>
                 <div>
-                  <h3 class="text-sm font-bold text-zinc-900 font-sans">Compatibilidad ATS Garantizada</h3>
-                  <p class="text-xs text-zinc-555 mt-0.5 font-sans">Diseños estructurados bajo estándares que permiten a los lectores automáticos indexar tu información sin errores.</p>
+                  <h3 class="text-sm font-bold text-zinc-900 font-sans">Compatibilidad ATS</h3>
+                  <p class="text-[10px] text-zinc-555 mt-0.5 font-sans leading-tight">Diseños estructurados bajo estándares que permiten a los lectores automáticos indexar tu información sin errores.</p>
                 </div>
               </div>
 
-              <div class="reveal-item delay-300 flex gap-3.5 items-start text-left">
+              <div class="reveal-item delay-300 flex gap-3 items-start text-left">
                 <div class="p-2 bg-zinc-100 rounded-lg text-zinc-900 shrink-0">
                   <svg class="w-4 h-4 text-zinc-800 dark:text-zinc-200" fill="none" viewBox="295 43 33 33" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path opacity="0.12" d="M297 70.5424C297 69.7271 297 69.3195 297.092 68.9359C297.174 68.5957 297.308 68.2706 297.491 67.9724C297.697 67.636 297.986 67.3477 298.562 66.7712L319.5 45.8333C320.881 44.4526 323.119 44.4526 324.5 45.8333C325.881 47.214 325.881 49.4526 324.5 50.8333L303.562 71.7712C302.986 72.3477 302.697 72.636 302.361 72.8421C302.063 73.0249 301.738 73.1596 301.397 73.2412C301.014 73.3333 300.606 73.3333 299.791 73.3333H297V70.5424Z" fill="currentColor"/>
+                    <path opacity="0.12" d="M297 70.5424C297 69.7271 297 69.3195 297.092 68.9359C297.174 68.5957 297.308 68.2706 297.491 67.9724C297.697 67.636 297.986 67.3477 298.562 66.7712L319.5 45.8333C320.881 44.4526 323.119 44.4526 324.5 45.8333C325.881 47.214 325.881 49.4526 324.5 50.8333L303.562 71.7712C302.986 72.3477 302.697 72.636 302.361 72.8421C302.063 73.0249 301.738 73.1596 301.397 73.2412C301.014 73.3333 300.606 73.3333 299.791 73.3333H297V70.5424V73.3333Z" fill="currentColor"/>
                     <path d="M327 70L325.333 71.8234C324.449 72.7902 323.25 73.3333 322 73.3333C320.75 73.3333 319.551 72.7902 318.667 71.8234C317.782 70.8585 316.583 70.3168 315.334 70.3168C314.084 70.3168 312.885 70.8585 312 71.8234M297 73.3333H299.791C300.606 73.3333 301.014 73.3333 301.397 73.2412C301.738 73.1596 302.063 73.0249 302.361 72.8421C302.697 72.636 302.986 72.3477 303.562 71.7712L324.5 50.8333C325.881 49.4526 325.881 47.214 324.5 45.8333C323.119 44.4526 320.881 44.4526 319.5 45.8333L298.562 66.7712C297.986 67.3477 297.697 67.636 297.491 67.9724C297.308 68.2706 297.174 68.5957 297.092 68.9359C297 69.3195 297 69.7271 297 70.5424V73.3333Z" />
                   </svg>
                 </div>
                 <div>
-                  <h3 class="text-sm font-bold text-zinc-900 font-sans">Edición Fluida en Tiempo Real</h3>
-                  <p class="text-xs text-zinc-555 mt-0.5 font-sans">Observa los cambios al instante en tu plantilla A4 con previsualización interactiva mientras escribes.</p>
+                  <h3 class="text-sm font-bold text-zinc-900 font-sans">Edición en Vivo</h3>
+                  <p class="text-[10px] text-zinc-555 mt-0.5 font-sans leading-tight">Observa los cambios al instante en tu plantilla A4 con previsualización interactiva mientras escribes.</p>
                 </div>
               </div>
 
-              <div class="reveal-item delay-375 flex gap-3.5 items-start text-left">
+              <div class="reveal-item delay-375 flex gap-3 items-start text-left">
                 <div class="p-2 bg-zinc-100 rounded-lg text-zinc-900 shrink-0">
                   <svg class="w-4 h-4 text-zinc-800 dark:text-zinc-200" fill="none" viewBox="1103 121 37 37" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <path opacity="0.12" d="M1105.33 123.333L1108.67 126.667M1138.67 123.333L1135.33 126.667M1138.67 156.667L1135.33 153.333M1105.33 156.667L1108.67 153.333M1105.33 146.667H1107.83M1115.33 123.333V125.833M1138.67 133.333H1136.17M1128.67 156.667V154.167M1132 146.667H1137.83M1128.67 123.333V130M1105.33 133.333H1112M1115.33 156.667V150" fill="currentColor"/>
-                    <path d="M1121.06 132.609L1114.61 139.057C1114.28 139.057 1114.11 139.222 1114.05 139.412C1114 139.58 1114 139.76 1114.05 139.928C1114.11 140.118 1114.28 140.283 1114.61 140.613L1121.06 147.061C1121.39 147.391 1121.55 147.556 1121.74 147.617C1121.91 147.617 1122.09 147.617 1122.26 147.617C1122.45 147.556 1122.61 147.391 1122.94 147.061L1129.39 140.613C1129.72 140.283 1129.89 140.118 1129.95 139.928C1130 139.76 1130 139.58 1129.95 139.412C1129.89 139.222 1129.72 139.057 1129.39 138.727L1122.94 132.279C1122.61 131.949 1122.45 131.784 1122.26 131.723C1122.09 131.668 1121.91 131.668 1121.74 131.723C1121.55 131.784 1121.39 131.949 1121.06 132.279Z" />
+                    <path d="M1121.06 132.609L1114.61 139.057C1114.28 139.057C1114.11 139.222C1114.05 139.412C1114 139.58C1114 139.76C1114.05 139.928C1114.11 140.118C1114.28 140.283C1114.61 140.613L1121.06 147.061C1121.39 147.391C1121.55 147.556C1121.74 147.617C1121.91 147.617C1122.09 147.617C1122.26 147.617C1122.45 147.556C1122.61 147.391C1122.94 147.061L1129.39 140.613C1129.72 140.283C1129.89 140.118C1129.95 139.928C1130 139.76C1130 139.58C1129.95 139.412C1129.89 139.222C1129.72 139.057C1129.39 138.727L1122.94 132.279C1122.61 131.949C1122.45 131.784C1122.26 131.723C1122.09 131.668C1121.91 131.668C1121.74 131.723C1121.55 131.784C1121.39 131.949C1121.06 132.279Z" />
                   </svg>
                 </div>
                 <div>
-                  <h3 class="text-sm font-bold text-zinc-900 font-sans">Recomendador Inteligente de Habilidades</h3>
-                  <p class="text-xs text-zinc-555 mt-0.5 font-sans">Analizamos tu profesión y te sugerimos palabras clave esenciales para tu industria para añadir con un clic.</p>
+                  <h3 class="text-sm font-bold text-zinc-900 font-sans">Sugerencias de Keywords</h3>
+                  <p class="text-[10px] text-zinc-555 mt-0.5 font-sans leading-tight">Analizamos tu profesión y te sugerimos palabras clave esenciales para tu industria para añadir con un clic.</p>
                 </div>
               </div>
 
-              <div class="reveal-item delay-450 flex gap-3.5 items-start text-left">
+              <div class="reveal-item delay-450 flex gap-3 items-start text-left">
                 <div class="p-2 bg-zinc-100 rounded-lg text-zinc-900 shrink-0">
                   <svg class="w-4 h-4 text-zinc-800 dark:text-zinc-200" viewBox="1267 43 34 34" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <path opacity="0.12" d="M1269 75H1299V65H1269V75Z" fill="currentColor"/>
@@ -378,8 +377,8 @@ const user = await getUserFromRequest(Astro.request);
                   </svg>
                 </div>
                 <div>
-                  <h3 class="text-sm font-bold text-zinc-900 font-sans">Exportación PDF Directa y Limpia</h3>
-                  <p class="text-xs text-zinc-555 mt-0.5 font-sans">Descarga tu currículum con un formato A4 estricto, sin marcas de agua, límites de descargas ni cobros ocultos.</p>
+                  <h3 class="text-sm font-bold text-zinc-900 font-sans">PDF Limpio Gratis</h3>
+                  <p class="text-[10px] text-zinc-555 mt-0.5 font-sans leading-tight">Descarga tu currículum con un formato A4 estricto, sin marcas de agua, límites de descargas ni cobros ocultos.</p>
                 </div>
               </div>
             </div>
@@ -661,6 +660,17 @@ const user = await getUserFromRequest(Astro.request);
     document.getElementById('footer-login-btn')?.addEventListener('click', () => switchView('login'));
     document.getElementById('footer-register-btn')?.addEventListener('click', () => switchView('register'));
 
+    // OAuth social logins redirects
+    const oauthProviders = ['google', 'github', 'linkedin'];
+    oauthProviders.forEach(provider => {
+      document.getElementById(`login-${provider}-btn`)?.addEventListener('click', () => {
+        window.location.href = `/api/auth/oauth/${provider}/login`;
+      });
+      document.getElementById(`register-${provider}-btn`)?.addEventListener('click', () => {
+        window.location.href = `/api/auth/oauth/${provider}/login`;
+      });
+    });
+
     // Check URL flow on load
     const params = new URLSearchParams(window.location.search);
     const flow = params.get('flow');
@@ -797,7 +807,15 @@ const user = await getUserFromRequest(Astro.request);
     .landing a, .landing button { -webkit-tap-highlight-color: transparent; }
     .landing { -webkit-overflow-scrolling: touch; }
 
-    /* Native scrolling on mobile handles viewports and virtual keyboards cleanly */
+    /* Lock body scroll on mobile viewport */
+    @media (max-width: 1023px) {
+      html, body {
+        overflow: hidden !important;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+      }
+    }
 
     /* Motion text reveal keyframes */
     @keyframes revealUp {
