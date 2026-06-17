@@ -47,6 +47,20 @@ const getGradient = (id: string) => {
         </div>
 
         <div class="flex items-center gap-4">
+          <button
+            id="theme-toggle-btn"
+            class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-zinc-200 bg-white text-zinc-700 hover:bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-850 cursor-pointer transition-colors shadow-sm"
+            title="Cambiar tema"
+          >
+            <!-- Sun Icon (shown in light mode) -->
+            <svg class="h-4 w-4 dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+            </svg>
+            <!-- Moon Icon (shown in dark mode) -->
+            <svg class="h-4 w-4 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            </svg>
+          </button>
           <span class="text-sm text-zinc-650 dark:text-zinc-400 font-medium">Hola, {user.name}</span>
           <button 
             id="logout-btn"
@@ -170,6 +184,23 @@ const getGradient = (id: string) => {
                         {resume.viewsCount} vistas
                       </span>
                       <span>• {resume.templateId === 'ats-classic' ? 'ATS Classic' : 'Plantilla Custom'}</span>
+                    </div>
+
+                    {/* Link Container */}
+                    <div 
+                      id={`link-container-${resume.id}`}
+                      class={`mt-4 items-center justify-between rounded-xl border border-zinc-200 bg-zinc-50/70 p-2 dark:border-zinc-800 dark:bg-zinc-950/40 ${resume.isPublished ? 'flex' : 'hidden'}`}
+                    >
+                      <span class="truncate text-[10px] font-mono text-zinc-500 max-w-[170px]" id={`link-text-${resume.id}`}>
+                        {`/cv/${resume.slug}`}
+                      </span>
+                      <button
+                        class="copy-link-btn text-[10px] font-bold text-zinc-700 hover:text-black dark:text-zinc-400 dark:hover:text-white px-2 py-1 rounded-lg border border-zinc-200 bg-white hover:bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:bg-zinc-850 cursor-pointer transition-colors shadow-sm"
+                        data-slug={resume.slug}
+                        title="Copiar enlace público"
+                      >
+                        Copiar
+                      </button>
                     </div>
                   </div>
 
@@ -671,11 +702,38 @@ const getGradient = (id: string) => {
             target.className = "publish-toggle-btn text-[10px] font-bold px-2 py-0.5 rounded-full border transition-all active:scale-95 cursor-pointer shrink-0 bg-zinc-100 text-zinc-600 border-zinc-200 dark:bg-zinc-850 dark:text-zinc-400 dark:border-zinc-800";
           }
 
+          const linkContainer = document.getElementById(`link-container-${id}`);
+          if (linkContainer) {
+            if (newPublishedState) {
+              linkContainer.classList.remove('hidden');
+              linkContainer.classList.add('flex');
+            } else {
+              linkContainer.classList.remove('flex');
+              linkContainer.classList.add('hidden');
+            }
+          }
+
         } catch (err: any) {
           showToast(err.message || 'Error al actualizar publicación', 'error');
         } finally {
           target.disabled = false;
         }
+      });
+    });
+
+    // ==================== COPY LINK FLOW ====================
+    document.querySelectorAll('.copy-link-btn').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        const target = e.currentTarget as HTMLButtonElement;
+        const slug = target.getAttribute('data-slug');
+        if (!slug) return;
+
+        const absoluteUrl = `${window.location.origin}/cv/${slug}`;
+        navigator.clipboard.writeText(absoluteUrl).then(() => {
+          showToast('Enlace de CV copiado al portapapeles', 'success');
+        }).catch(() => {
+          showToast('Error al copiar el enlace', 'error');
+        });
       });
     });
 
@@ -706,6 +764,19 @@ const getGradient = (id: string) => {
           true
         );
       });
+    });
+
+    // ==================== THEME TOGGLE FLOW ====================
+    const themeToggleBtn = document.getElementById('theme-toggle-btn');
+    themeToggleBtn?.addEventListener('click', () => {
+      const isDark = document.documentElement.classList.contains('dark');
+      if (isDark) {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      }
     });
   </script>
 </Layout>

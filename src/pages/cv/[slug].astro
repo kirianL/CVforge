@@ -1,0 +1,368 @@
+---
+import "../../styles/global.css";
+import { getDb } from "../../lib/db";
+
+const { slug } = Astro.params;
+
+if (!slug) {
+  return new Response("Not Found", { status: 404 });
+}
+
+const prisma = getDb();
+const resume = await prisma.resume.findFirst({
+  where: { slug, isPublished: true },
+});
+
+if (!resume) {
+  return new Response(
+    `
+    <!DOCTYPE html>
+    <html lang="es">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>CV No Encontrado | CVForge</title>
+        <style>
+          @import "tailwindcss";
+          @import "../../styles/global.css";
+        </style>
+        <script is:inline>
+          const theme = (() => {
+            if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+              return localStorage.getItem('theme');
+            }
+            if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+              return 'dark';
+            }
+            return 'light';
+          })();
+          if (theme === 'dark') {
+            document.documentElement.classList.add('dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+          }
+        </script>
+      </head>
+      <body class="bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-50 min-h-screen flex items-center justify-center p-4">
+        <div class="max-w-md w-full text-center space-y-4">
+          <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-black text-white font-bold text-2xl dark:bg-white dark:text-black mx-auto">
+            CF
+          </div>
+          <h1 class="text-2xl font-bold tracking-tight">Este currículum no es público</h1>
+          <p class="text-sm text-zinc-500 dark:text-zinc-400">El propietario ha marcado este currículum como privado o el enlace es incorrecto.</p>
+          <div class="pt-4">
+            <a href="/" class="inline-flex h-10 items-center justify-center rounded-md bg-black px-4 text-sm font-semibold text-white hover:bg-zinc-800 dark:bg-white dark:text-black dark:hover:bg-zinc-200 transition-colors">
+              Ir a CVForge
+            </a>
+          </div>
+        </div>
+      </body>
+    </html>
+    `,
+    {
+      status: 404,
+      headers: { "Content-Type": "text/html; charset=utf-8" },
+    }
+  );
+}
+
+// Incrementar contador de visitas
+try {
+  await prisma.resume.update({
+    where: { id: resume.id },
+    data: { viewsCount: { increment: 1 } },
+  });
+} catch (e) {
+  console.error("Error incrementando contador de visitas:", e);
+}
+
+const content = resume.content as any;
+const {
+  personal = {},
+  summary = "",
+  experience = [],
+  education = [],
+  skills = [],
+  projects = [],
+  certifications = [],
+  languages = [],
+  sectionOrder = [
+    "personal",
+    "summary",
+    "experience",
+    "education",
+    "skills",
+    "projects",
+    "languages",
+    "certifications",
+  ],
+} = content;
+
+const title = `${personal.name || "Currículum"} - ${personal.title || "Profesional"} | CVForge`;
+const description = summary || `Currículum profesional de ${personal.name || "CVForge User"}.`;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+
+    <script is:inline>
+      const theme = (() => {
+        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+          return localStorage.getItem('theme');
+        }
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          return 'dark';
+        }
+        return 'light';
+      })();
+    
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
+  </head>
+  <body class="bg-zinc-100 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-50 print:bg-white print:text-black min-h-screen flex flex-col">
+    <!-- Navbar (Hidden when printing) -->
+    <header class="h-14 border-b border-zinc-200 bg-white flex items-center justify-between px-4 sm:px-6 dark:border-zinc-800 dark:bg-zinc-950 print:hidden shrink-0">
+      <div class="flex items-center gap-3">
+        <a href="/" class="flex h-8 w-8 items-center justify-center rounded-lg bg-black text-white font-bold text-lg dark:bg-white dark:text-black">
+          CF
+        </a>
+        <span class="text-sm font-bold tracking-tight">CVForge</span>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <!-- Theme Toggle Button -->
+        <button
+          id="theme-toggle-btn"
+          class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-zinc-200 bg-white text-zinc-700 hover:bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-850 cursor-pointer transition-colors shadow-sm"
+          title="Cambiar tema"
+        >
+          <!-- Sun Icon (shown in light mode) -->
+          <svg class="h-4 w-4 dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+          </svg>
+          <!-- Moon Icon (shown in dark mode) -->
+          <svg class="h-4 w-4 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+        </button>
+
+        <a 
+          href="/"
+          class="inline-flex h-8 items-center justify-center rounded-md bg-black px-3.5 text-xs font-bold text-white hover:bg-zinc-800 dark:bg-white dark:text-black dark:hover:bg-zinc-200 transition-colors shadow-sm"
+        >
+          Crea tu propio CV
+        </a>
+      </div>
+    </header>
+
+    <!-- CV Container -->
+    <main class="flex-1 p-6 flex justify-center items-start print:p-0">
+      <div 
+        id="cv-print-area"
+        class="w-[21cm] min-h-[29.7cm] bg-white text-zinc-900 shadow-md border border-zinc-200/50 p-[2cm] print:shadow-none print:border-none print:p-0 print:w-full print:min-h-0 rounded-2xl print:rounded-none"
+      >
+        {sectionOrder.map((sectionId: string) => {
+          switch (sectionId) {
+            case 'personal':
+              return (
+                <div class="text-center mb-6">
+                  <h1 class="text-3xl font-bold tracking-tight text-zinc-900 uppercase">{personal.name || 'Tu Nombre'}</h1>
+                  <p class="text-lg font-medium text-zinc-600 mt-1">{personal.title || 'Tu Profesión'}</p>
+                  <div class="flex flex-wrap justify-center gap-x-4 gap-y-1 mt-2 text-xs text-zinc-500">
+                    {personal.email && (
+                      <span>
+                        <a 
+                          href={`mailto:${personal.email}`} 
+                          class="hover:underline text-zinc-650"
+                        >
+                          {personal.email}
+                        </a>
+                      </span>
+                    )}
+                    {personal.phone && <span>• {personal.phone}</span>}
+                    {personal.website && (
+                      <span>
+                        •{' '}
+                        <a 
+                          href={personal.website.startsWith('http') ? personal.website : `https://${personal.website}`} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          class="hover:underline text-zinc-650 font-medium"
+                        >
+                          {personal.website}
+                        </a>
+                      </span>
+                    )}
+                    {personal.location && <span>• {personal.location}</span>}
+                  </div>
+                </div>
+              );
+
+            case 'summary':
+              if (!summary) return null;
+              return (
+                <div class="mb-5">
+                  <h2 class="text-xs font-bold uppercase tracking-wider text-zinc-900 border-b border-zinc-900 pb-1 mb-2">Perfil Profesional</h2>
+                  <p class="text-[10.5pt] leading-relaxed text-zinc-700 text-justify whitespace-pre-line">{summary}</p>
+                </div>
+              );
+
+            case 'experience':
+              if (!experience || experience.length === 0) return null;
+              return (
+                <div class="mb-5">
+                  <h2 class="text-xs font-bold uppercase tracking-wider text-zinc-900 border-b border-zinc-900 pb-1 mb-2">Experiencia Laboral</h2>
+                  <div class="space-y-3">
+                    {experience.map((exp: any) => (
+                      <div class="text-[10.5pt]">
+                        <div class="flex justify-between items-baseline font-semibold text-zinc-800">
+                          <span>{exp.role} | {exp.company}</span>
+                          <span class="text-xs text-zinc-500 font-normal">
+                            {exp.startDate} – {exp.current ? 'Presente' : exp.endDate || 'Presente'}
+                          </span>
+                        </div>
+                        {exp.description && (
+                          <p class="mt-1 text-zinc-750 text-justify leading-relaxed whitespace-pre-line pl-1">{exp.description}</p>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+
+            case 'education':
+              if (!education || education.length === 0) return null;
+              return (
+                <div class="mb-5">
+                  <h2 class="text-xs font-bold uppercase tracking-wider text-zinc-900 border-b border-zinc-900 pb-1 mb-2">Educación</h2>
+                  <div class="space-y-3">
+                    {education.map((edu: any) => (
+                      <div class="text-[10.5pt]">
+                        <div class="flex justify-between items-baseline font-semibold text-zinc-800">
+                          <span>{edu.degree} en {edu.field}</span>
+                          <span class="text-xs text-zinc-500 font-normal">
+                            {edu.startDate} – {edu.current ? 'Presente' : edu.endDate}
+                          </span>
+                        </div>
+                        <div class="text-zinc-600 text-xs">{edu.school}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+
+            case 'skills':
+              if (!skills || skills.length === 0) return null;
+              return (
+                <div class="mb-5">
+                  <h2 class="text-xs font-bold uppercase tracking-wider text-zinc-900 border-b border-zinc-900 pb-1 mb-2">Habilidades</h2>
+                  <div class="text-[10.5pt] leading-relaxed text-zinc-700">
+                    {skills.join(', ')}
+                  </div>
+                </div>
+              );
+
+            case 'projects':
+              if (!projects || projects.length === 0) return null;
+              return (
+                <div class="mb-5">
+                  <h2 class="text-xs font-bold uppercase tracking-wider text-zinc-900 border-b border-zinc-900 pb-1 mb-2">Proyectos</h2>
+                  <div class="space-y-3">
+                    {projects.map((proj: any) => (
+                      <div class="text-[10.5pt]">
+                        <div class="flex justify-between items-baseline font-semibold text-zinc-800">
+                          <span>
+                            {proj.name} {proj.role && <span class="text-zinc-600 font-normal">({proj.role})</span>}
+                          </span>
+                          {proj.link && (
+                            <a 
+                              href={proj.link.startsWith('http') ? proj.link : `https://${proj.link}`} 
+                              target="_blank" 
+                              rel="noopener noreferrer" 
+                              class="text-xs text-zinc-500 font-normal underline hover:text-zinc-800 transition-colors"
+                            >
+                              {proj.link}
+                            </a>
+                          )}
+                        </div>
+                        {proj.description && (
+                          <p class="mt-1 text-zinc-700 leading-relaxed text-justify">{proj.description}</p>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+
+            case 'certifications':
+              if (!certifications || certifications.length === 0) return null;
+              return (
+                <div class="mb-5">
+                  <h2 class="text-xs font-bold uppercase tracking-wider text-zinc-900 border-b border-zinc-900 pb-1 mb-2">Certificaciones</h2>
+                  <div class="space-y-2">
+                    {certifications.map((cert: any) => (
+                      <div class="text-[10.5pt] flex justify-between items-baseline">
+                        <span>
+                          <span class="font-semibold">{cert.name}</span> – <span class="text-zinc-600 text-xs">{cert.issuer}</span>
+                        </span>
+                        <span class="text-xs text-zinc-500">{cert.date}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+
+            case 'languages':
+              if (!languages || languages.length === 0) return null;
+              return (
+                <div class="mb-5">
+                  <h2 class="text-xs font-bold uppercase tracking-wider text-zinc-900 border-b border-zinc-900 pb-1 mb-2">Idiomas</h2>
+                  <div class="text-[10.5pt] leading-relaxed text-zinc-700">
+                    {languages.map((l: any) => `${l.name} (${l.proficiency})`).join(', ')}
+                  </div>
+                </div>
+              );
+
+            default:
+              return null;
+          }
+        })}
+      </div>
+    </main>
+
+    <script is:inline>
+      const themeToggleBtn = document.getElementById('theme-toggle-btn');
+      themeToggleBtn?.addEventListener('click', () => {
+        const isDark = document.documentElement.classList.contains('dark');
+        if (isDark) {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+        }
+      });
+    </script>
+  </body>
+</html>
