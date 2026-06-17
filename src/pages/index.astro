@@ -22,8 +22,11 @@ const user = await getUserFromRequest(Astro.request);
 
       {/* ── Header ── */}
       <header class="flex h-14 items-center justify-between shrink-0 py-4 z-20 relative" data-logged-in={user ? "true" : "false"} id="landing-header">
-        <button id="logo-home-btn" class="flex items-center gap-2 no-underline border-none bg-transparent cursor-pointer p-0">
-          <span class="text-[15px] font-extrabold tracking-tight text-zinc-900">CVForge</span>
+        <button id="logo-home-btn" class="flex items-center gap-2.5 no-underline border-none bg-transparent cursor-pointer p-0 select-none">
+          <div class="flex h-7.5 w-7.5 items-center justify-center rounded-lg bg-black text-white font-extrabold text-[15px] dark:bg-white dark:text-black">
+            CF
+          </div>
+          <span class="text-[16px] font-bold tracking-tight text-zinc-900">CV<span class="text-zinc-450">Forge</span></span>
         </button>
 
         {/* Desktop nav */}
@@ -130,8 +133,9 @@ const user = await getUserFromRequest(Astro.request);
                 rel="noopener noreferrer"
                 class="w-full sm:w-auto inline-flex h-12 sm:h-12 items-center justify-center rounded-lg border border-zinc-200 bg-white px-6 text-[14px] font-medium text-zinc-650 hover:bg-zinc-50 hover:border-zinc-350 active:scale-[0.97] transition-all cursor-pointer shadow-sm gap-2"
               >
-                <svg class="w-4 h-4 text-zinc-700" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" />
+                <svg class="w-4 h-4 text-zinc-700 animate-pulse" fill="none" viewBox="1346 41 37 37" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path opacity="0.12" d="M1365 76.6667C1374.2 76.6667 1381.67 69.2047 1381.67 60C1381.67 50.7953 1374.2 43.3333 1365 43.3333C1355.8 43.3333 1348.33 50.7953 1348.33 60C1348.33 69.2047 1355.8 76.6667 1365 76.6667Z" fill="currentColor"/>
+                  <path d="M1368.33 68.3333L1373.33 63.3333L1368.33 58.3333M1361.67 51.6667L1356.67 56.6667L1361.67 61.6667M1381.67 60C1381.67 69.2047 1374.2 76.6667 1365 76.6667C1355.8 76.6667 1348.33 69.2047 1348.33 60C1348.33 50.7953 1355.8 43.3333 1365 43.3333C1374.2 43.3333 1381.67 50.7953 1381.67 60Z" />
                 </svg>
                 Ver en GitHub
               </a>
@@ -275,8 +279,9 @@ const user = await getUserFromRequest(Astro.request);
             <div class="space-y-4 pt-2 w-full max-w-md mx-auto lg:mx-0">
               <div class="reveal-item delay-225 flex gap-3.5 items-start text-left">
                 <div class="p-2 bg-zinc-100 rounded-lg text-zinc-900 shrink-0">
-                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  <svg class="w-4 h-4 text-zinc-800 dark:text-zinc-200" fill="none" viewBox="941 121 37 37" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path opacity="0.12" d="M953.333 156.667C958.856 156.667 963.333 152.19 963.333 146.667C963.333 141.144 958.856 136.667 953.333 136.667C947.81 136.667 943.333 141.144 943.333 146.667Z" fill="currentColor"/>
+                    <path d="M950 123.333L953.333 126.667L950 130M953.333 126.667H950C946.318 126.667 943.333 129.651 943.333 133.333M970 156.667L966.667 153.333L970 150M966.667 153.333H970C973.682 153.333 976.667 150.349 976.667 146.667M956.982 130.833C958.092 126.52 962.007 123.333 966.667 123.333C972.189 123.333 976.667 127.81 976.667 133.333C976.667 137.993 973.48 141.908 969.167 143.018M963.333 146.667C963.333 152.19 958.856 156.667 953.333 156.667C947.81 156.667 943.333 152.19 943.333 146.667Z" />
                   </svg>
                 </div>
                 <div>
@@ -287,8 +292,9 @@ const user = await getUserFromRequest(Astro.request);
 
               <div class="reveal-item delay-300 flex gap-3.5 items-start text-left">
                 <div class="p-2 bg-zinc-100 rounded-lg text-zinc-900 shrink-0">
-                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                  <svg class="w-4 h-4 text-zinc-800 dark:text-zinc-200" fill="none" viewBox="295 43 33 33" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path opacity="0.12" d="M297 70.5424C297 69.7271 297 69.3195 297.092 68.9359C297.174 68.5957 297.308 68.2706 297.491 67.9724C297.697 67.636 297.986 67.3477 298.562 66.7712L319.5 45.8333C320.881 44.4526 323.119 44.4526 324.5 45.8333C325.881 47.214 325.881 49.4526 324.5 50.8333L303.562 71.7712C302.986 72.3477 302.697 72.636 302.361 72.8421C302.063 73.0249 301.738 73.1596 301.397 73.2412C301.014 73.3333 300.606 73.3333 299.791 73.3333H297V70.5424Z" fill="currentColor"/>
+                    <path d="M327 70L325.333 71.8234C324.449 72.7902 323.25 73.3333 322 73.3333C320.75 73.3333 319.551 72.7902 318.667 71.8234C317.782 70.8585 316.583 70.3168 315.334 70.3168C314.084 70.3168 312.885 70.8585 312 71.8234M297 73.3333H299.791C300.606 73.3333 301.014 73.3333 301.397 73.2412C301.738 73.1596 302.063 73.0249 302.361 72.8421C302.697 72.636 302.986 72.3477 303.562 71.7712L324.5 50.8333C325.881 49.4526 325.881 47.214 324.5 45.8333C323.119 44.4526 320.881 44.4526 319.5 45.8333L298.562 66.7712C297.986 67.3477 297.697 67.636 297.491 67.9724C297.308 68.2706 297.174 68.5957 297.092 68.9359C297 69.3195 297 69.7271 297 70.5424V73.3333Z" />
                   </svg>
                 </div>
                 <div>
@@ -299,8 +305,9 @@ const user = await getUserFromRequest(Astro.request);
 
               <div class="reveal-item delay-375 flex gap-3.5 items-start text-left">
                 <div class="p-2 bg-zinc-100 rounded-lg text-zinc-900 shrink-0">
-                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                  <svg class="w-4 h-4 text-zinc-800 dark:text-zinc-200" fill="none" viewBox="1103 121 37 37" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path opacity="0.12" d="M1105.33 123.333L1108.67 126.667M1138.67 123.333L1135.33 126.667M1138.67 156.667L1135.33 153.333M1105.33 156.667L1108.67 153.333M1105.33 146.667H1107.83M1115.33 123.333V125.833M1138.67 133.333H1136.17M1128.67 156.667V154.167M1132 146.667H1137.83M1128.67 123.333V130M1105.33 133.333H1112M1115.33 156.667V150" fill="currentColor"/>
+                    <path d="M1121.06 132.609L1114.61 139.057C1114.28 139.057 1114.11 139.222 1114.05 139.412C1114 139.58 1114 139.76 1114.05 139.928C1114.11 140.118 1114.28 140.283 1114.61 140.613L1121.06 147.061C1121.39 147.391 1121.55 147.556 1121.74 147.617C1121.91 147.617 1122.09 147.617 1122.26 147.617C1122.45 147.556 1122.61 147.391 1122.94 147.061L1129.39 140.613C1129.72 140.283 1129.89 140.118 1129.95 139.928C1130 139.76 1130 139.58 1129.95 139.412C1129.89 139.222 1129.72 139.057 1129.39 138.727L1122.94 132.279C1122.61 131.949 1122.45 131.784 1122.26 131.723C1122.09 131.668 1121.91 131.668 1121.74 131.723C1121.55 131.784 1121.39 131.949 1121.06 132.279Z" />
                   </svg>
                 </div>
                 <div>
@@ -311,8 +318,9 @@ const user = await getUserFromRequest(Astro.request);
 
               <div class="reveal-item delay-450 flex gap-3.5 items-start text-left">
                 <div class="p-2 bg-zinc-100 rounded-lg text-zinc-900 shrink-0">
-                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                  <svg class="w-4 h-4 text-zinc-800 dark:text-zinc-200" viewBox="1267 43 34 34" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path opacity="0.12" d="M1269 75H1299V65H1269V75Z" fill="currentColor"/>
+                    <path d="M1299 65V67C1299 69.8003 1299 71.2004 1298.46 72.27C1297.98 73.2108 1297.21 73.9757 1296.27 74.455C1295.2 75 1293.8 75 1291 75H1277C1274.2 75 1272.8 75 1271.73 74.455C1270.79 73.9757 1270.02 73.2108 1269.54 72.27C1269 71.2004 1269 69.8003 1269 67V65M1275.67 56.6667L1284 65L1292.33 56.6667M1284 65V45" />
                   </svg>
                 </div>
                 <div>
@@ -410,19 +418,19 @@ const user = await getUserFromRequest(Astro.request);
             </div>
           </div>
 
-          {/* Floating Keyword Badge 1: TypeScript */}
+          {/* Floating Keyword Badge 1: Gestión de Proyectos */}
           <div class="absolute bottom-32 left-4 bg-zinc-900 text-white rounded-full px-3.5 py-1.5 text-[10px] font-bold tracking-wide shadow-lg floating-card-delay-1 flex items-center gap-1 font-sans">
-            <span class="text-emerald-400">✓</span> TypeScript
+            <span class="text-emerald-400">✓</span> Gestión de Proyectos
           </div>
 
-          {/* Floating Keyword Badge 2: React */}
+          {/* Floating Keyword Badge 2: Planificación */}
           <div class="absolute top-36 right-8 bg-white/95 border border-zinc-200 text-zinc-900 rounded-full px-3.5 py-1.5 text-[10px] font-bold tracking-wide shadow-md floating-card-delay-2 flex items-center gap-1 backdrop-blur-md font-sans">
-            <span class="text-emerald-500">✓</span> React.js
+            <span class="text-emerald-500">✓</span> Planificación
           </div>
 
-          {/* Floating Keyword Badge 3: ATS Friendly */}
+          {/* Floating Keyword Badge 3: Formato Aprobado */}
           <div class="absolute bottom-24 right-12 bg-zinc-50 border border-zinc-200 text-zinc-650 rounded-full px-3.5 py-1.5 text-[10px] font-bold tracking-wide shadow-md floating-card-delay-3 flex items-center gap-1 font-sans">
-            <span class="text-emerald-500">✓</span> Formato ATS
+            <span class="text-emerald-500">✓</span> Formato Aprobado
           </div>
           
         </div>
@@ -630,7 +638,18 @@ const user = await getUserFromRequest(Astro.request);
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || 'Error al iniciar sesión');
-        window.location.href = '/dashboard';
+        
+        loginSubmit.innerText = '✓ Conectado';
+        loginSubmit.classList.remove('bg-black', 'hover:bg-zinc-800');
+        loginSubmit.classList.add('bg-emerald-600', 'hover:bg-emerald-600');
+        
+        const landing = document.querySelector('.landing');
+        if (landing) {
+          landing.classList.add('transition-all', 'duration-500', 'ease-in-out', 'opacity-0', 'scale-[0.985]');
+        }
+        setTimeout(() => {
+          window.location.href = '/dashboard';
+        }, 500);
       } catch (err: any) {
         loginError.innerText = err.message;
         loginError.classList.remove('hidden');
@@ -662,7 +681,18 @@ const user = await getUserFromRequest(Astro.request);
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || 'Error al crear la cuenta');
-        window.location.href = '/dashboard';
+        
+        regSubmit.innerText = '✓ Cuenta Creada';
+        regSubmit.classList.remove('bg-black', 'hover:bg-zinc-800');
+        regSubmit.classList.add('bg-emerald-600', 'hover:bg-emerald-600');
+        
+        const landing = document.querySelector('.landing');
+        if (landing) {
+          landing.classList.add('transition-all', 'duration-500', 'ease-in-out', 'opacity-0', 'scale-[0.985]');
+        }
+        setTimeout(() => {
+          window.location.href = '/dashboard';
+        }, 500);
       } catch (err: any) {
         regError.innerText = err.message;
         regError.classList.remove('hidden');

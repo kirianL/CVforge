@@ -149,12 +149,12 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || Astro.url.origin)
   <body class="bg-zinc-100 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-50 print:bg-white print:text-black min-h-screen flex flex-col">
     <!-- Navbar (Hidden when printing) -->
     <header class="h-14 border-b border-zinc-200 bg-white flex items-center justify-between px-4 sm:px-6 dark:border-zinc-800 dark:bg-zinc-950 print:hidden shrink-0">
-      <div class="flex items-center gap-3">
-        <a href="/" class="flex h-8 w-8 items-center justify-center rounded-lg bg-black text-white font-bold text-lg dark:bg-white dark:text-black">
+      <a href="/" class="flex items-center gap-2.5 no-underline cursor-pointer select-none" data-astro-prefetch>
+        <div class="flex h-7.5 w-7.5 items-center justify-center rounded-lg bg-black text-white font-extrabold text-[15px] dark:bg-white dark:text-black">
           CF
-        </a>
-        <span class="text-sm font-bold tracking-tight">CVForge</span>
-      </div>
+        </div>
+        <span class="text-[16px] font-bold tracking-tight text-zinc-900 dark:text-white">CV<span class="text-zinc-450">Forge</span></span>
+      </a>
 
       <div class="flex items-center gap-3">
 

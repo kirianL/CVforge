@@ -58,7 +58,7 @@ export function analyzeCV(content: CVContent): AtsAnalysisResult {
   }
 
   // 2. Resumen Profesional (Total: 15%)
-  const summaryLength = summary?.trim().length || 0;
+  const summaryLength = (summary || '').trim().length;
   if (summaryLength >= 100) {
     score += 15;
     recommendations.push({ text: 'Resumen profesional completo y bien desarrollado (mín. 100 caracteres)', completed: true, points: 15 });
@@ -74,7 +74,7 @@ export function analyzeCV(content: CVContent): AtsAnalysisResult {
     score += 10;
     
     // Validar si las experiencias tienen descripciones detalladas de logros
-    const hasDetailedDesc = experience.every(exp => exp.description?.trim().length >= 50);
+    const hasDetailedDesc = experience.every(exp => (exp.description || '').trim().length >= 50);
     if (hasDetailedDesc) {
       score += 10;
       recommendations.push({ text: 'Experiencias laborales documentadas con descripción de logros (mín. 50 caracteres)', completed: true, points: 10 });

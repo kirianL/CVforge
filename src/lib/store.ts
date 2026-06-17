@@ -113,22 +113,22 @@ interface CVStore {
 const initialContent: CVContent = {
   personal: {
     name: 'Juan Pérez',
-    title: 'Desarrollador Fullstack',
+    title: 'Especialista en Gestión de Proyectos',
     email: 'juan.perez@email.com',
     phone: '+506 8888-8888',
-    website: 'https://juanperez.dev',
+    website: 'https://linkedin.com/in/juanperez',
     location: 'San José, Costa Rica',
   },
-  summary: 'Profesional enfocado en la creación de aplicaciones web escalables y eficientes. Experiencia trabajando con metodologías ágiles, bases de datos relacionales y tecnologías modernas del ecosistema de JavaScript.',
+  summary: 'Profesional orientado a resultados con experiencia en la planificación, ejecución y optimización de proyectos y operaciones comerciales. Capacidad demostrada para liderar equipos multidisciplinarios, gestionar presupuestos y mejorar la eficiencia de los procesos organizacionales utilizando metodologías ágiles y herramientas modernas de gestión.',
   experience: [
     {
       id: 'exp-1',
-      company: 'Tech Solutions S.A.',
-      role: 'Desarrollador Fullstack Senior',
+      company: 'Corporación de Logística Americana',
+      role: 'Coordinador de Proyectos Senior',
       startDate: '2023-01',
       endDate: '',
       current: true,
-      description: 'Lideré la migración de microservicios, mejorando el rendimiento de carga en un 40%. Colaboré activamente en el diseño de arquitecturas cloud con AWS.',
+      description: 'Lideré la planificación e implementación de nuevos procesos operativos, logrando reducir los tiempos de entrega en un 15%. Coordiné equipos de 12 personas y gestioné presupuestos anuales superiores a $200,000 USD.',
     }
   ],
   education: [
@@ -136,27 +136,27 @@ const initialContent: CVContent = {
       id: 'edu-1',
       school: 'Universidad de Costa Rica',
       degree: 'Bachillerato',
-      field: 'Ingeniería del Software',
+      field: 'Administración de Empresas',
       startDate: '2018',
       endDate: '2022',
       current: false,
     }
   ],
-  skills: ['TypeScript', 'React', 'Node.js', 'Next.js', 'PostgreSQL', 'TailwindCSS', 'Docker'],
+  skills: ['Gestión de Proyectos', 'Planificación Estratégica', 'Liderazgo de Equipos', 'Optimización de Procesos', 'Presupuestos', 'Metodologías Ágiles', 'Microsoft Excel'],
   projects: [
     {
       id: 'proj-1',
-      name: 'CVForge',
-      role: 'Creador principal',
-      link: 'https://github.com/user/cvforge',
-      description: 'Plataforma para generar hojas de vida optimizadas para ATS de forma ágil y responsiva.',
+      name: 'Implementación de Sistema ERP',
+      role: 'Líder del Proyecto',
+      link: 'https://linkedin.com/in/juanperez',
+      description: 'Coordiné la migración y capacitación del nuevo sistema de planificación de recursos empresariales para más de 150 usuarios.',
     }
   ],
   certifications: [
     {
       id: 'cert-1',
-      name: 'AWS Certified Cloud Practitioner',
-      issuer: 'Amazon Web Services',
+      name: 'Project Management Professional (PMP)',
+      issuer: 'Project Management Institute (PMI)',
       date: '2024-05',
     }
   ],
