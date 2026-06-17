@@ -27,7 +27,7 @@ const user = await getUserFromRequest(Astro.request);
         </a>
 
         {/* Desktop nav */}
-        <nav class="hidden md:flex items-center gap-6 text-[13px] text-zinc-550 font-medium">
+        <nav class="hidden md:flex items-center gap-6 text-[13px] text-zinc-555 font-medium">
           <a href="#features" class="hover:text-black transition-colors duration-150">Características</a>
           <a href="#editor" class="hover:text-black transition-colors duration-150">Editor</a>
           <a href="https://github.com/kirianL/CVforge" target="_blank" rel="noopener noreferrer" class="hover:text-black transition-colors duration-150">GitHub</a>
@@ -122,10 +122,10 @@ const user = await getUserFromRequest(Astro.request);
         </div>
 
         {/* Right Side: Imposing Floating 3D ASCII Sculpture */}
-        <div class="w-full lg:w-1/2 flex justify-center items-center lg:justify-end">
+        <div class="w-full lg:w-1/2 flex justify-center items-center lg:justify-end overflow-hidden">
           <pre 
             id="ascii-sculpture" 
-            class="leading-[0.95] font-mono text-[9px] sm:text-[11px] lg:text-[11.5px] text-zinc-850 select-none cursor-default font-bold transition-colors hover:text-black"
+            class="leading-[0.92] font-mono text-[7px] sm:text-[8px] md:text-[9.5px] lg:text-[10px] xl:text-[11px] text-zinc-850 select-none cursor-default font-extrabold transition-colors hover:text-black"
           ></pre>
         </div>
       </main>
@@ -149,9 +149,9 @@ const user = await getUserFromRequest(Astro.request);
     let A = 0.15; // Tilted X angle
     let B = 0;    // Y rotation angle
 
-    // Larger grid resolution for imposing appearance
-    const width = 60;
-    const height = 34;
+    // High resolution grid for imposing classical design
+    const width = 80;
+    const height = 44;
 
     function renderFrame() {
       if (!asciiElement) return;
@@ -159,8 +159,8 @@ const user = await getUserFromRequest(Astro.request);
       const output = Array(width * height).fill(' ');
       const zbuffer = Array(width * height).fill(-1000);
 
-      const stepsY = 80;
-      const stepsTheta = 80;
+      const stepsY = 90;
+      const stepsTheta = 90;
 
       for (let i = 0; i < stepsY; i++) {
         const y = -7 + (14 * i) / (stepsY - 1);
@@ -168,25 +168,25 @@ const user = await getUserFromRequest(Astro.request);
         for (let j = 0; j < stepsTheta; j++) {
           const theta = (2 * Math.PI * j) / stepsTheta;
 
-          // Thick stepped Classical Doric column
-          let R = 4.2;
+          // Grand stepped Classical Doric column
+          let R = 6.2;
           if (y < -6.0) {
             // Upper capital slab (Abacus)
-            R = 6.4;
+            R = 9.8;
           } else if (y < -4.8) {
             // Flared transition (Echinus)
-            R = 4.2 + Math.pow(Math.abs(y + 4.8), 1.5) * 1.8;
+            R = 6.2 + Math.pow(Math.abs(y + 4.8), 1.5) * 2.8;
           } else if (y > 6.0) {
             // Lower base slab (Plinth)
-            R = 6.4;
+            R = 9.8;
           } else if (y > 4.8) {
             // Base transition
-            R = 4.2 + Math.pow(y - 4.8, 1.5) * 1.8;
+            R = 6.2 + Math.pow(y - 4.8, 1.5) * 2.8;
           } else {
             // Shaft fluting
             const numGrooves = 12;
-            const grooveDepth = 0.45;
-            R = 4.0 + grooveDepth * Math.cos(numGrooves * theta);
+            const grooveDepth = 0.65;
+            R = 5.8 + grooveDepth * Math.cos(numGrooves * theta);
           }
 
           const x3 = Math.cos(theta) * R;
@@ -201,14 +201,14 @@ const user = await getUserFromRequest(Astro.request);
           const yFinal = y3 * Math.cos(A) - zRotY * Math.sin(A);
           const zFinal = y3 * Math.sin(A) + zRotY * Math.cos(A);
 
-          // Projection scale adjustments for larger size
+          // Projection calculations for larger size
           const distance = 22;
           const scaleX = 2.45;
           const scaleY = 1.1;
 
           const ooz = 1 / (zFinal + distance);
-          const xp = Math.round(width / 2 + scaleX * xRotY * ooz * 24);
-          const yp = Math.round(height / 2 - scaleY * yFinal * ooz * 28);
+          const xp = Math.round(width / 2 + scaleX * xRotY * ooz * 32);
+          const yp = Math.round(height / 2 - scaleY * yFinal * ooz * 36);
 
           if (xp >= 0 && xp < width && yp >= 0 && yp < height) {
             const nx3 = Math.cos(theta);
