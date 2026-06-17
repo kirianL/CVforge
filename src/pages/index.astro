@@ -9,7 +9,7 @@ const user = await getUserFromRequest(Astro.request);
   title="CVForge | Generador de Currículums Optimizado para ATS"
   description="Crea un currículum profesional de una sola página, optimizado para pasar los filtros automáticos ATS de reclutamiento y exportable a PDF de forma gratuita."
 >
-  <div class="landing min-h-screen bg-zinc-55/30 text-zinc-900 flex flex-col font-sans relative overflow-hidden">
+  <div class="landing h-[100dvh] lg:h-screen lg:min-h-screen bg-zinc-55/30 text-zinc-900 flex flex-col font-sans relative overflow-hidden">
 
     {/* ── Subtle noise texture ── */}
     <div class="absolute inset-0 opacity-[0.012] pointer-events-none" style="background-image:url('data:image/svg+xml,%3Csvg viewBox=%220 0 256 256%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.9%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23n)%22/%3E%3C/svg%3E')"></div>
@@ -18,13 +18,13 @@ const user = await getUserFromRequest(Astro.request);
     <div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(120,119,198,0.03),transparent)] pointer-events-none"></div>
 
     {/* ══════════ Content shell ══════════ */}
-    <div class="mx-auto w-full max-w-[1120px] px-5 sm:px-8 flex flex-col min-h-screen relative z-10">
+    <div class="mx-auto w-full max-w-[1120px] px-5 sm:px-8 flex flex-col h-full relative z-10">
 
       {/* ── Header ── */}
-      <header class="flex h-14 items-center justify-between shrink-0 py-4">
-        <a href="/" class="flex items-center gap-2 no-underline">
+      <header class="flex h-14 items-center justify-between shrink-0 py-4 z-20 relative">
+        <button id="logo-home-btn" class="flex items-center gap-2 no-underline border-none bg-transparent cursor-pointer p-0">
           <span class="text-[15px] font-extrabold tracking-tight text-zinc-900">CVForge</span>
-        </a>
+        </button>
 
         {/* Desktop nav */}
         <nav class="hidden md:flex items-center gap-6 text-[13px] text-zinc-550 font-medium">
@@ -46,15 +46,18 @@ const user = await getUserFromRequest(Astro.request);
             </>
           ) : (
             <>
-              <a href="/login" class="hidden sm:inline text-[13px] text-zinc-550 hover:text-black transition-colors duration-150 font-semibold">
+              <button 
+                id="nav-login-btn"
+                class="hidden sm:inline text-[13px] text-zinc-550 hover:text-black transition-colors duration-150 font-semibold cursor-pointer border-none bg-transparent"
+              >
                 Entrar
-              </a>
-              <a 
-                href="/register" 
-                class="inline-flex h-8 items-center justify-center rounded-lg bg-black px-3.5 text-[13px] font-semibold text-white hover:bg-zinc-800 active:scale-[0.97] transition-all cursor-pointer shadow-sm"
+              </button>
+              <button 
+                id="nav-register-btn"
+                class="inline-flex h-8 items-center justify-center rounded-lg bg-black px-3.5 text-[13px] font-semibold text-white hover:bg-zinc-800 active:scale-[0.97] transition-all cursor-pointer shadow-sm border-none"
               >
                 Comenzar
-              </a>
+              </button>
             </>
           )}
 
@@ -72,60 +75,190 @@ const user = await getUserFromRequest(Astro.request);
       </header>
 
       {/* Thin separator */}
-      <div class="h-px bg-zinc-200/60"></div>
+      <div class="h-px bg-zinc-200/60 z-20"></div>
 
       {/* ── Mobile nav drawer ── */}
-      <div id="mobile-nav" class="md:hidden overflow-hidden transition-all duration-300 ease-out" style="max-height:0;opacity:0">
+      <div id="mobile-nav" class="md:hidden overflow-hidden transition-all duration-300 ease-out z-20 relative" style="max-height:0;opacity:0">
         <nav class="flex flex-col py-3 border-b border-zinc-200/60">
           <a href="#features" class="mobile-nav-link px-2 py-2.5 text-[14px] text-zinc-500 hover:text-black transition-colors duration-150 font-medium">Características</a>
-          <a href="#editor" class="mobile-nav-link px-2 py-2.5 text-[14px] text-zinc-550 hover:text-black transition-colors duration-150 font-medium">Editor</a>
+          <a href="#editor" class="mobile-nav-link px-2 py-2.5 text-[14px] text-zinc-500 hover:text-black transition-colors duration-150 font-medium">Editor</a>
           <a href="https://github.com/kirianL/CVforge" target="_blank" rel="noopener noreferrer" class="mobile-nav-link px-2 py-2.5 text-[14px] text-zinc-500 hover:text-black transition-colors duration-150 font-medium">GitHub</a>
           {!user && (
-            <a href="/login" class="mobile-nav-link px-2 py-2.5 text-[14px] text-zinc-500 hover:text-black transition-colors duration-150 font-medium">Iniciar sesión</a>
+            <button id="mobile-login-btn" class="mobile-nav-link text-left px-2 py-2.5 text-[14px] text-zinc-500 hover:text-black transition-colors duration-150 font-medium cursor-pointer border-none bg-transparent">Iniciar sesión</button>
           )}
         </nav>
       </div>
 
-      {/* ══════════ Hero (Split Screen) ══════════ */}
-      <main class="flex-1 flex flex-col lg:flex-row items-center justify-between py-12 lg:py-0 relative">
+      {/* ══════════ Hero / Form Split Screen ══════════ */}
+      <main class="flex-1 flex flex-col lg:flex-row items-center justify-center lg:justify-between py-6 lg:py-0 relative overflow-hidden">
         
-        {/* Left Side: Copywriting */}
-        <div class="w-full lg:max-w-xl text-center lg:text-left space-y-6 sm:space-y-8 z-10 py-12 lg:py-24">
-          {/* Headline */}
-          <h1 class="text-[2.25rem] sm:text-[3.25rem] md:text-[3.75rem] lg:text-[4.25rem] font-semibold leading-[1.08] tracking-[-0.03em] text-zinc-900">
-            Crea currículos que <br class="hidden sm:inline"/>
-            <span class="text-zinc-400">superan filtros ATS.</span>
-          </h1>
+        {/* Left Side Container (Transitions between Hero copy, Login, and Register) */}
+        <div id="views-container" class="w-full lg:max-w-xl relative grid grid-cols-1 grid-rows-1 items-center z-10 py-6 lg:py-24 transition-[height] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] mx-auto lg:mx-0">
+          
+          {/* ── VIEW 1: HERO COPY ── */}
+          <div id="view-hero" class="w-full col-start-1 row-start-1 transition-all duration-500 transform opacity-0 translate-x-0 space-y-6 sm:space-y-8 flex flex-col justify-center text-center lg:text-left">
+            {/* Headline with premium motion text reveal */}
+            <h1 class="text-[2.25rem] sm:text-[3.25rem] md:text-[3.75rem] lg:text-[4.25rem] font-semibold leading-[1.08] tracking-[-0.03em] text-zinc-900 text-center lg:text-left">
+              <span class="block overflow-hidden h-[1.18em] relative">
+                <span class="reveal-text block">Crea currículos que</span>
+              </span>
+              <span class="block overflow-hidden h-[1.18em] relative">
+                <span class="reveal-text block text-zinc-400 animation-delay-150">superan filtros ATS.</span>
+              </span>
+            </h1>
 
-          {/* Subtitle */}
-          <p class="text-[15px] sm:text-[17px] leading-relaxed text-zinc-500 max-w-lg mx-auto lg:mx-0">
-            Editor en tiempo real, formato profesional validado por reclutadores y exportación PDF gratuita. Minimalista, estético y en blanco.
-          </p>
+            {/* Subtitle */}
+            <p class="reveal-item delay-225 text-[15px] sm:text-[17px] leading-relaxed text-zinc-500 max-w-lg mx-auto lg:mx-0 text-center lg:text-left">
+              Editor en tiempo real, formato profesional validado por reclutadores y exportación PDF gratuita. Minimalista, estético y en blanco.
+            </p>
 
-          {/* CTA row */}
-          <div class="flex flex-col sm:flex-row gap-3 items-center justify-center lg:justify-start pt-2">
-            <a 
-              href={user ? "/dashboard" : "/register"} 
-              class="w-full sm:w-auto inline-flex h-10 sm:h-11 items-center justify-center rounded-lg bg-black px-5 sm:px-6 text-[14px] font-semibold text-white hover:bg-zinc-800 active:scale-[0.97] transition-all cursor-pointer shadow-md"
-            >
-              Comenzar gratis →
-            </a>
-            <a 
-              href="https://github.com/kirianL/CVforge"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="w-full sm:w-auto inline-flex h-10 sm:h-11 items-center justify-center rounded-lg border border-zinc-200 bg-white px-5 sm:px-6 text-[14px] font-medium text-zinc-650 hover:bg-zinc-50 hover:border-zinc-350 active:scale-[0.97] transition-all cursor-pointer shadow-sm"
-            >
-              Ver en GitHub
-            </a>
+            {/* CTA row */}
+            <div class="reveal-item delay-300 flex flex-col sm:flex-row gap-3 items-center justify-center lg:justify-start pt-2">
+              <button 
+                id="hero-start-btn" 
+                class="w-full sm:w-auto inline-flex h-12 sm:h-12 items-center justify-center rounded-lg bg-black px-6 text-[14px] font-semibold text-white hover:bg-zinc-800 active:scale-[0.97] transition-all cursor-pointer shadow-md border-none"
+              >
+                Comenzar gratis →
+              </button>
+              <a 
+                href="https://github.com/kirianL/CVforge"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="w-full sm:w-auto inline-flex h-12 sm:h-12 items-center justify-center rounded-lg border border-zinc-200 bg-white px-6 text-[14px] font-medium text-zinc-650 hover:bg-zinc-50 hover:border-zinc-350 active:scale-[0.97] transition-all cursor-pointer shadow-sm"
+              >
+                Ver en GitHub
+              </a>
+            </div>
           </div>
+
+          {/* ── VIEW 2: LOGIN FORM (Flat/Frameless, Optimized for Mobile) ── */}
+          <div id="view-login" class="w-full col-start-1 row-start-1 hidden transition-all duration-500 transform opacity-0 translate-x-12 flex flex-col justify-center space-y-6 text-center lg:text-left">
+            <div class="space-y-2.5 flex flex-col items-center lg:items-start">
+              <button id="login-back-btn" class="reveal-item delay-0 inline-flex items-center justify-center lg:justify-start gap-1.5 text-[13px] text-zinc-550 hover:text-black transition-colors font-semibold cursor-pointer border-none bg-transparent p-0 w-full lg:w-auto">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" class="w-3.5 h-3.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+                Volver al inicio
+              </button>
+              <h2 class="reveal-item delay-75 text-3xl font-extrabold tracking-tight text-zinc-900 text-center lg:text-left">Entrar a tu cuenta</h2>
+              <p class="reveal-item delay-150 text-[14px] text-zinc-550 text-center lg:text-left">Ingresa tus credenciales para continuar.</p>
+            </div>
+
+            <div id="login-error-alert" class="hidden p-3.5 rounded-lg border border-red-200 bg-red-50/70 text-xs text-red-650 font-medium"></div>
+
+            <form id="login-form" class="space-y-4 w-full max-w-sm mx-auto lg:mx-0 text-left">
+              <div class="reveal-item delay-225 space-y-1.5">
+                <label for="login-email" class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Correo Electrónico</label>
+                <input 
+                  type="email" 
+                  id="login-email" 
+                  required
+                  placeholder="correo@ejemplo.com"
+                  class="flex h-12 w-full rounded-lg border border-zinc-200 bg-white px-3.5 py-2 text-base placeholder:text-zinc-400 focus:outline-none focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100 transition-all shadow-sm"
+                />
+              </div>
+
+              <div class="reveal-item delay-300 space-y-1.5">
+                <label for="login-password" class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Contraseña</label>
+                <input 
+                  type="password" 
+                  id="login-password" 
+                  required
+                  placeholder="••••••"
+                  class="flex h-12 w-full rounded-lg border border-zinc-200 bg-white px-3.5 py-2 text-base placeholder:text-zinc-400 focus:outline-none focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100 transition-all shadow-sm"
+                />
+              </div>
+
+              <button 
+                type="submit" 
+                id="login-submit-btn"
+                class="reveal-item delay-375 w-full flex h-12 items-center justify-center rounded-lg bg-black px-4 text-sm font-semibold text-white shadow hover:bg-zinc-800 active:scale-98 transition-all cursor-pointer border-none"
+              >
+                Iniciar Sesión
+              </button>
+            </form>
+
+            <div class="reveal-item delay-450 text-[14px] text-zinc-550 text-center lg:text-left">
+              ¿No tienes una cuenta?
+              <button id="login-to-register-btn" class="font-semibold text-black hover:underline cursor-pointer ml-1 border-none bg-transparent p-0">
+                Regístrate gratis
+              </button>
+            </div>
+          </div>
+
+          {/* ── VIEW 3: REGISTER FORM (Flat/Frameless, Optimized for Mobile) ── */}
+          <div id="view-register" class="w-full col-start-1 row-start-1 hidden transition-all duration-500 transform opacity-0 translate-x-12 flex flex-col justify-center space-y-6 text-center lg:text-left">
+            <div class="space-y-2.5 flex flex-col items-center lg:items-start">
+              <button id="register-back-btn" class="reveal-item delay-0 inline-flex items-center justify-center lg:justify-start gap-1.5 text-[13px] text-zinc-550 hover:text-black transition-colors font-semibold cursor-pointer border-none bg-transparent p-0 w-full lg:w-auto">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" class="w-3.5 h-3.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+                Volver al inicio
+              </button>
+              <h2 class="reveal-item delay-75 text-3xl font-extrabold tracking-tight text-zinc-900 text-center lg:text-left">Crea tu cuenta</h2>
+              <p class="reveal-item delay-150 text-[14px] text-zinc-550 text-center lg:text-left">Regístrate para guardar tus currículums gratis.</p>
+            </div>
+
+            <div id="register-error-alert" class="hidden p-3.5 rounded-lg border border-red-200 bg-red-50/70 text-xs text-red-650 font-medium"></div>
+
+            <form id="register-form" class="space-y-4 w-full max-w-sm mx-auto lg:mx-0 text-left">
+              <div class="reveal-item delay-225 space-y-1.5">
+                <label for="register-name" class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Nombre Completo</label>
+                <input 
+                  type="text" 
+                  id="register-name" 
+                  required
+                  placeholder="Juan Pérez"
+                  class="flex h-12 w-full rounded-lg border border-zinc-200 bg-white px-3.5 py-2 text-base placeholder:text-zinc-400 focus:outline-none focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100 transition-all shadow-sm"
+                />
+              </div>
+
+              <div class="reveal-item delay-300 space-y-1.5">
+                <label for="register-email" class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Correo Electrónico</label>
+                <input 
+                  type="email" 
+                  id="register-email" 
+                  required
+                  placeholder="correo@ejemplo.com"
+                  class="flex h-12 w-full rounded-lg border border-zinc-200 bg-white px-3.5 py-2 text-base placeholder:text-zinc-400 focus:outline-none focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100 transition-all shadow-sm"
+                />
+              </div>
+
+              <div class="reveal-item delay-375 space-y-1.5">
+                <label for="register-password" class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Contraseña (mín. 6 caracteres)</label>
+                <input 
+                  type="password" 
+                  id="register-password" 
+                  required
+                  placeholder="••••••"
+                  class="flex h-12 w-full rounded-lg border border-zinc-200 bg-white px-3.5 py-2 text-base placeholder:text-zinc-400 focus:outline-none focus:border-zinc-900 focus:ring-4 focus:ring-zinc-100 transition-all shadow-sm"
+                />
+              </div>
+
+              <button 
+                type="submit" 
+                id="register-submit-btn"
+                class="reveal-item delay-450 w-full flex h-12 items-center justify-center rounded-lg bg-black px-4 text-sm font-semibold text-white shadow hover:bg-zinc-800 active:scale-98 transition-all cursor-pointer border-none"
+              >
+                Crear Cuenta
+              </button>
+            </form>
+
+            <div class="reveal-item delay-525 text-[14px] text-zinc-550 text-center lg:text-left">
+              ¿Ya tienes una cuenta?
+              <button id="register-to-login-btn" class="font-semibold text-black hover:underline cursor-pointer ml-1 border-none bg-transparent p-0">
+                Inicia sesión
+              </button>
+            </div>
+          </div>
+
         </div>
 
         {/* Right Side: Gigantic Viewport Column (Cinematic background placement) */}
         <div class="hidden lg:flex absolute top-0 bottom-0 right-0 w-[46%] items-center justify-end pointer-events-none select-none overflow-hidden z-0">
           <pre 
             id="ascii-sculpture" 
-            class="leading-[0.88] font-mono text-[7px] xl:text-[9px] text-zinc-800/80 font-bold select-none cursor-default"
+            class="leading-[0.82] font-mono text-[7.5px] xl:text-[9.5px] text-zinc-300/70 font-bold select-none cursor-default"
           ></pre>
         </div>
       </main>
@@ -134,8 +267,8 @@ const user = await getUserFromRequest(Astro.request);
       <footer class="py-6 flex items-center justify-between text-[12px] text-zinc-500 shrink-0 border-t border-zinc-200/60 z-10 bg-zinc-50/50">
         <span>© 2026 CVForge</span>
         <div class="flex items-center gap-5">
-          <a href="/login" class="hover:text-black transition-colors duration-150 font-medium">Acceso</a>
-          <a href="/register" class="hover:text-black transition-colors duration-150 font-medium">Registro</a>
+          <button id="footer-login-btn" class="hover:text-black transition-colors duration-150 font-semibold border-none bg-transparent cursor-pointer p-0 text-[12px]">Acceso</button>
+          <button id="footer-register-btn" class="hover:text-black transition-colors duration-150 font-semibold border-none bg-transparent cursor-pointer p-0 text-[12px]">Registro</button>
         </div>
       </footer>
     </div>
@@ -149,9 +282,9 @@ const user = await getUserFromRequest(Astro.request);
     let A = 0.15; // Tilted X angle
     let B = 0;    // Y rotation angle
 
-    // Tall high-resolution grid that spans the entire page height
-    const width = 80;
-    const height = 66;
+    // Tall high-resolution grid that spans the entire page height from header to footer
+    const width = 85;
+    const height = 115;
 
     function renderFrame() {
       if (!asciiElement) return;
@@ -159,67 +292,89 @@ const user = await getUserFromRequest(Astro.request);
       const output = Array(width * height).fill(' ');
       const zbuffer = Array(width * height).fill(-1000);
 
-      const stepsY = 140;
-      const stepsTheta = 70;
+      const stepsY = 160;
+      const stepsTheta = 72;
+
+      const cosA = Math.cos(A);
+      const sinA = Math.sin(A);
+      const cosB = Math.cos(B);
+      const sinB = Math.sin(B);
 
       for (let i = 0; i < stepsY; i++) {
-        // y ranges from -20 to 20 to draw a colossal towering column
-        const y = -20 + (40 * i) / (stepsY - 1);
+        const y = -45 + (90 * i) / (stepsY - 1);
 
         for (let j = 0; j < stepsTheta; j++) {
           const theta = (2 * Math.PI * j) / stepsTheta;
 
-          // Colossal Doric Greek Column
-          let R = 3.6;
-          if (y < -18.5) {
-            // Upper capital slab (Abacus)
-            R = 6.4;
-          } else if (y < -16.5) {
-            // Flared transition (Echinus)
-            R = 3.6 + Math.pow(Math.abs(y + 16.5), 1.5) * 1.5;
-          } else if (y > 18.5) {
-            // Lower base slab (Plinth)
-            R = 6.4;
-          } else if (y > 16.5) {
-            // Base transition
-            R = 3.6 + Math.pow(y - 16.5, 1.5) * 1.5;
+          // Mathematical representation of a Classical Greek Column with Plinth and Abacus
+          let R = 3.0; // Default base shaft radius
+
+          if (y < -40) {
+            // Plinth: Square block at the very base
+            const sq = Math.max(Math.abs(Math.cos(theta)), Math.abs(Math.sin(theta)));
+            R = 5.6 / sq;
+          } else if (y < -37) {
+            // Lower torus (thick round ring)
+            const dy = (y - (-38.5)) / 1.5;
+            R = 4.4 + Math.sqrt(Math.max(0, 1 - dy * dy)) * 0.8;
+          } else if (y < -34) {
+            // Scotia (inward curved ring)
+            const dy = (y - (-35.5)) / 1.5;
+            R = 3.6 - Math.sqrt(Math.max(0, 1 - dy * dy)) * 0.3;
+          } else if (y < -31) {
+            // Upper torus (smaller round ring)
+            const dy = (y - (-32.5)) / 1.5;
+            R = 3.6 + Math.sqrt(Math.max(0, 1 - dy * dy)) * 0.4;
+          } else if (y > 40) {
+            // Abacus: Square block at the very top (capital cap)
+            const sq = Math.max(Math.abs(Math.cos(theta)), Math.abs(Math.sin(theta)));
+            R = 5.6 / sq;
+          } else if (y > 36) {
+            // Echinus: Flaring bell shape under the abacus
+            const t = (y - 36) / 4; // 0 to 1
+            R = 3.2 + t * 1.8;
+          } else if (y > 33) {
+            // Annulets: Small necking rings under echinus
+            const cycle = Math.sin((y - 33) * Math.PI * 2);
+            R = 3.0 + (cycle > 0 ? 0.25 : 0);
           } else {
-            // Fluted shaft grooves
-            const numGrooves = 10;
-            const grooveDepth = 0.4;
-            R = 3.4 + grooveDepth * Math.cos(numGrooves * theta);
+            // Shaft with entasis (swelling) and 12 flutes (grooves)
+            const normY = y / 33; // -1 to 1
+            const entasis = 0.28 * Math.cos(normY * Math.PI / 2);
+            const numGrooves = 12;
+            const grooveDepth = 0.25;
+            const baseR = 2.6 + entasis;
+            R = baseR + grooveDepth * Math.cos(numGrooves * theta);
           }
 
           const x3 = Math.cos(theta) * R;
           const z3 = Math.sin(theta) * R;
           const y3 = y;
 
-          // Rotate around Y axis
-          const xRotY = x3 * Math.cos(B) - z3 * Math.sin(B);
-          const zRotY = x3 * Math.sin(B) + z3 * Math.cos(B);
+          // Project with cached trigonometric functions
+          const xRotY = x3 * cosB - z3 * sinB;
+          const zRotY = x3 * sinB + z3 * cosB;
 
-          // Rotate around X axis
-          const yFinal = y3 * Math.cos(A) - zRotY * Math.sin(A);
-          const zFinal = y3 * Math.sin(A) + zRotY * Math.cos(A);
+          const yFinal = y3 * cosA - zRotY * sinA;
+          const zFinal = y3 * sinA + zRotY * cosA;
 
-          // Projection calculations for colossal column fitting exactly in 66 grid lines
-          const distance = 24;
-          const scaleX = 2.45;
-          const scaleY = 1.1;
+          const distance = 46;
+          const scaleX = 3.2;
+          const scaleY = 1.0;
 
           const ooz = 1 / (zFinal + distance);
-          const xp = Math.round(width / 2 + scaleX * xRotY * ooz * 32);
-          const yp = Math.round(height / 2 - scaleY * yFinal * ooz * 32);
+          const xp = Math.round(width / 2 + scaleX * xRotY * ooz * 58);
+          const yp = Math.round(height / 2 - scaleY * yFinal * ooz * 58);
 
           if (xp >= 0 && xp < width && yp >= 0 && yp < height) {
             const nx3 = Math.cos(theta);
             const nz3 = Math.sin(theta);
             const ny3 = 0;
 
-            const nxRotY = nx3 * Math.cos(B) - nz3 * Math.sin(B);
-            const nzRotY = nx3 * Math.sin(B) + nz3 * Math.cos(B);
-            const nyFinal = ny3 * Math.cos(A) - nzRotY * Math.sin(A);
-            const nzFinalNormal = ny3 * Math.sin(A) + nzRotY * Math.cos(A);
+            const nxRotY = nx3 * cosB - nz3 * sinB;
+            const nzRotY = nx3 * sinB + nz3 * cosB;
+            const nyFinal = ny3 * cosA - nzRotY * sinA;
+            const nzFinalNormal = ny3 * sinA + nzRotY * cosA;
 
             const luminance = nxRotY * 0.45 + nyFinal * 0.35 - nzFinalNormal * 0.85;
 
@@ -244,14 +399,205 @@ const user = await getUserFromRequest(Astro.request);
 
       asciiElement.textContent = frameStr;
       
-      // Extremely slow rotation for cinematic feel
+      // Cinematic slow rotation
       B += 0.005;
     }
 
-    // Run at 25 frames per second
-    setInterval(renderFrame, 40);
+    setInterval(renderFrame, 45);
 
-    // ── Mobile nav ──
+    // ── SPA View Switcher with Dynamic Height & Directional Slide ──
+    const viewHero = document.getElementById('view-hero');
+    const viewLogin = document.getElementById('view-login');
+    const viewRegister = document.getElementById('view-register');
+    const viewsContainer = document.getElementById('views-container');
+
+    const viewDepths = {
+      hero: 0,
+      login: 1,
+      register: 2
+    };
+
+    let isTransitioning = false;
+    let currentActiveViewName: 'hero' | 'login' | 'register' = 'hero';
+
+    function switchView(target: 'hero' | 'login' | 'register') {
+      if (isTransitioning || target === currentActiveViewName) return;
+
+      const prevViewName = currentActiveViewName;
+      currentActiveViewName = target;
+      isTransitioning = true;
+
+      const viewsMap = {
+        hero: viewHero,
+        login: viewLogin,
+        register: viewRegister
+      };
+
+      const activeEl = viewsMap[prevViewName];
+      const nextEl = viewsMap[target];
+
+      if (!activeEl || !nextEl || !viewsContainer) {
+        isTransitioning = false;
+        return;
+      }
+
+      const isForward = viewDepths[target] > viewDepths[prevViewName];
+
+      // 1. Measure current container height
+      const prevHeight = viewsContainer.offsetHeight;
+
+      // 2. Lock container height to prevent screen bouncing
+      viewsContainer.style.height = prevHeight + 'px';
+
+      // 3. Prepare the next view (make it display:flex, but invisible and offset)
+      nextEl.classList.remove('hidden');
+      nextEl.classList.add('pointer-events-none');
+      
+      // Position offscreen based on direction
+      nextEl.classList.remove('opacity-100', 'translate-x-0', 'view-active');
+      nextEl.classList.add('opacity-0');
+      if (isForward) {
+        nextEl.classList.remove('-translate-x-12');
+        nextEl.classList.add('translate-x-12');
+      } else {
+        nextEl.classList.remove('translate-x-12');
+        nextEl.classList.add('-translate-x-12');
+      }
+
+      // Force DOM reflow to apply starting transition values
+      nextEl.offsetHeight;
+
+      // 4. Measure target container height with the new view loaded
+      const targetHeight = nextEl.offsetHeight;
+
+      // 5. Animate container height to target height
+      viewsContainer.style.height = targetHeight + 'px';
+
+      // 6. Slide and fade active element out
+      activeEl.classList.remove('opacity-100', 'translate-x-0', 'view-active');
+      activeEl.classList.add('opacity-0', 'pointer-events-none');
+      if (isForward) {
+        activeEl.classList.add('-translate-x-12');
+      } else {
+        activeEl.classList.add('translate-x-12');
+      }
+
+      // 7. Slide and fade target element in
+      nextEl.classList.remove('opacity-0', 'translate-x-12', '-translate-x-12');
+      nextEl.classList.add('opacity-100', 'translate-x-0', 'view-active');
+
+      // 8. Clean up after the transition finishes (500ms)
+      setTimeout(() => {
+        activeEl.classList.add('hidden');
+        activeEl.classList.remove('pointer-events-none', 'translate-x-12', '-translate-x-12');
+        
+        nextEl.classList.remove('pointer-events-none');
+        viewsContainer.style.height = ''; // Clear height constraint for responsiveness
+        isTransitioning = false;
+      }, 500);
+    }
+
+    // Trigger initial load animation for the Hero
+    if (viewHero) {
+      requestAnimationFrame(() => {
+        viewHero.classList.add('view-active');
+        viewHero.classList.remove('opacity-0');
+      });
+    }
+
+    // Register DOM listeners for View Switches
+    document.getElementById('nav-login-btn')?.addEventListener('click', () => switchView('login'));
+    document.getElementById('nav-register-btn')?.addEventListener('click', () => switchView('register'));
+    document.getElementById('mobile-login-btn')?.addEventListener('click', () => {
+      switchView('login');
+      document.getElementById('mobile-menu-btn')?.click();
+    });
+    
+    document.getElementById('logo-home-btn')?.addEventListener('click', () => switchView('hero'));
+    document.getElementById('hero-start-btn')?.addEventListener('click', () => switchView('register'));
+
+    document.getElementById('login-back-btn')?.addEventListener('click', () => switchView('hero'));
+    document.getElementById('login-to-register-btn')?.addEventListener('click', () => switchView('register'));
+
+    document.getElementById('register-back-btn')?.addEventListener('click', () => switchView('hero'));
+    document.getElementById('register-to-login-btn')?.addEventListener('click', () => switchView('login'));
+
+    document.getElementById('footer-login-btn')?.addEventListener('click', () => switchView('login'));
+    document.getElementById('footer-register-btn')?.addEventListener('click', () => switchView('register'));
+
+    // Check URL flow on load
+    const params = new URLSearchParams(window.location.search);
+    const flow = params.get('flow');
+    if (flow === 'login') {
+      switchView('login');
+    } else if (flow === 'register') {
+      switchView('register');
+    }
+
+    // ── Login Submit API Call ──
+    const loginForm = document.getElementById('login-form') as HTMLFormElement;
+    const loginError = document.getElementById('login-error-alert') as HTMLDivElement;
+    const loginSubmit = document.getElementById('login-submit-btn') as HTMLButtonElement;
+
+    loginForm?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = (document.getElementById('login-email') as HTMLInputElement).value;
+      const password = (document.getElementById('login-password') as HTMLInputElement).value;
+
+      loginError.classList.add('hidden');
+      loginSubmit.disabled = true;
+      loginSubmit.innerText = 'Cargando...';
+
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Error al iniciar sesión');
+        window.location.href = '/dashboard';
+      } catch (err: any) {
+        loginError.innerText = err.message;
+        loginError.classList.remove('hidden');
+        loginSubmit.disabled = false;
+        loginSubmit.innerText = 'Iniciar Sesión';
+      }
+    });
+
+    // ── Register Submit API Call ──
+    const regForm = document.getElementById('register-form') as HTMLFormElement;
+    const regError = document.getElementById('register-error-alert') as HTMLDivElement;
+    const regSubmit = document.getElementById('register-submit-btn') as HTMLButtonElement;
+
+    regForm?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = (document.getElementById('register-name') as HTMLInputElement).value;
+      const email = (document.getElementById('register-email') as HTMLInputElement).value;
+      const password = (document.getElementById('register-password') as HTMLInputElement).value;
+
+      regError.classList.add('hidden');
+      regSubmit.disabled = true;
+      regSubmit.innerText = 'Cargando...';
+
+      try {
+        const res = await fetch('/api/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, password }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Error al crear la cuenta');
+        window.location.href = '/dashboard';
+      } catch (err: any) {
+        regError.innerText = err.message;
+        regError.classList.remove('hidden');
+        regSubmit.disabled = false;
+        regSubmit.innerText = 'Crear Cuenta';
+      }
+    });
+
+    // ── Mobile nav toggle logic ──
     const btn = document.getElementById('mobile-menu-btn');
     const nav = document.getElementById('mobile-nav');
     let open = false;
@@ -292,5 +638,54 @@ const user = await getUserFromRequest(Astro.request);
 
     .landing a, .landing button { -webkit-tap-highlight-color: transparent; }
     .landing { -webkit-overflow-scrolling: touch; }
+
+    /* Lock body scroll on mobile viewport */
+    @media (max-width: 1023px) {
+      html, body {
+        overflow: hidden !important;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    /* Motion text reveal keyframes */
+    @keyframes revealUp {
+      from {
+        transform: translateY(100%);
+      }
+      to {
+        transform: translateY(0);
+      }
+    }
+
+    .reveal-text {
+      animation: revealUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .animation-delay-150 {
+      animation-delay: 0.15s;
+    }
+
+    /* Staggered form field reveal transition on view active */
+    .reveal-item {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .view-active .reveal-item {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .delay-0 { transition-delay: 0ms !important; }
+    .delay-75 { transition-delay: 75ms !important; }
+    .delay-150 { transition-delay: 150ms !important; }
+    .delay-225 { transition-delay: 225ms !important; }
+    .delay-300 { transition-delay: 300ms !important; }
+    .delay-375 { transition-delay: 375ms !important; }
+    .delay-450 { transition-delay: 450ms !important; }
+    .delay-525 { transition-delay: 525ms !important; }
   </style>
 </Layout>
